@@ -5,6 +5,6 @@ public class test {
 	
 	
 	test(){
-		this.nbDeTest=this.nbDeTest+1;
+		test.nbDeTest=test.nbDeTest+1;
 	}
 }

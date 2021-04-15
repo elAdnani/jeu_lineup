@@ -74,6 +74,14 @@ public class Graphe {
 	
 	
 	
+	/** Permet de renommer un sommet du graphe */
+	public boolean renameNode(String before, String after) {
+		// TODO Faire la fonction de renommage de sommet
+		return true;
+	}
+	
+	
+	
 	/**
 	 * Permet d'ajouter une arrête au graphe.<br>
 	 * Dans le cas d'un graphe orienté, l'arrête part du sommet s1 et se dirige vers le sommet s2.

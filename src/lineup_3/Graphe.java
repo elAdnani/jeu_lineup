@@ -1,5 +1,5 @@
 package lineup_3;
-
+// TODO gérer le cas des graphes avec poids
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,9 +8,13 @@ import java.util.HashMap;
 /**
  * Permet la lecture et l'utilisation des graphes avec un ordinateur.
  * 
+ * @see java.util.List 
+ * @see {@link java.util.List}
+ * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  */
 public class Graphe {
+	private static int cpt = 1;
 	private String name;
 	private GrapheType type;
 	private List<String> nodes;
@@ -26,10 +30,55 @@ public class Graphe {
 	 * @param edges
 	 */
 	public Graphe(String name, GrapheType type, List<String> nodes, Map<String, List<String>> edges) {
-		this.name = name;
-		this.type = type;
-		this.nodes = nodes;
-		this.edges = edges;
+		if (name == null)
+			this.name = "Graphe";
+		else
+			this.name = name;
+		
+		if (type == null)
+			this.type = GrapheType.UGRAPH;
+		else
+			this.type = type;
+		
+		boolean valide = nodes != null && edges != null && !nodes.isEmpty() && !edges.isEmpty();
+		
+		if (valide) {
+			for (String s : nodes)
+				valide = valide && nodes.indexOf(s) == nodes.lastIndexOf(s); // on vérifie que chaque sommet est bien unique
+		
+			for (String s : edges.keySet()) {
+				for (String e : edges.get(s))
+					valide = valide && edges.get(s).indexOf(e) == edges.get(s).lastIndexOf(e);
+				valide = valide; // TODO vérifier que tous les sommets donnés sont présents et qu'il n'y a qu'eux.
+			}
+			
+			this.nodes = nodes;
+			this.edges = edges;
+		} else {
+			this.nodes = new ArrayList<String>();
+			this.edges = new HashMap<String, List<String>>();
+		}
+	}
+	
+	/**
+	 * Constructeur ne nécessitant que le nom et le type du graphe.
+	 * @param name
+	 * @param type
+	 */
+	public Graphe(String name, GrapheType type) {
+		this(name, type, null, null);
+	}
+	
+	/**
+	 * Contructeur qui crée un graphe non orienté dont le nom est donné en paramètres
+	 * @param name
+	 */
+	public Graphe(String name) {
+		this(name, null);
+	}
+	
+	public Graphe() {
+		this("Graphe n°" + cpt++);
 	}
 	
 	
@@ -63,21 +112,46 @@ public class Graphe {
 	
 	/** Donne la possibilité d'ajouter un sommet au graphe. */
 	public boolean addNode(String name) {
-		if (this.nodes.contains(name)) // si le nom existe déjà
+		if (name == null || name.isBlank() || this.nodes.contains(name)) // si le nom existe déjà ou s'il est vide
 			return false;
 		else {
 			this.nodes.add(name);
 			this.edges.put(name, new ArrayList<String>());
 			return true;
 		}
-	}
-	
-	
+	}	
 	
 	/** Permet de renommer un sommet du graphe */
 	public boolean renameNode(String before, String after) {
-		// TODO Faire la fonction de renommage de sommet
-		return true;
+		if (after != null && !after.isBlank() && this.nodes.contains(before) && !this.nodes.contains(after)) {
+			for (String s : this.edges.keySet())
+				if (this.edges.get(s).remove(before))
+					this.edges.get(s).add(after);
+			
+			// recrée la liste du sommet
+			List<String> save = this.edges.remove(before);
+			this.edges.put(after, save);
+			
+			// renome le sommet dans la liste des sommets
+			this.nodes.remove(before);
+			this.nodes.add(after);
+			
+			return true;
+		} else
+			return false;
+	}
+	
+	/** Supprime le sommet donné */
+	public boolean removeNode(String name) {
+		if (this.nodes.contains(name)) {
+			for (String s : this.edges.keySet())
+				this.edges.get(s).remove(name);
+			this.edges.remove(name);
+			this.nodes.remove(name);
+			
+			return true;
+		} else
+			return false;
 	}
 	
 	
@@ -86,18 +160,31 @@ public class Graphe {
 	 * Permet d'ajouter une arrête au graphe.<br>
 	 * Dans le cas d'un graphe orienté, l'arrête part du sommet s1 et se dirige vers le sommet s2.
 	 */
-	public boolean addEdge(String s1, String s2) {
-		if (s1.equals(s2) || !this.nodes.contains(s1) || !this.nodes.contains(s2)) // si les sommets donnés sont identiques ou qu'ils n'existent pas
+	public boolean addEdge(String s1, String s2) {		
+		if (s1 == null || s2 == null || s1.equals(s2) || !this.nodes.contains(s1) || !this.nodes.contains(s2) || this.edges.get(s1).contains(s2)) // si les sommets donnés sont identiques, que l'un n'existe pas ou que l'arrête existe déjà.
 			return false;
 		else {
-			if (!this.edges.get(s1).contains(s2)) // si la destination n'existe pas déjà
-				this.edges.get(s1).add(s2);
+			this.edges.get(s1).add(s2);
 			
-			if (!this.type.isDirected() && !this.edges.get(s2).contains(s1)) // si le graphe n'est pas dirigé et que la destination n'existe pas déjà
+			if (!this.type.isDirected())
 				this.edges.get(s2).add(s1);
-			return true;
-		}
 			
+			return true;
+		}	
+	}	
+	
+	/** Supprime une arrête entre deux sommets. */
+	public boolean removeEdge(String s1, String s2) {
+		if (s1 == null || s2 == null || s1.equals(s2) || !this.nodes.contains(s1) || !this.nodes.contains(s2)) // si les sommets donnés sont identiques ou qu'ils n'existent pas
+			return false;
+		else {
+			boolean reussite = this.edges.get(s1).remove(s2);
+			
+			if (!this.type.isDirected()) // si le graphe n'est pas dirigé
+				reussite = this.edges.get(s2).remove(s1);
+			
+			return reussite;
+		}
 	}
 	
 	
@@ -130,23 +217,37 @@ public class Graphe {
 	
 	
 	public static void main(String[] args) {
-		List<String> sommets = new ArrayList<>();
-		sommets.add("A");
-		sommets.add("B");
-		sommets.add("C");
-		sommets.add("D");
-		
-		Map<String, List<String>> arretes = new HashMap<String, List<String>>();
-		for (String s : sommets)
-			arretes.put(s, new ArrayList<String>());
-		
-		Graphe G = new Graphe("Plateau", GrapheType.UGRAPH, sommets, arretes);
+//		List<String> sommets = new ArrayList<>();
+//		sommets.add("A");
+//		sommets.add("B");
+//		sommets.add("C");
+//		sommets.add("D");
+//		
+//		Map<String, List<String>> arretes = new HashMap<String, List<String>>();
+//		for (String s : sommets)
+//			arretes.put(s, new ArrayList<String>());
+//		
+//		Graphe G = new Graphe("Plateau", null, sommets, arretes);
+//
+//		G.addNode("E");
+//		G.addEdge("A", "B");
+//		G.addEdge("A", "G");
+//		G.addEdge("A", "D");
+//		G.addEdge("D", "A");
+//		G.removeEdge("A", "D");
+//		G.removeNode("D");
+//		G.renameNode("B", "BB");
+//		
+//		System.out.println(G.toString());
 
-		G.addNode("E");
-		G.addEdge("A", "B");
-		G.addEdge("A", "C");
-		G.addEdge("A", "D");
-		
-		System.out.println(G.toString());
+		Graphe G1 = new Graphe();
+		Graphe Ga = new Graphe("a");
+		Graphe G2 = new Graphe();
+		Graphe G3 = new Graphe();
+
+		System.out.println(G1 + "\n");
+		System.out.println(Ga + "\n");
+		System.out.println(G2 + "\n");
+		System.out.println(G3);
 	}
 }

@@ -17,14 +17,12 @@ public enum GrapheType {
 	 * Signifie que le graphe est dirigé, ses arrêtes ont un sens a respecter.
 	 */
 	DIGRAPH,
-	
 
 	/**
 	 * (Undirected Weighted GRAPH)<br>
 	 * Signifie que les arrêtes ont un poid donné et qu'elles n'ont aucun sens de spécifié.
 	 */
 	UWGRAPH,
-	
 
 	/**
 	 * (DIrected Weighted GRAPH)<br>

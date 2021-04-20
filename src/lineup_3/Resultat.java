@@ -20,7 +20,7 @@ package lineup_3;
  * @author 
  * IUT-A Informatique, Universite de Lille.
  * @date 14 avr. 2021
- * @version XX
+ * @version XXX
  */
 public class Resultat {
 

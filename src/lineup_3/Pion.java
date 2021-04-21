@@ -2,13 +2,15 @@ package lineup_3;
 
 /**
  * 
- * Cette classe fait.........
+ * Cette classe sert à instancier un Pion avec lequel un Joueur pourra jouer.
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
  * IUT-A Informatique, Universite de Lille.
  * @date 19 avr. 2021
  * @version 19 avr. 2021 15:16:48
  */
+
+
 public class Pion {
 	// attributes
 	

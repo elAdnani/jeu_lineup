@@ -13,7 +13,7 @@ import java.time.LocalTime;
 
 
 public class Joueur {
-	// class attributes
+		// Class Attributes
 	/**
 	 * le nom du que le joueur choisi.
 	 */
@@ -28,6 +28,8 @@ public class Joueur {
 	 * La main du joueur avec laquelle il jouera toute la partie.
 	 */
 	private DeckPions main;
+	
+		// Getters
 	
 	public String getPseudo() {
 		return pseudo;
@@ -45,7 +47,7 @@ public class Joueur {
 		return main;
 	}
 
-	// Constructor
+		// Constructor
 
 	/**
 	 * Instancie un Joueur pour la partie en lui affectant un pseudo et une main.
@@ -55,5 +57,11 @@ public class Joueur {
 	public Joueur(String p, int nbPions) {
 		this.pseudo = p;
 		main = new DeckPions(nbPions);
+	}
+	
+		// Methods
+	
+	public Pion getPion() {
+		return this.main.getPion();
 	}
 }

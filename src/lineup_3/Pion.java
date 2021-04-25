@@ -12,7 +12,7 @@ package lineup_3;
 
 
 public class Pion {
-	// attributes
+		// Class Attributes
 	
 	/**
 	 * x correspond à la couche sur laquelle le pion se trouve.
@@ -23,6 +23,8 @@ public class Pion {
 	 * y correspond au point de la couche x sur lequel le pion se trouve.
 	 */
 	private int y;
+	
+		// Getters & Setters
 	
 	public int getX() {
 		return x;
@@ -57,5 +59,17 @@ public class Pion {
 	 */
 	public Pion()  {
 		this(0,0);
+	}
+	
+		// Methods
+	
+	/**
+	 * Affecte une position à un Pion.
+	 * @param couche l'attribut x prend la valeur couche passée en paramètre.
+	 * @param point l'attribut y prend la valeur point passée en paramètre.
+	 */
+	public void setPosition(int couche, int point) {
+		setX(couche);
+		setY(point);
 	}
 }

@@ -14,10 +14,10 @@ import java.util.HashMap;
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  */
 public class Graphe {
-	private static int cpt = 1;
+	private static int cpt = 0;
 	private String name;
 	private GrapheType type;
-	private List<String> nodes;
+	private List<String> nodes; // TODO uitiliser Set<> qui évite les doublons
 	private Map<String, List<String>> edges;
 	
 	
@@ -78,7 +78,7 @@ public class Graphe {
 	}
 	
 	public Graphe() {
-		this("Graphe n°" + cpt++);
+		this("Graphe n°" + ++cpt);
 	}
 	
 	
@@ -124,15 +124,17 @@ public class Graphe {
 	/** Permet de renommer un sommet du graphe */
 	public boolean renameNode(String before, String after) {
 		if (after != null && !after.isBlank() && this.nodes.contains(before) && !this.nodes.contains(after)) {
-			for (String s : this.edges.keySet())
-				if (this.edges.get(s).remove(before))
-					this.edges.get(s).add(after);
 			
 			// recrée la liste du sommet
 			List<String> save = this.edges.remove(before);
 			this.edges.put(after, save);
 			
-			// renome le sommet dans la liste des sommets
+			// Modifie l'ancien élément dans chacune des listes de sommets
+			for (String s : this.edges.keySet())
+				if (this.edges.get(s).remove(before))
+					this.edges.get(s).add(after);
+			
+			// renomme le sommet dans la liste des sommets
 			this.nodes.remove(before);
 			this.nodes.add(after);
 			
@@ -217,37 +219,37 @@ public class Graphe {
 	
 	
 	public static void main(String[] args) {
-//		List<String> sommets = new ArrayList<>();
-//		sommets.add("A");
-//		sommets.add("B");
-//		sommets.add("C");
-//		sommets.add("D");
-//		
-//		Map<String, List<String>> arretes = new HashMap<String, List<String>>();
-//		for (String s : sommets)
-//			arretes.put(s, new ArrayList<String>());
-//		
-//		Graphe G = new Graphe("Plateau", null, sommets, arretes);
+		List<String> sommets = new ArrayList<>();
+		sommets.add("A");
+		sommets.add("B");
+		sommets.add("C");
+		sommets.add("D");
+		
+		Map<String, List<String>> arretes = new HashMap<String, List<String>>();
+		for (String s : sommets)
+			arretes.put(s, new ArrayList<String>());
+		
+		Graphe G = new Graphe("Plateau", GrapheType.UGRAPH, sommets, arretes);
+
+		G.addNode("E");
+		G.addEdge("A", "B");
+		G.addEdge("A", "G");
+		G.addEdge("A", "D");
+		G.addEdge("D", "A");
+		G.removeEdge("A", "D");
+		G.removeNode("D");
+		G.renameNode("B", "BB");
+		
+		System.out.println(G.toString());
+
+//		Graphe G1 = new Graphe();
+//		Graphe Ga = new Graphe("a");
+//		Graphe G2 = new Graphe();
+//		Graphe G3 = new Graphe();
 //
-//		G.addNode("E");
-//		G.addEdge("A", "B");
-//		G.addEdge("A", "G");
-//		G.addEdge("A", "D");
-//		G.addEdge("D", "A");
-//		G.removeEdge("A", "D");
-//		G.removeNode("D");
-//		G.renameNode("B", "BB");
-//		
-//		System.out.println(G.toString());
-
-		Graphe G1 = new Graphe();
-		Graphe Ga = new Graphe("a");
-		Graphe G2 = new Graphe();
-		Graphe G3 = new Graphe();
-
-		System.out.println(G1 + "\n");
-		System.out.println(Ga + "\n");
-		System.out.println(G2 + "\n");
-		System.out.println(G3);
+//		System.out.println(G1 + "\n");
+//		System.out.println(Ga + "\n");
+//		System.out.println(G2 + "\n");
+//		System.out.println(G3);
 	}
 }

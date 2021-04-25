@@ -531,7 +531,15 @@ public class Matrice {
 				Matrice old = new Matrice(this.matrice);
 				this.identite();
 				
+				boolean valide = true;
+				int colonne = 0;
+				while (valide && ++colonne < old.taille.getY()) {
+					int ligne = colonne;
+					while (old.read(ligne, colonne) == 0 && ligne < old.taille.getX())
+						valide = false; // TODO ne pas oublier de finir l'algorithme !
+				}
 				
+				return valide;
 			}
 		} else
 			return false;

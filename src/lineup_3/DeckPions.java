@@ -11,17 +11,24 @@ package lineup_3;
 
 
 public class DeckPions {
-	// class attributes
+		// Class Attributes
 	
 	/**
-	 * stock le nombre de coups joué par le joueur.
+	 * Stock le nombre de coups joué par le joueur.
 	 */
 	private int nbCoups;
 	
 	/**
-	 * représente la main du joueur.
+	 * Représente la main du joueur.
 	 */
 	private Pion[] main;
+	
+	/**
+	 * Indique le prochain pion sur la liste.
+	 */
+	private int idx;	
+	
+		// Getters
 	
 	public int getNbCoups() {
 		return nbCoups;
@@ -31,10 +38,37 @@ public class DeckPions {
 		return main;
 	}
 	
-	// Constructor
-	
+		// Constructor
 	
 	public DeckPions(int nbPions) {
+		this.idx = nbPions;
 		this.main = new Pion[nbPions];
+		this.initialiserMain();
 	}
+	
+		// Methods
+	
+	/**
+	 * Permet d'obtenir le prochain Pion de la main.
+	 * @return Retourne un Objet de type Pion.
+	 */
+	public Pion getPion() {
+		return main[idx];
+	}
+	
+	/**
+	 * Permet de remplir la main avec des Pions sans position.
+	 */
+	private void initialiserMain() {
+		for (int i = 0; i < main.length; i++) {
+			main[i] = new Pion();
+		}
+	}
+	
+    public void addPions(Pion pion) {
+        if(this.idx<=main.length) {
+            this.main[idx]=pion;
+        }
+        idx= idx +1;
+    }
 }

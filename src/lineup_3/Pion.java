@@ -51,6 +51,10 @@ public class Pion {
 	public String getJoueur() {
 		return joueur;
 	}
+	
+	public void setJoueur(String joueur) {
+		this.joueur = joueur;
+	}
 
 	// Constructor
 	public Pion(int couche, int point, String j) {

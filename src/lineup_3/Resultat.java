@@ -14,6 +14,9 @@
  */
 package lineup_3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Cette classe sert à .........
  *
@@ -23,11 +26,16 @@ package lineup_3;
  * @version XXX
  */
 public class Resultat {
-
-	/**
-	 * 
-	 */
-	public Resultat() {
-		// TODO Auto-generated constructor stub
+	
+	public static void main(String[] args) {
+		int nbPions = 6;
+		Joueur j1 = new Joueur("Joueur1", nbPions);
+		Joueur j2 = new Joueur("Joueur2", nbPions);
+		
+		List<String> nodes = new ArrayList<String>();
+		nodes.add("a");
+		
+		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
+		
 	}
 }

@@ -79,7 +79,6 @@ public class DeckPions {
 		builder.append(Arrays.toString(main).replace(",", "\n"));
 		builder.append("\nidx : ");
 		builder.append(idx);
-		builder.append("\n");
 		return builder.toString();
 	}
 

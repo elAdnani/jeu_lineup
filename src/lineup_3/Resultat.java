@@ -19,12 +19,12 @@ import java.util.List;
 
 
 /**
- * Cette classe sert à .........
+ * Cette classe sert à lancer le jeu.
  *
- * @author 
- * IUT-A Informatique, Universite de Lille.
- * @date 14 avr. 2021
- * @version XXX
+ * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
+ * IUT-A Informatique, Université de Lille.
+ * @date 21 avr. 2021
+ * @version 21 avr. 2021 19:26:15
  */
 public class Resultat {
 	

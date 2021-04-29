@@ -16,11 +16,6 @@ public class DeckPions {
 		// Class Attributes
 	
 	/**
-	 * Stock le nombre de coups joué par le joueur.
-	 */
-	private int nbCoups;
-	
-	/**
 	 * Représente la main du joueur.
 	 */
 	private Pion[] main;
@@ -32,10 +27,6 @@ public class DeckPions {
 	
 		// Getters
 	
-	public int getNbCoups() {
-		return nbCoups;
-	}
-
 	public Pion[] getMain() {
 		return main;
 	}
@@ -84,13 +75,11 @@ public class DeckPions {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DeckPions [nbCoups=");
-		builder.append(nbCoups);
-		builder.append(", main=");
-		builder.append(Arrays.toString(main));
-		builder.append(", idx=");
+		builder.append("Main :\n");
+		builder.append(Arrays.toString(main).replace(",", "\n"));
+		builder.append("\nidx : ");
 		builder.append(idx);
-		builder.append("]");
+		builder.append("\n");
 		return builder.toString();
 	}
 

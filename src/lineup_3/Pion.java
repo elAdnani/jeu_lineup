@@ -95,10 +95,9 @@ public class Pion {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pion(");
 		builder.append(x);
-		builder.append(", ");
+		builder.append(";");
 		builder.append(y);
-		builder.append(") : ");
-		builder.append(joueur);
+		builder.append(")");
 		return builder.toString();
 	}
 }

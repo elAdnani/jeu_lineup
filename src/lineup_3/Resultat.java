@@ -17,6 +17,7 @@ package lineup_3;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Cette classe sert à .........
  *
@@ -37,5 +38,9 @@ public class Resultat {
 		
 		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
 		
+		System.out.println(j1);
+		System.out.println(j1.getMain().toString());
+		//System.out.println(j2);
+		//System.out.println(g1);
 	}
 }

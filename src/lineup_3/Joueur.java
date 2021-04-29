@@ -65,6 +65,14 @@ public class Joueur {
 		return this.main.getPion();
 	}
 	
+	/**
+	 * Permet de compter le nombre de Pion restant dans la main du Joueur.
+	 * @return retourne un nombre de Pion.
+	 */
+	public int countPions() {
+		return main.getMain().length;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

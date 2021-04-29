@@ -42,10 +42,15 @@ public class DeckPions {
 	
 		// Constructor
 	
-	public DeckPions(int nbPions) {
+	/**
+	 * Instancie une main pour un Joueur selon un nombre de Pion donné.
+	 * @param nbPions nombre de Pion souhaité pour la main.
+	 * @param joueur Joueur à qui la main appartient.
+	 */
+	public DeckPions(int nbPions, String joueur) {
 		this.idx = nbPions;
 		this.main = new Pion[nbPions];
-		this.initialiserMain();
+		this.initialiserMain(joueur);
 	}
 	
 		// Methods
@@ -60,10 +65,12 @@ public class DeckPions {
 	
 	/**
 	 * Permet de remplir la main avec des Pions sans position.
+	 * @param joueur Correspond au propriétaire de la main en cours d'initialisation.
 	 */
-	private void initialiserMain() {
+	private void initialiserMain(String joueur) {
 		for (int i = 0; i < main.length; i++) {
 			main[i] = new Pion();
+			main[i].setJoueur(joueur);
 		}
 	}
 	

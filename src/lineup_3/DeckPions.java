@@ -1,5 +1,7 @@
 package lineup_3;
 
+import java.util.Arrays;
+
 /**
  * Cette classe créer une pile de pion et compte le nombre de coups joué par un Joueur.
  *
@@ -71,4 +73,19 @@ public class DeckPions {
         }
         idx= idx +1;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DeckPions [nbCoups=");
+		builder.append(nbCoups);
+		builder.append(", main=");
+		builder.append(Arrays.toString(main));
+		builder.append(", idx=");
+		builder.append(idx);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	
 }

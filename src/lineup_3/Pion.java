@@ -72,4 +72,15 @@ public class Pion {
 		setX(couche);
 		setY(point);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pion(");
+		builder.append(x);
+		builder.append(", ");
+		builder.append(y);
+		builder.append(")");
+		return builder.toString();
+	}
 }

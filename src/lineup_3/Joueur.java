@@ -64,4 +64,21 @@ public class Joueur {
 	public Pion getPion() {
 		return this.main.getPion();
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		builder.append(pseudo);
+		builder.append(", temps de réflexion :");
+		builder.append(temps);
+		builder.append(", Pions restant :");
+		builder.append(main);
+		builder.append("]");
+		return builder.toString();
+	}
+
+
+
+	
 }

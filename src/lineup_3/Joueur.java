@@ -56,7 +56,7 @@ public class Joueur {
 	 */
 	public Joueur(String p, int nbPions) {
 		this.pseudo = p;
-		main = new DeckPions(nbPions);
+		main = new DeckPions(nbPions, pseudo);
 	}
 	
 		// Methods

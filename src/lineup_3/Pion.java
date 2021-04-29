@@ -24,6 +24,12 @@ public class Pion {
 	 */
 	private int y;
 	
+	/**
+	 * 
+	 * joueur correspond au Joueur à qui appartient le Pion.
+	 */
+	private String joueur;
+	
 		// Getters & Setters
 	
 	public int getX() {
@@ -41,17 +47,24 @@ public class Pion {
 	private void setY(int y) {
 		this.y = y;
 	}
-
-		// Constructor
 	
+	public String getJoueur() {
+		return joueur;
+	}
+
+	// Constructor
+	public Pion(int couche, int point, String j) {
+		this.x = couche;
+		this.y = point;
+		this.joueur = j;
+	}
 	/**
 	 * Instancie un pion
 	 * @param couche l'attribut x prend la valeur couche passée en paramètre.
 	 * @param point l'attribut y prend la valeur point passée en paramètre.
 	 */
 	public Pion(int couche, int point) {
-		this.x = couche;
-		this.y = point;
+		this(couche, point, null);
 	}
 	
 	/**
@@ -80,7 +93,8 @@ public class Pion {
 		builder.append(x);
 		builder.append(", ");
 		builder.append(y);
-		builder.append(")");
+		builder.append(") : ");
+		builder.append(joueur);
 		return builder.toString();
 	}
 }

@@ -29,14 +29,14 @@ import java.util.List;
 public class Resultat {
 	
 	public static void main(String[] args) {
-		int nbPions = 6;
-		Joueur j1 = new Joueur("Joueur1", nbPions);
-		Joueur j2 = new Joueur("Joueur2", nbPions);
 		
+		int nbPions = 6;
 		List<String> nodes = new ArrayList<String>();
 		nodes.add("a");
-		
 		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
+		
+		Joueur j1 = new Joueur("Joueur1", nbPions);
+		Joueur j2 = new Joueur("Joueur2", nbPions);
 		
 		System.out.println(j1);
 		System.out.println(j1.getMain().toString());

@@ -15,19 +15,12 @@ import java.util.List;
 
 public class Pion {
 		// Class Attributes
-	
 	/**
-	 * x correspond à la couche sur laquelle le pion se trouve.
+	 * Correspond aux coordonnées du Pion.
 	 */
-	private int x;
+	private Paire coordonnees;
 	
 	/**
-	 * y correspond au point de la couche x sur lequel le pion se trouve.
-	 */
-	private int y;
-	
-	/**
-	 * 
 	 * joueur correspond au Joueur à qui appartient le Pion.
 	 */
 	private String joueur;
@@ -49,23 +42,7 @@ public class Pion {
 	
 	
 		// Getters & Setters
-	
-	public int getX() {
-		return x;
-	}
 
-	private void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	private void setY(int y) {
-		this.y = y;
-	}
-	
 	public String getJoueur() {
 		return joueur;
 	}
@@ -76,8 +53,7 @@ public class Pion {
 
 	// Constructor
 	public Pion(int couche, int point, String j, int nbCote, int nbCouche) {
-		this.x = couche;
-		this.y = point;
+		this.coordonnees = new Paire(couche, point);
 		this.joueur = j;
 		this.nbCote = nbCote;
 		this.NBCOUCHE = nbCouche;
@@ -106,8 +82,8 @@ public class Pion {
 	 * @param point l'attribut y prend la valeur point passée en paramètre.
 	 */
 	public void setPosition(int couche, int point) {
-		setX(couche);
-		setY(point);
+		this.coordonnees.setX(couche);
+		this.coordonnees.setY(point);
 	}
 	
 	/**
@@ -122,8 +98,8 @@ public class Pion {
 		}
 		
 		final int COUCHEPRINCIPALE = 1;
-		int X = selection.getX();
-		int Y = selection.getY();
+		int X = selection.coordonnees.getX();
+		int Y = selection.coordonnees.getY();
 		int nombrePionDansUneCouche = (nbCote - 1) * NBCOUCHE;
 		
 		// en haut (faire +1 à la couche) => X=paire et Y!=COUCHEMAX
@@ -157,8 +133,8 @@ public class Pion {
 		
 			if (this.possibilite.contains(Deplacement.valueOf(direction.toUpperCase()))) {
 				selection.setPosition(
-						selection.getX()+ Deplacement.valueOf(direction.toUpperCase()).getX(),
-						selection.getY()+ Deplacement.valueOf(direction.toUpperCase()).getY()
+						selection.coordonnees.getX()+ Deplacement.valueOf(direction.toUpperCase()).getX(),
+						selection.coordonnees.getY()+ Deplacement.valueOf(direction.toUpperCase()).getY()
 				);
 						
 				 /**   @TODO faire un / modulo        */
@@ -178,7 +154,7 @@ public class Pion {
 	
 	public boolean presenceCoordonnee(int X, int Y) {
 		for (Pion p : Plateau.getListSommet())
-			if (p.getX() == X && p.getY() == Y)
+			if (p.coordonnees.getX() == X && p.coordonnees.getY() == Y)
 				return true;
 
 		return false;
@@ -188,9 +164,9 @@ public class Pion {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pion(");
-		builder.append(x);
+		builder.append(coordonnees.getX());
 		builder.append(";");
-		builder.append(y);
+		builder.append(coordonnees.getY());
 		builder.append(")");
 		return builder.toString();
 	}

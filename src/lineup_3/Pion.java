@@ -74,6 +74,10 @@ public class Pion {
 		this(-1,-1);
 	}
 	
+	public Paire getCoordonnees() {
+		return this.coordonnees;
+	}
+	
 		// Methods
 	
 	/**
@@ -92,7 +96,7 @@ public class Pion {
 	 * @param selection correspond au pion que le joueur souhaite déplacer.
 	 */
 	
-	private void deplacementPossible(Pion selection) {
+	/*private void deplacementPossible(Pion selection) {
 		if(this.possibilite != null) {
 			this.possibilite.clear();
 		}
@@ -107,7 +111,7 @@ public class Pion {
 		// en droite (faire +1 à X) => X!= coucheMAX
 		// à gauche (faire -1 à X) =>
 		// HAUT :
-		if (Y % 2 == 0 && X != Plateau.NBCOUCHE && !presenceCoordonnee(X + 1, Y))
+		if (Y % 2 == 0 && X != PlateauDeBase.NBCOUCHE && !presenceCoordonnee(X + 1, Y))
 
 			this.possibilite.add(Deplacement.HAUT);
 		if (Y % 2 == 0 && X != COUCHEPRINCIPALE && !presenceCoordonnee(X - 1, Y))
@@ -120,7 +124,7 @@ public class Pion {
 
 			this.possibilite.add(Deplacement.GAUCHE);
 
-	}
+	}*/
 	
 	/**
 	 * Déplace un pion, selon sa disponibilité et la direction donnée.
@@ -152,14 +156,15 @@ public class Pion {
 	 * @return s'il existe un pion à l'emplacement (X,Y)
 	 */
 	
-	public boolean presenceCoordonnee(int X, int Y) {
-		for (Pion p : Plateau.getListSommet())
+	/*public boolean presenceCoordonnee(int X, int Y) {
+		for (Pion p : PlateauDeBase.getListPion())
 			if (p.coordonnees.getX() == X && p.coordonnees.getY() == Y)
 				return true;
 
 		return false;
 	}
-
+	*/
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

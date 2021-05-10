@@ -45,24 +45,5 @@ public abstract class Plateau {
 		Set<Joueur> listeJoueur = this.listJoueur;
 		return  listeJoueur;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

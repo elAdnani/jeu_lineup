@@ -105,7 +105,7 @@ public class PlateauDeBase extends Plateau{
 
 		for( Pion p :listPion)
 			
-			if( p.getX()==x && p.getY()==y)
+			if( p.getCoordonnees().getX()==x && p.getCoordonnees().getY()==y)
 				
 				return p;
 		

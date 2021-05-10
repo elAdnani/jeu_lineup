@@ -132,14 +132,14 @@ public class Pion {
 	 * @param direction est la direction que le joueur a choisie
 	 */
 	
-	public boolean deplacerPion(Pion selection,String direction) {
+	/*public boolean deplacerPion(Pion selection,String direction) {
 		deplacementPossible(selection);
 		
 			if (this.possibilite.contains(Deplacement.valueOf(direction.toUpperCase()))) {
 				selection.setPosition(
 						selection.coordonnees.getX()+ Deplacement.valueOf(direction.toUpperCase()).getX(),
 						selection.coordonnees.getY()+ Deplacement.valueOf(direction.toUpperCase()).getY()
-				);
+				);*/
 						
 				 /**   @TODO faire un / modulo        */
 				return true;

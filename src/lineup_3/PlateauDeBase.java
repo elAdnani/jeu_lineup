@@ -26,7 +26,9 @@ import java.util.Set;
 
 
 /**
- * Cette classe représente un plateau respectant les consignes
+ * Cette classe représente un plateau respectant les consignes :- Trois Sommets par côtés
+ * 																- Trois couches
+ * 																- Autant de côté possible
  *
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
  *         IUT-A Informatique, Université de Lille.

@@ -4,8 +4,9 @@ import java.util.List;
 
 /**
  * 
- * Cette classe sert à instancier un Pion avec lequel un Joueur pourra jouer.
- *
+ * Cette classe sert à instancier un Pion avec lequel un Joueur pourra jouer, c'est cette classe qui détermine
+ * si un mouvement est possible et si oui effectue le déplacement.
+ * 
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
  * IUT-A Informatique, Université de Lille.
  * @date 19 avr. 2021
@@ -142,12 +143,12 @@ public class Pion {
 				);*/
 						
 				 /**   @TODO faire un / modulo        */
-				return true;
+			//return true;
 			// on modifie le X en lui attribuant la valeur de lui même
 				// plus la direction dans laquelle il veut se diriger
-			}
+			/*}
 		return false;
-	}
+	}*/
 
 	/**
 	 * 

@@ -13,12 +13,12 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  */
-public class Graphe {
+public class Graphe<T> {
 	private static int cpt = 0;
 	private String name;
 	private GrapheType type;
-	private List<String> nodes; // TODO uitiliser Set<> qui évite les doublons
-	private Map<String, List<String>> edges;
+	private List<T> nodes; // TODO uitiliser Set<> qui évite les doublons
+	private Map<T, List<T>> edges;
 	
 	
 	

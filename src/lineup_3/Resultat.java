@@ -42,5 +42,7 @@ public class Resultat {
 		System.out.println(j1.getMain().toString());
 		//System.out.println(j2);
 		//System.out.println(g1);
+		
+		
 	}
 }

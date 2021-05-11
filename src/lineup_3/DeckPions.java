@@ -60,7 +60,7 @@ public class DeckPions {
 	 */
 	private void initialiserMain(String joueur) {
 		for (int i = 0; i < main.length; i++) {
-			main[i] = new Pion();
+			main[i] = new ChifumiPion();
 			main[i].setJoueur(joueur);
 		}
 	}

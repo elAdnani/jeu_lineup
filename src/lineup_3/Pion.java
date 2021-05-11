@@ -4,8 +4,8 @@ import java.util.List;
 
 /**
  * 
- * Cette classe sert à instancier un Pion avec lequel un Joueur pourra jouer, c'est cette classe qui détermine
- * si un mouvement est possible et si oui effectue le déplacement.
+ * Cette classe sert à définir ce qu'est un Pion, en règle générale, avec lequel un Joueur pourra jouer, c'est
+ * cette classe qui détermine si un mouvement est possible et, si oui, effectue le déplacement.
  * 
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
  * IUT-A Informatique, Université de Lille.
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 
-public class Pion {
+public abstract class Pion {
 		// Class Attributes
 	/**
 	 * Correspond aux coordonnées du Pion.
@@ -52,7 +52,15 @@ public class Pion {
 		this.joueur = joueur;
 	}
 
-	// Constructor
+		// Constructor
+	/**
+	 * Instancie un Pion avec un maximum d'information.
+	 * @param couche représente la coordonnée indiquant la couche sur laquelle se trouve le Pion.
+	 * @param point représente la coordonnée indiquant le point sur laquelle se trouve le Pion, dépendamment de la couche.
+	 * @param j représente le pseudo du Joueur à qui appartient ce Pion.
+	 * @param nbCote représente le nombre de côté du Plateau.(Utile pour savoir où se déplacer).
+	 * @param nbCouche représente le nombre de couche du Plateau.(Utile pour savoir où se déplacer).
+	 */
 	public Pion(int couche, int point, String j, int nbCote, int nbCouche) {
 		this.coordonnees = new Paire(couche, point);
 		this.joueur = j;

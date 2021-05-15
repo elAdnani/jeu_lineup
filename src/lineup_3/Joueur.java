@@ -14,6 +14,12 @@ import java.time.LocalTime;
 
 public class Joueur {
 		// Class Attributes
+	
+	/**
+	 * Stock le nombre de coups joué par le joueur.
+	 */
+	private int nbCoups;
+	
 	/**
 	 * le nom du que le joueur choisi.
 	 */
@@ -35,16 +41,16 @@ public class Joueur {
 		return pseudo;
 	}
 
-
-
 	public LocalTime getTemps() {
 		return temps;
 	}
 
-
-
 	public DeckPions getMain() {
 		return main;
+	}
+	
+	public int getNbCoups() {
+		return nbCoups;
 	}
 
 		// Constructor
@@ -56,7 +62,7 @@ public class Joueur {
 	 */
 	public Joueur(String p, int nbPions) {
 		this.pseudo = p;
-		main = new DeckPions(nbPions);
+		main = new DeckPions(nbPions, pseudo);
 	}
 	
 		// Methods
@@ -64,4 +70,31 @@ public class Joueur {
 	public Pion getPion() {
 		return this.main.getPion();
 	}
+	
+	/**
+	 * Permet de compter le nombre de Pion restant dans la main du Joueur.
+	 * @return retourne un nombre de Pion.
+	 */
+	public int countPions() {
+		return main.getMain().length;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("# ");
+		builder.append(pseudo);
+		builder.append("\nPions restant :");
+		builder.append(this.countPions());
+		builder.append("\nNombre de Coups :");
+		builder.append(nbCoups);
+		builder.append("\nTemps de réflexion :");
+		builder.append(temps);
+		builder.append("\n");
+		return builder.toString();
+	}
+
+
+
+	
 }

@@ -9,11 +9,15 @@ package lineup_3;
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</ a>
  */
 public class Paire {
-	/** premier attribut, représente par convention les lignes */
+	/**
+	 * x correspond à la couche sur laquelle le pion se trouve.
+	 */
 	private int x;
-	/** deuxième attribut, représente par convention les colonnes */
-	private int y;
 	
+	/**
+	 * y correspond au point de la couche x sur lequel le pion se trouve.
+	 */
+	private int y;	
 	
 	
 	/**

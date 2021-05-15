@@ -14,20 +14,35 @@
  */
 package lineup_3;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
- * Cette classe sert à .........
+ * Cette classe sert à lancer le jeu.
  *
- * @author 
- * IUT-A Informatique, Universite de Lille.
- * @date 14 avr. 2021
- * @version XXX
+ * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
+ * IUT-A Informatique, Université de Lille.
+ * @date 21 avr. 2021
+ * @version 21 avr. 2021 19:26:15
  */
 public class Resultat {
-
-	/**
-	 * 
-	 */
-	public Resultat() {
-		// TODO Auto-generated constructor stub
+	
+	public static void main(String[] args) {
+		
+		int nbPions = 6;
+		List<String> nodes = new ArrayList<String>();
+		nodes.add("a");
+		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
+		
+		Joueur j1 = new Joueur("Joueur1", nbPions);
+		Joueur j2 = new Joueur("Joueur2", nbPions);
+		
+		System.out.println(j1);
+		System.out.println(j1.getMain().toString());
+		//System.out.println(j2);
+		//System.out.println(g1);
+		
+		
 	}
 }

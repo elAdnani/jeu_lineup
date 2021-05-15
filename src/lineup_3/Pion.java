@@ -41,6 +41,11 @@ public abstract class Pion {
 	 */
 	private final int NBCOUCHE;
 	
+	/**
+	 * Correspond à la nature du pion
+	 */
+	private Chifumi nature;
+	
 	
 		// Getters & Setters
 
@@ -50,6 +55,10 @@ public abstract class Pion {
 	
 	public void setJoueur(String joueur) {
 		this.joueur = joueur;
+	}
+	
+	public Chifumi getNature() {
+		return this.nature;
 	}
 
 		// Constructor
@@ -88,6 +97,22 @@ public abstract class Pion {
 	}
 	
 		// Methods
+	
+	/**
+	 * Cette méthode determine si le Pion courant peut manger celui passé en paramètre.
+	 * @param other Pion comparé au Pion courant.
+	 * @return retourne vrai si le Pion courant peut manger celui en paramètre, faux sinon.
+	 */
+	public boolean mange(Pion other) {
+		
+		if ((this.nature == Chifumi.CISEAUX && other.nature == Chifumi.PAPIER) ||
+				(this.nature == Chifumi.PAPIER && other.nature == Chifumi.PIERRE) ||
+				(this.nature == Chifumi.PIERRE && other.nature == Chifumi.CISEAUX)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	/**
 	 * Affecte une position à un Pion.

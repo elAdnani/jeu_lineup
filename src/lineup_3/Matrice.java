@@ -520,23 +520,49 @@ public class Matrice {
 				if (n != 0) {
 					// on inverse la matrice
 					this.write(0, 0,  n * old.read(1, 1)); // 
-					this.write(0, 1, -n * old.read(0, 1)); // | a  b | __\  n * | d -b |
-					this.write(1, 0, -n * old.read(1, 0)); // | c  d |   /      |-c  a |
+					this.write(0, 1, -n * old.read(0, 1)); // | a  b |  __\  n * | d -b |
+					this.write(1, 0, -n * old.read(1, 0)); // | c  d |    /      |-c  a |
 					this.write(1, 1,  n * old.read(0, 0)); //
 					
 					return true;
 				} else
 					return false;
 			} else {
-				Matrice old = new Matrice(this.matrice);
-				this.identite();
+				// Initialisation des matrices
+				Matrice old = new Matrice(this.matrice); // matrice d'origine
+				Matrice fin = Matrice.inverse(this); // matrice finale qui sera inversée
 				
-				boolean valide = true;
-				int colonne = 0;
-				while (valide && ++colonne < old.taille.getY()) {
-					int ligne = colonne;
-					while (old.read(ligne, colonne) == 0 && ligne < old.taille.getX())
-						valide = false; // TODO ne pas oublier de finir l'algorithme !
+				int taille = old.taille.getX();			
+				boolean valide = true; // si l'inversion s'avère impossible, permet de ne pas retourner true.
+				
+				int diagonale = 0; // vise à parcourir la diagonale
+				while (valide && diagonale < taille) {
+					int ligne = diagonale; // on ne vérifie pas les lignes ayant leurs premières colonnes de bonnes
+					while (old.read(ligne, diagonale) == 0)
+						if(++ligne == taille) // sert aussi à incrémenter
+							return false;
+
+					// on place la ligne courante après la dernière ligne vérifiée
+					if (ligne != diagonale) {
+						old.echangerLignes(diagonale, ligne);
+						fin.echangerLignes(diagonale, ligne);
+					}
+					
+					// on vérifie que que la ligne courante soit bien avec un indice de 1
+					if (old.read(diagonale, diagonale) != 1) {
+						old.produitLigne(1 / old.read(diagonale, diagonale), ligne);
+						fin.produitLigne(1 / fin.read(diagonale, diagonale), ligne);
+					}
+					
+					// On modifie les autres lignes pour mettre à zéro leur indice
+					for (ligne = 0; ligne < matrice.length; ligne++) {
+						if (ligne != diagonale) {
+							old = sommeLigne(produitLigne(old, old.read(ligne, diagonale), diagonale), ligne, diagonale);
+							fin = sommeLigne(produitLigne(fin, fin.read(ligne, diagonale), diagonale), ligne, diagonale);
+						}
+					}
+					
+					++diagonale;
 				}
 				
 				return valide;

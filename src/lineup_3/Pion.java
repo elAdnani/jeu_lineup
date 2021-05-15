@@ -61,7 +61,8 @@ public abstract class Pion {
 		return this.nature;
 	}
 
-		// Constructor
+		// Constructors
+	
 	/**
 	 * Instancie un Pion avec un maximum d'information.
 	 * @param couche représente la coordonnée indiquant la couche sur laquelle se trouve le Pion.
@@ -77,16 +78,16 @@ public abstract class Pion {
 		this.NBCOUCHE = nbCouche;
 	}
 	/**
-	 * Instancie un pion
-	 * @param couche l'attribut x prend la valeur couche passée en paramètre.
-	 * @param point l'attribut y prend la valeur point passée en paramètre.
+	 * Instancie un pion avec ses coordonnées.
+	 * @param couche Représente l'attribut x.
+	 * @param point Représente l'attribut y.
 	 */
 	public Pion(int couche, int point) {
 		this(couche, point, null, 0, 0);
 	}
 	
 	/**
-	 * Instancie un pion sans paramètre particulier
+	 * Instancie un pion sans paramètre particulier.
 	 */
 	public Pion()  {
 		this(-1,-1);
@@ -158,7 +159,7 @@ public abstract class Pion {
 
 			this.possibilite.add(Deplacement.GAUCHE);
 
-	}*/
+	}
 	
 	/**
 	 * Déplace un pion, selon sa disponibilité et la direction donnée.
@@ -173,9 +174,9 @@ public abstract class Pion {
 				selection.setPosition(
 						selection.coordonnees.getX()+ Deplacement.valueOf(direction.toUpperCase()).getX(),
 						selection.coordonnees.getY()+ Deplacement.valueOf(direction.toUpperCase()).getY()
-				);*/
+				);
 						
-				 /**   @TODO faire un / modulo        */
+				 /**   @TODO faire un / modulo*/
 			//return true;
 			// on modifie le X en lui attribuant la valeur de lui même
 				// plus la direction dans laquelle il veut se diriger
@@ -196,8 +197,7 @@ public abstract class Pion {
 				return true;
 
 		return false;
-	}
-	*/
+	}*/
 	
 	@Override
 	public String toString() {

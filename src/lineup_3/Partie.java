@@ -26,7 +26,7 @@ import java.util.List;
  * @date 21 avr. 2021
  * @version 21 avr. 2021 19:26:15
  */
-public class Resultat {
+public class Partie {
 	
 	public static void main(String[] args) {
 		

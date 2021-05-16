@@ -29,7 +29,7 @@ public class Graphe<T> {
 	 * @param nodes
 	 * @param edges
 	 */
-	public Graphe(String name, GrapheType type, List<String> nodes, Map<String, List<String>> edges) {
+	public Graphe(String name, GrapheType type, List<T> nodes, Map<T, List<T>> edges) {
 		if (name == null)
 			this.name = "Graphe";
 		else
@@ -43,11 +43,11 @@ public class Graphe<T> {
 		boolean valide = nodes != null && edges != null && !nodes.isEmpty() && !edges.isEmpty();
 		
 		if (valide) {
-			for (String s : nodes)
+			for (T s : nodes)
 				valide = valide && nodes.indexOf(s) == nodes.lastIndexOf(s); // on vérifie que chaque sommet est bien unique
 		
-			for (String s : edges.keySet()) {
-				for (String e : edges.get(s))
+			for (T s : edges.keySet()) {
+				for (T e : edges.get(s))
 					valide = valide && edges.get(s).indexOf(e) == edges.get(s).lastIndexOf(e);
 				valide = valide; // TODO vérifier que tous les sommets donnés sont présents et qu'il n'y a qu'eux.
 			}
@@ -55,8 +55,8 @@ public class Graphe<T> {
 			this.nodes = nodes;
 			this.edges = edges;
 		} else {
-			this.nodes = new ArrayList<String>();
-			this.edges = new HashMap<String, List<String>>();
+			this.nodes = new ArrayList<T>();
+			this.edges = new HashMap<T, List<T>>();
 		}
 	}
 	
@@ -99,38 +99,38 @@ public class Graphe<T> {
 	}
 	
 	/** Permet d'obtenir la liste des sommets */
-	public List<String> getNodes() {
+	public List<T> getNodes() {
 		return this.nodes;
 	}
 	
 	/** Permet d'obtenir les arrêtes du graphe */
-	public Map<String, List<String>> getEdges() {
+	public Map<T, List<T>> getEdges() {
 		return this.edges;
 	}
 	
 	
 	
 	/** Donne la possibilité d'ajouter un sommet au graphe. */
-	public boolean addNode(String name) {
-		if (name == null || name.isBlank() || this.nodes.contains(name)) // si le nom existe déjà ou s'il est vide
+	public boolean addNode(T name) {
+		if (name == null || this.nodes.contains(name)) // si le nom existe déjà ou s'il est vide
 			return false;
 		else {
 			this.nodes.add(name);
-			this.edges.put(name, new ArrayList<String>());
+			this.edges.put(name, new ArrayList<T>());
 			return true;
 		}
 	}	
 	
 	/** Permet de renommer un sommet du graphe */
-	public boolean renameNode(String before, String after) {
-		if (after != null && !after.isBlank() && this.nodes.contains(before) && !this.nodes.contains(after)) {
+	public boolean renameNode(T before, T after) {
+		if (after != null && this.nodes.contains(before) && !this.nodes.contains(after)) {
 			
 			// recrée la liste du sommet
-			List<String> save = this.edges.remove(before);
+			List<T> save = this.edges.remove(before);
 			this.edges.put(after, save);
 			
 			// Modifie l'ancien élément dans chacune des listes de sommets
-			for (String s : this.edges.keySet())
+			for (T s : this.edges.keySet())
 				if (this.edges.get(s).remove(before))
 					this.edges.get(s).add(after);
 			
@@ -146,7 +146,7 @@ public class Graphe<T> {
 	/** Supprime le sommet donné */
 	public boolean removeNode(String name) {
 		if (this.nodes.contains(name)) {
-			for (String s : this.edges.keySet())
+			for (T s : this.edges.keySet())
 				this.edges.get(s).remove(name);
 			this.edges.remove(name);
 			this.nodes.remove(name);
@@ -162,7 +162,7 @@ public class Graphe<T> {
 	 * Permet d'ajouter une arrête au graphe.<br>
 	 * Dans le cas d'un graphe orienté, l'arrête part du sommet s1 et se dirige vers le sommet s2.
 	 */
-	public boolean addEdge(String s1, String s2) {		
+	public boolean addEdge(T s1, T s2) {		
 		if (s1 == null || s2 == null || s1.equals(s2) || !this.nodes.contains(s1) || !this.nodes.contains(s2) || this.edges.get(s1).contains(s2)) // si les sommets donnés sont identiques, que l'un n'existe pas ou que l'arrête existe déjà.
 			return false;
 		else {
@@ -207,7 +207,7 @@ public class Graphe<T> {
 	public String toString() {
 		String arretes = "";
 		
-		for (String s : this.edges.keySet())
+		for (T s : this.edges.keySet())
 			arretes += "\n - " + s + " : " + this.edges.get(s).toString();
 		
 		return "# " + this.name + "\n"

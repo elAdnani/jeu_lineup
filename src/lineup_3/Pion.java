@@ -131,7 +131,7 @@ public abstract class Pion {
 	 * @param selection correspond au pion que le joueur souhaite déplacer.
 	 */
 	
-	/*private void deplacementPossible(Pion selection) {
+	private void deplacementPossible(Pion selection) {
 		if(this.possibilite != null) {
 			this.possibilite.clear();
 		}
@@ -146,16 +146,16 @@ public abstract class Pion {
 		// en droite (faire +1 à X) => X!= coucheMAX
 		// à gauche (faire -1 à X) =>
 		// HAUT :
-		if (Y % 2 == 0 && X != PlateauDeBase.NBCOUCHE && !presenceCoordonnee(X + 1, Y))
+		if (Y % 2 == 0 && X != PlateauDeBase.NBCOUCHE && !presencePion(X + 1, Y))
 
 			this.possibilite.add(Deplacement.HAUT);
-		if (Y % 2 == 0 && X != COUCHEPRINCIPALE && !presenceCoordonnee(X - 1, Y))
+		if (Y % 2 == 0 && X != COUCHEPRINCIPALE && !presencePion(X - 1, Y))
 
 			this.possibilite.add(Deplacement.BAS);
-		if (!presenceCoordonnee(X, (Y + 1) % nombrePionDansUneCouche))
+		if (!presencePion(X, (Y + 1) % nombrePionDansUneCouche))
 
 			this.possibilite.add(Deplacement.DROITE);
-		if (!presenceCoordonnee(X, (Y - 1) % nombrePionDansUneCouche))
+		if (!presencePion(X, (Y - 1) % nombrePionDansUneCouche))
 
 			this.possibilite.add(Deplacement.GAUCHE);
 
@@ -167,7 +167,7 @@ public abstract class Pion {
 	 * @param direction est la direction que le joueur a choisie
 	 */
 	
-	/*public boolean deplacerPion(Pion selection,String direction) {
+	public boolean deplacerPion(Pion selection,String direction) {
 		deplacementPossible(selection);
 		
 			if (this.possibilite.contains(Deplacement.valueOf(direction.toUpperCase()))) {
@@ -180,25 +180,85 @@ public abstract class Pion {
 			//return true;
 			// on modifie le X en lui attribuant la valeur de lui même
 				// plus la direction dans laquelle il veut se diriger
-			/*}
+			}
 		return false;
-	}*/
+	}
 
 	/**
-	 * 
-	 * @param X coordonnée
-	 * @param Y coordonnée
-	 * @return s'il existe un pion à l'emplacement (X,Y)
+	 * presencePion vérifie la présence d'un Pion
+	 * @param coordonnees Représente la {@link Paire} de coordonnée
+	 * @return	Retourne vrai si un Pion est présent aux coordonnées passées en paramètre, faux sinon.
 	 */
 	
-	/*public boolean presenceCoordonnee(int X, int Y) {
+	public boolean presencePion(Paire coordonnees) {
+		for (Pion p : PlateauDeBase.getListPion())
+			if (p.coordonnees.getX() == coordonnees.getX() && p.coordonnees.getY() == coordonnees.getY())
+				return true;
+
+		return false;
+	}
+	
+	/**
+	 * presencePion vérifie la présence d'un Pion
+	 * @param X	Représente la couche à la coordonnée X.
+	 * @param Y	Représente la couche à la coordonnée Y.
+	 * @return	Retourne vrai si un Pion est présent aux coordonnées passées en paramètre, faux sinon.
+	 */
+	
+	public boolean presencePion(int X, int Y) {
 		for (Pion p : PlateauDeBase.getListPion())
 			if (p.coordonnees.getX() == X && p.coordonnees.getY() == Y)
 				return true;
 
 		return false;
-	}*/
+	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + NBCOUCHE;
+		result = prime * result + ((coordonnees == null) ? 0 : coordonnees.hashCode());
+		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
+		result = prime * result + ((nature == null) ? 0 : nature.hashCode());
+		result = prime * result + nbCote;
+		result = prime * result + ((possibilite == null) ? 0 : possibilite.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pion other = (Pion) obj;
+		if (NBCOUCHE != other.NBCOUCHE)
+			return false;
+		if (coordonnees == null) {
+			if (other.coordonnees != null)
+				return false;
+		} else if (!coordonnees.equals(other.coordonnees))
+			return false;
+		if (joueur == null) {
+			if (other.joueur != null)
+				return false;
+		} else if (!joueur.equals(other.joueur))
+			return false;
+		if (nature != other.nature)
+			return false;
+		if (nbCote != other.nbCote)
+			return false;
+		if (possibilite == null) {
+			if (other.possibilite != null)
+				return false;
+		} else if (!possibilite.equals(other.possibilite))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

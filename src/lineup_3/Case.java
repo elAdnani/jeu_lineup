@@ -26,13 +26,13 @@ public class Case {
 	 */
 	private Pion pion;
 	
-	public boolean isEstLibre() {
+	public boolean EstLibre() {
 		return estLibre;
 	}
 
 
 
-	public boolean isEstPiege() {
+	public boolean EstPiege() {
 		return estPiege;
 	}
 
@@ -75,4 +75,35 @@ public class Case {
 			return false;
 		}
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (estLibre ? 1231 : 1237);
+		result = prime * result + (estPiege ? 1231 : 1237);
+		result = prime * result + ((pion == null) ? 0 : pion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Case other = (Case) obj;
+		if (estLibre != other.estLibre)
+			return false;
+		if (estPiege != other.estPiege)
+			return false;
+		if (pion == null) {
+			if (other.pion != null)
+				return false;
+		} else if (!pion.equals(other.pion))
+			return false;
+		return true;
+	}
+	
 }

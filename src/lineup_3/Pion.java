@@ -16,10 +16,16 @@ import java.util.List;
 
 public abstract class Pion {
 		// Class Attributes
+	
+	/**
+	 * Correspond aux paramètre de la partie.
+	 */
+	private Parametres param;
+	
 	/**
 	 * Correspond aux coordonnées du Pion.
 	 */
-	private Paire coordonnees;
+	private Case c;
 	
 	/**
 	 * joueur correspond au Joueur à qui appartient le Pion.
@@ -29,7 +35,7 @@ public abstract class Pion {
 	/**
 	 * Liste des déplacements possibles pour un Pion donné
 	 */
-	private List<Deplacement> possibilite;
+	private List<Deplacement> possibilites;
 	
 	/**
 	 * Correspond au nombre de côté par couche du Plateau.
@@ -65,36 +71,28 @@ public abstract class Pion {
 	
 	/**
 	 * Instancie un Pion avec un maximum d'information.
-	 * @param couche représente la coordonnée indiquant la couche sur laquelle se trouve le Pion.
-	 * @param point représente la coordonnée indiquant le point sur laquelle se trouve le Pion, dépendamment de la couche.
 	 * @param j représente le pseudo du Joueur à qui appartient ce Pion.
 	 * @param nbCote représente le nombre de côté du Plateau.(Utile pour savoir où se déplacer).
 	 * @param nbCouche représente le nombre de couche du Plateau.(Utile pour savoir où se déplacer).
 	 */
-	public Pion(int couche, int point, String j, int nbCote, int nbCouche) {
-		this.coordonnees = new Paire(couche, point);
+	public Pion(String j, int nbCote, int nbCouche) {
 		this.joueur = j;
 		this.nbCote = nbCote;
 		this.NBCOUCHE = nbCouche;
 	}
 	/**
 	 * Instancie un pion avec ses coordonnées.
-	 * @param couche Représente l'attribut x.
-	 * @param point Représente l'attribut y.
+	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
 	 */
-	public Pion(int couche, int point) {
-		this(couche, point, null, 0, 0);
+	public Pion(String j) {
+		this(j, 0, 0);
 	}
 	
 	/**
 	 * Instancie un pion sans paramètre particulier.
 	 */
 	public Pion()  {
-		this(-1,-1);
-	}
-	
-	public Paire getCoordonnees() {
-		return this.coordonnees;
+		this(null);
 	}
 	
 		// Methods
@@ -117,100 +115,88 @@ public abstract class Pion {
 	
 	/**
 	 * Affecte une position à un Pion.
-	 * @param couche l'attribut x prend la valeur couche passée en paramètre.
-	 * @param point l'attribut y prend la valeur point passée en paramètre.
+	 * @param couche l'attribut x de Case prend la valeur couche passée en paramètre.
+	 * @param point l'attribut y de Case prend la valeur point passée en paramètre.
 	 */
 	public void setPosition(int couche, int point) {
-		this.coordonnees.setX(couche);
-		this.coordonnees.setY(point);
+		this.c.getCoordonnees().setX(couche);
+		this.c.getCoordonnees().setY(point);
 	}
 	
 	/**
-	 * Considère les déplacements que peut réaliser un pion dans le plateau.
-	 * Il rajoute à l'attribut this.possibilite par quel moyen un même pion peut se déplacer.
-	 * @param selection correspond au pion que le joueur souhaite déplacer.
-	 */
-	
-	private void deplacementPossible(Pion selection) {
-		if(this.possibilite != null) {
-			this.possibilite.clear();
+	* deplacementsPossibles détermine, dans l'absolu, les possibles mouvements du Pion courant.
+	*/
+
+	public void deplacementsPossibles() {
+		if(this.possibilites != null) {
+			this.possibilites.clear();
 		}
-		
-		final int COUCHEPRINCIPALE = 1;
-		int X = selection.coordonnees.getX();
-		int Y = selection.coordonnees.getY();
-		int nombrePionDansUneCouche = (nbCote - 1) * NBCOUCHE;
-		
-		// en haut (faire +1 à la couche) => X=paire et Y!=COUCHEMAX
-		// en bas (faire -1 à la couche) => X=paire et Y!=1
-		// en droite (faire +1 à X) => X!= coucheMAX
-		// à gauche (faire -1 à X) =>
-		// HAUT :
-		if (Y % 2 == 0 && X != PlateauDeBase.NBCOUCHE && !presencePion(X + 1, Y))
 
-			this.possibilite.add(Deplacement.HAUT);
-		if (Y % 2 == 0 && X != COUCHEPRINCIPALE && !presencePion(X - 1, Y))
+	//Peu importe le point, il y a toujours des points à gauche et à droite.
+		this.possibilites.add(Deplacement.GAUCHE);
+		this.possibilites.add(Deplacement.DROITE);
 
-			this.possibilite.add(Deplacement.BAS);
-		if (!presencePion(X, (Y + 1) % nombrePionDansUneCouche))
-
-			this.possibilite.add(Deplacement.DROITE);
-		if (!presencePion(X, (Y - 1) % nombrePionDansUneCouche))
-
-			this.possibilite.add(Deplacement.GAUCHE);
-
+	/*Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.*/
+		if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {//TODO ajouter un attribut param là où besoin.
+			this.possibilites.add(Deplacement.BAS);
+		} else if (this.c.getCoordonnees().getX() == 0) {
+			this.possibilites.add(Deplacement.HAUT);
+		} else if (this.c.getCoordonnees().getX()%2 != 0) {
+			this.possibilites.add(Deplacement.BAS);
+			this.possibilites.add(Deplacement.HAUT);	
+		}
 	}
 	
-	/**
-	 * Déplace un pion, selon sa disponibilité et la direction donnée.
-	 * @param selection est le pion décide de déplacer
-	 * @param direction est la direction que le joueur a choisie
-	 */
-	
-	public boolean deplacerPion(Pion selection,String direction) {
-		deplacementPossible(selection);
-		
-			if (this.possibilite.contains(Deplacement.valueOf(direction.toUpperCase()))) {
-				selection.setPosition(
-						selection.coordonnees.getX()+ Deplacement.valueOf(direction.toUpperCase()).getX(),
-						selection.coordonnees.getY()+ Deplacement.valueOf(direction.toUpperCase()).getY()
-				);
-						
-				 /**   @TODO faire un / modulo*/
-			//return true;
-			// on modifie le X en lui attribuant la valeur de lui même
-				// plus la direction dans laquelle il veut se diriger
+	/* A finir si on a le temps, dans le but de surligner les possibilités en vert sur le plateau.
+		/**
+		* estLibre Vérifie si les cases autour de celle passée en paramètre sont libre ou non.
+		* @param listeC Représente la liste des cases du plateau.
+		*/
+	/*
+		public boolean estLibre(List<Case> listeC) {
+			deplacementsPossibles();
+			for (Déplacement d : this.possibilites) {
+				if (this.c.getCoordonnees().getX()) {
+					
+				}
 			}
-		return false;
+		}
+	*/
+
+	/**
+	* deplacerPion permet de déplacer le Pion courant vers la case de la direction passée en paramètre.
+	* @param direction Représente la direction vers laquelle on souhaite déplacer le Pion courant.
+	* @return Retourne vrai si le déplacement s'est correctement effectué, faux sinon.
+	*/
+	public boolean deplacerPion(String direction) {
+		this.deplacementsPossibles();
+
+		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {
+			this.setPosition(
+				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getX()),
+				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getY())%param.getNBPOINT()
+			);
+			//TODO update l'attribut Pion de l'ancienne case et celui de la nouvelle.
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
-	 * presencePion vérifie la présence d'un Pion
-	 * @param coordonnees Représente la {@link Paire} de coordonnée
-	 * @return	Retourne vrai si un Pion est présent aux coordonnées passées en paramètre, faux sinon.
-	 */
-	
-	public boolean presencePion(Paire coordonnees) {
-		for (Pion p : PlateauDeBase.getListPion())
-			if (p.coordonnees.getX() == coordonnees.getX() && p.coordonnees.getY() == coordonnees.getY())
-				return true;
+	* poserPion permet de mettre un Pion qui était dans la main du Joueur sur le Plateau.
+	* @param c Représente la case où l'on souhaite poser le Pion courant.
+	* @return Retourne vrai si le Pion se pose correctement, faux s'il était déjà poser.
+	*/
 
-		return false;
-	}
-	
-	/**
-	 * presencePion vérifie la présence d'un Pion
-	 * @param X	Représente la couche à la coordonnée X.
-	 * @param Y	Représente la couche à la coordonnée Y.
-	 * @return	Retourne vrai si un Pion est présent aux coordonnées passées en paramètre, faux sinon.
-	 */
-	
-	public boolean presencePion(int X, int Y) {
-		for (Pion p : PlateauDeBase.getListPion())
-			if (p.coordonnees.getX() == X && p.coordonnees.getY() == Y)
-				return true;
-
-		return false;
+	public boolean poserPion(Case c) {
+		if (this.c != null) {
+			return false;
+		} else {
+			this.c = c;
+			return true;
+		}
+		//TODO update l'attribut Pion de l'ancienne case et celui de la nouvelle.
 	}
 	
 	@Override
@@ -218,11 +204,11 @@ public abstract class Pion {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + NBCOUCHE;
-		result = prime * result + ((coordonnees == null) ? 0 : coordonnees.hashCode());
+		result = prime * result + ((c.getCoordonnees() == null) ? 0 : c.getCoordonnees().hashCode());
 		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
 		result = prime * result + ((nature == null) ? 0 : nature.hashCode());
 		result = prime * result + nbCote;
-		result = prime * result + ((possibilite == null) ? 0 : possibilite.hashCode());
+		result = prime * result + ((possibilites == null) ? 0 : possibilites.hashCode());
 		return result;
 	}
 
@@ -237,10 +223,10 @@ public abstract class Pion {
 		Pion other = (Pion) obj;
 		if (NBCOUCHE != other.NBCOUCHE)
 			return false;
-		if (coordonnees == null) {
-			if (other.coordonnees != null)
+		if (c.getCoordonnees() == null) {
+			if (other.c.getCoordonnees() != null)
 				return false;
-		} else if (!coordonnees.equals(other.coordonnees))
+		} else if (!c.getCoordonnees().equals(other.c.getCoordonnees()))
 			return false;
 		if (joueur == null) {
 			if (other.joueur != null)
@@ -251,10 +237,10 @@ public abstract class Pion {
 			return false;
 		if (nbCote != other.nbCote)
 			return false;
-		if (possibilite == null) {
-			if (other.possibilite != null)
+		if (possibilites == null) {
+			if (other.possibilites != null)
 				return false;
-		} else if (!possibilite.equals(other.possibilite))
+		} else if (!possibilites.equals(other.possibilites))
 			return false;
 		return true;
 	}
@@ -263,9 +249,9 @@ public abstract class Pion {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pion(");
-		builder.append(coordonnees.getX());
+		builder.append(c.getCoordonnees().getX());
 		builder.append(";");
-		builder.append(coordonnees.getY());
+		builder.append(c.getCoordonnees().getY());
 		builder.append(")");
 		return builder.toString();
 	}

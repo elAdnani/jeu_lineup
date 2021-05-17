@@ -11,6 +11,12 @@ package lineup_3;
  */
 public class Case {
 		// Class Attributes
+	
+	/**
+	 * Correspond aux coordonnées du Pion.
+	 */
+	private Paire coordonnees;
+	
 	/**
 	 * Représente la disponibilité de la case. Par défaut estLibre est à true.
 	 */
@@ -26,6 +32,12 @@ public class Case {
 	 */
 	private Pion pion;
 	
+			// Getters & Setters
+	
+	public Paire getCoordonnees() {
+		return this.coordonnees;
+	}
+	
 	public boolean EstLibre() {
 		return estLibre;
 	}
@@ -40,9 +52,13 @@ public class Case {
 			// Constructors
 
 	/**
-	 * Ceci est un constructeur vide, car une Case ne contient que des paramètres prédéfinis.
+	 * Ce constructeur instancie une case avec ses coordonnées passées en paramètre.
+	 * @param couche représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
+	 * @param point représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
 	 */
-	public Case() {}
+	public Case(int couche, int point) {
+		this.coordonnees = new Paire(couche, point);
+	}
 	
 			// Methods
 	
@@ -52,12 +68,11 @@ public class Case {
 	 * @return 	Retourne vrai si le Pion s'est bien poser, faux sinon.
 	 */
 	public boolean addPion(Pion p) {
-		this.pion = p;
-		
-		if (this.pion == p) {
-			return true;
-		} else {
+		if (this.pion != null) {
 			return false;
+		} else {
+			this.pion = p;
+			return true;
 		}
 	}
 	
@@ -67,12 +82,11 @@ public class Case {
 	 * @return	Retourne vrai si le Pion s'est bien enlevé, faux sinon.
 	 */
 	public boolean removePion(Pion p) {
-		this.pion = null;
-		
-		if (this.pion == null) {
-			return true;
-		} else {
+		if (this.pion != null) {
 			return false;
+		} else {
+			this.pion = null;
+			return true;
 		}
 	}
 	@Override

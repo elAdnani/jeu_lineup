@@ -15,12 +15,18 @@
 package lineup_3;
 
 
+import java.util.List;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 
 /**
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
- * jeu. Il est la base du fonctionnement du jeu.
- *
+ * jeu. Il est la base du fonctionnement du jeu.  </br>
+ * Un Plateau consiste à :  </br> 
+ * 	- former le schéma de la partie, en donnant les sommets qui en sommant une partie, forment pour la plupart du temps des arêtes  </br> 
+ *  - former les cases permettant les déplacements et le fonctionnement logique du jeu </br> 
+ * 
+ *	</br> 
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
  *         IUT-A Informatique, Université de Lille.
  * @date 7 mai. 2021
@@ -29,21 +35,15 @@ import java.util.Set;
 
 public abstract class Plateau {
 	
-	protected Set<Joueur> listJoueur;
-
-
-	public Plateau(Set<Joueur> joueursDuJeu) {
-		this.listJoueur = joueursDuJeu;
-	}
-	
-	public abstract Joueur partieGagnee();
 	
 	public abstract String affichagePlateau();
+
+	public abstract void generationDuPlateau();
+
+	public abstract int retrouverSommet(Paire paire);
+	
+	public abstract List<Case> getListSommet();
 	
 	
-	public Set<Joueur> getListJoueur() {
-		Set<Joueur> listeJoueur = this.listJoueur;
-		return  listeJoueur;
-	}
 
 }

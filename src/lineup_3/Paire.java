@@ -110,21 +110,6 @@ public class Paire {
 		return this.x == other.x && this.y == other.y;
 	}
 	
-	
-	
-	/**
-	 * Renvoie une chaîne de caractères contenant la représentation de la paire courante.<br>
-	 * Sous la forme suivante : (x; y)
-	 * 
-	 * @return une représentation sous forme de chaîne de caractères d'une paire.
-	 */
-	@Override
-	public String toString() {
-		return "(" + this.x + "; " + this.y + ")";
-	}
-	
-	
-	
 	/**
 	 * Permet d'inverser les deux valeurs de la paire courante.
 	 */
@@ -464,5 +449,16 @@ public class Paire {
 	 */
 	public static Paire enlever(Paire p, int i) {
 		return ajouter(p, -i);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Paire [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append("]");
+		return builder.toString();
 	}
 }

@@ -75,6 +75,17 @@ public class Matrice {
 	
 	
 	
+	/** 
+	 * Getter, permet de récupérer la taille de la matrice.
+	 * 
+	 * @return paire contenant la taille de la matrcice
+	 */
+	public Paire getTaille() {
+		return new Paire(this.taille.getX(), this.taille.getY());
+	}
+	
+	
+	
 	
 	/**
 	 * Convertit la matrice courante en une chaîne de caractères.

@@ -260,6 +260,7 @@ public class GrapheMatrice<T> {
 		/**
 		 * Ajoute une arrête avec un certain poids entre deux sommets donnés.
 		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent, que le poids soit non nul. Mais aussi que l'arrête ne soit pas encore créée.
+		 * Attention ! Cette méthode transforme le graphe en graphe pondéré !
 		 * 
 		 * @param s1 Un sommet duquel faire partir l'arrête.
 		 * @param s2 Un sommet vers lequel se dirige l'arrête.
@@ -270,8 +271,15 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
-				if (!type.isWeighted() || valeur == 0)
+				if (valeur == 0)
 					valeur = 1;
+				
+				if (!type.isWeighted()) {
+					if (type.isDirected())
+						type = GrapheType.DIWGRAPH;
+					else
+						type = GrapheType.UWGRAPH;
+				}
 				
 				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), valeur);
 				
@@ -318,9 +326,23 @@ public class GrapheMatrice<T> {
 		
 		// TODO voisinsDe
 		
-		// TODO estDirige
+		/**
+		 * Permet de savoir si le graphe est dirigé ou non.
+		 * 
+		 * @return true s'il est dirigé et false sinon.
+		 */
+		public boolean estDirige() {
+			return type.isDirected();
+		}
 		
-		// TODO estPondere
+		/**
+		 * Permet de savoir si le graphe est pondéré ou non.
+		 * 
+		 * @return true s'il est pondéré et false sinon.
+		 */
+		public boolean estPondere() {
+			return type.isWeighted();
+		}
 		
 	
 	

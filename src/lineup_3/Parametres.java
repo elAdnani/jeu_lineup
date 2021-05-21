@@ -28,12 +28,18 @@ public class Parametres {
 	 */
 	private final boolean PIEGES;
 	
+	/**
+	 * Correspond au choix du mode Chifumi.
+	 */
+	private final boolean CHIFUMI;
+	
 		// Constructor
 	
-	public Parametres(int nbCouche, int nbCote, boolean piege) {
+	public Parametres(int nbCouche, int nbCote, boolean piege, boolean chifumi) {
 		this.NBCOUCHE = nbCouche;
 		this.NBCOTE = nbCote;
 		this.PIEGES = piege;
+		this.CHIFUMI = chifumi;
 	}
 
 		// Methods
@@ -54,4 +60,7 @@ public class Parametres {
 		return (2*this.NBCOTE)*this.NBCOUCHE;
 	}
 	
+	public boolean getCHIFUMI() {
+		return this.CHIFUMI;
+	}
 }

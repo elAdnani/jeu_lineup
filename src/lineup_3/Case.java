@@ -68,12 +68,12 @@ public class Case {
 	 * @return 	Retourne vrai si le Pion s'est bien poser, faux sinon.
 	 */
 	public boolean addPion(Pion p) {
-		if (this.pion != null) {
-			return false;
-		} else {
+		if (this.estLibre) {
 			this.pion = p;
+			this.estLibre = false;
 			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -82,12 +82,12 @@ public class Case {
 	 * @return	Retourne vrai si le Pion s'est bien enlevé, faux sinon.
 	 */
 	public boolean removePion(Pion p) {
-		if (this.pion != null) {
-			return false;
-		} else {
+		if (!this.estLibre) {
 			this.pion = null;
+			this.estLibre = true;
 			return true;
 		}
+		return false;
 	}
 	@Override
 	public int hashCode() {
@@ -119,5 +119,24 @@ public class Case {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Case [coordonnees=");
+		builder.append(coordonnees);
+		builder.append(", estLibre=");
+		builder.append(estLibre);
+		builder.append(", estPiege=");
+		builder.append(estPiege);
+		if (estLibre) {
+			builder.append(", pion=");
+			builder.append(pion);
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 	
 }

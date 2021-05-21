@@ -232,6 +232,10 @@ public class GrapheMatrice<T> {
 			}
 		}
 		
+		public boolean existeSommet(T s) {
+			return this.sommets.contains(s);
+		}
+		
 		/**
 		 * Ajoute une arrête entre deux sommets donnés.
 		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent mais aussi que l'arrête ne soit pas encore créée.

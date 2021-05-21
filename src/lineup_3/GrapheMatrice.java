@@ -34,7 +34,7 @@ import java.util.TreeSet;
  * @param <T>
  */
 public class GrapheMatrice<T> {
-	/* ATTRIBUTS */
+	/* ATTRIBUTS ______________________________ */
 		/**
 		 * Spécifie le type du graphe.
 		 * Influence également l'ajout et la suppression des arrêtes lorsque le graphe est orienté ou non.
@@ -43,10 +43,10 @@ public class GrapheMatrice<T> {
 		private GrapheType type;
 		
 		/**
-		 * Regroupe l'ensemble des sommets du graphe.
+		 * Regroupe l'ensemble des sommets du graphe dans une pile.
 		 * Ceux-ci sont triés par ordre d'ajout afin de correspondre à la matrice d'adjacence.
 		 */
-		private Map<Integer, T> sommets;
+		private List<T> sommets;
 		
 		/**
 		 * Matrice d'adjacence du graphe.
@@ -60,7 +60,7 @@ public class GrapheMatrice<T> {
 	
 	
 	
-	/* CONSTRUCTEURS */
+	/* CONSTRUCTEURS ______________________________ */
 		/**
 		 * Ce constructeur sans paramètres va créer un graphe nul, sans sommet.
 		 * Par défaut, il ne sera ni orienté ni pondéré.
@@ -99,9 +99,9 @@ public class GrapheMatrice<T> {
 				this.type = GrapheType.DIGRAPH;
 			
 			// Attribut des sommets
-			this.sommets = new HashMap<Integer, T>();
+			this.sommets = new ArrayList<T>();
 			for (T t : sommets)
-				this.sommets.put(this.sommets.size(), t);
+				this.sommets.add(t);
 			
 			// Attribut de la matrice
 			this.matrice = Matrice.nulle(sommets.size(), sommets.size());
@@ -114,19 +114,21 @@ public class GrapheMatrice<T> {
 		 * @param sommets Contient les sommets à insérer dans le graphe
 		 * @param matrice Contient la matrice d'adjacence
 		 */
-		public GrapheMatrice(Map<Integer, T> sommets, Matrice matrice) {
-			this.sommets = new HashMap<Integer, T>();
-			for (int i = 0; i < sommets.size(); i++)
-				this.sommets.put(this.sommets.size(), sommets.get(i));
-			
-			this.matrice = new Matrice(matrice.getMatrice());
+		public GrapheMatrice(List<T> sommets, Matrice matrice) {
+			// dans les getters, une copie est déjà faite, ce ne sont donc pas les mêmes listes et matrices
+			this.sommets = sommets;
+			this.matrice = matrice;
 			
 			this.type = GrapheType.UGRAPH;
+			
 			if (!matrice.estSymetrique())
 				this.type = GrapheType.DIGRAPH;
+			
 			int i = 0;
+			
 			while (!this.type.isWeighted() && i < matrice.getTaille().getX()) {
 				int j = 0;
+				
 				while (!this.type.isWeighted() && j < matrice.getTaille().getY()) {
 					if (matrice.read(i, j) > 1 || matrice.read(i, j) < 0) {
 						if (this.type.isDirected())
@@ -139,6 +141,153 @@ public class GrapheMatrice<T> {
 				++i;
 			}
 		}
+		
+		
+		
+		
+		
+	/* ACCESSEURS ______________________________ */
+		/**
+		 * Récupère le type du graphe
+		 * 
+		 * @return Le type de graphe
+		 */
+		public GrapheType getType() {
+			return type;
+		}
+		
+		/**
+		 * Donne la liste des sommets composant le graphe
+		 * 
+		 * @return La liste des sommets
+		 */
+		public List<T> getSommets() {
+			List<T> contenu = new ArrayList<T>();
+			
+			for (int i = 0; i < this.sommets.size(); i++)
+				contenu.add(i, this.sommets.get(i));
+			
+			return contenu;
+		}
+		
+		/**
+		 * Donne la matrice d'adjacence du graphe
+		 * 
+		 * @return La matrice d'adjacence
+		 */
+		public Matrice getMatrice() {
+			return new Matrice(this.matrice.getMatrice());
+		}
+		
+		
+		
+		
+		
+	/* toString ______________________________ */
+		/**
+		 * TODO doc de toString
+		 */
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return super.toString();
+		}
+		
+		
+		
+		
+		
+	/* MÉTHODES ______________________________ */
+		/**
+		 * Ajoute un sommet au graphe.
+		 * Ne fonctionne pas si celui-ci existe déjà.
+		 * 
+		 * @param s Le nouveau sommet
+		 * @return true si l'opération s'est bien passée et false sinon
+		 */
+		public boolean ajouterSommet(T s) {
+			// si le sommet proposé n'existe pas et qu'il n'est pas nul alors on l'ajoute à la pile de sommets.
+			if (s == null || this.sommets.contains(s))
+				return false;
+			else {
+				this.sommets.add(s);
+				return true;
+			}
+		}
+		
+		/**
+		 * Enlève un certain sommet au graphe.
+		 * Il faut que celui-ci existe.
+		 * 
+		 * @param s Le sommet à enlever
+		 * @return true si le sommet a bien été enlevé et false sinon
+		 */
+		public boolean enleverSommet(T s) {
+			if (s == null || !this.sommets.contains(s))
+				return false;
+			else {
+				this.sommets.remove(s);
+				
+				return true;
+			}
+		}
+		
+		/**
+		 * Ajoute une arrête entre deux sommets donnés.
+		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent mais aussi que l'arrête ne soit pas encore créée.
+		 * 
+		 * @param s1 Un sommet duquel faire partir l'arrête.
+		 * @param s2 Un sommet vers lequel se dirige l'arrête.
+		 * @return true si l'ajout a pu se faire et false sinon.
+		 */
+		public boolean ajouterArrete(T s1, T s2) {
+			if (s1 == null || s2 == null || !this.sommets.contains(s1) || !this.sommets.contains(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+				return false;
+			else {
+				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 1);
+				
+				if (!type.isDirected())
+					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), 1);
+				
+				return true;
+			}
+		}
+		
+		/**
+		 * Ajoute une arrête avec un certain poids entre deux sommets donnés.
+		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent, que le poids soit non nul. Mais aussi que l'arrête ne soit pas encore créée.
+		 * 
+		 * @param s1 Un sommet duquel faire partir l'arrête.
+		 * @param s2 Un sommet vers lequel se dirige l'arrête.
+		 * @param valeur Le poids à donner à l'arrête.
+		 * @return true si l'ajout a pu se faire et false sinon.
+		 */
+		public boolean ajouterArrete(T s1, T s2, int valeur) {
+			if (s1 == null || s2 == null || !this.sommets.contains(s1) || !this.sommets.contains(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+				return false;
+			else {
+				if (!this.type.isWeighted() || valeur == 0)
+					valeur = 1;
+				
+				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), valeur);
+				
+				if (!type.isDirected())
+					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), valeur);
+				
+				return true;
+			}
+		}
+		
+		// TODO enleverArrete
+		
+		// TODO existeArrete
+		
+		// TODO voisinsDe
+		
+		// TODO estDirige
+		
+		// TODO estPondere
+		
 	
 	
 	
@@ -146,38 +295,48 @@ public class GrapheMatrice<T> {
 	
 	/* Test d'algorithmes pour les méthodes */
 	public static void main(String[] args) {
-		Map<Integer, String> map = new HashMap<Integer, String>();
+//		Map<Integer, String> map = new HashMap<Integer, String>();
+//
+//		map.put(map.size(), "a");
+//		map.put(map.size(), "b");
+//		map.put(map.size(), "c");
+//		System.out.println(map);
+//		
+//		// vérifier si la valeur existe déjà et si non, l'ajoute
+//		if (!map.containsValue("a"))
+//			map.put(map.size(), "a");
+//		System.out.println(map);
+//		
+//		// supprime une valeur en décalant les indices
+//		int i = 0;
+//		while (!map.get(i).equals("b"))
+//			++i;
+//		map.remove(i);
+//		for (int j = i; j < map.size(); j++) {
+//			map.put(j, map.get(j + 1));
+//			map.remove(j + 1);
+//		}
+//		map.put(map.size(), "a");
+//		map.put(map.size(), "b");
+//		map.put(map.size(), "c");
+//		
+//		
+//		
+//		Collection<String> col = map.values();
+//		System.out.println(col);
+//		col.remove("a");
+//		System.out.println(col);
+//		System.out.println(col.contains("a"));
+		
+		List<String> maListe = new ArrayList<>();
 
-		map.put(map.size(), "a");
-		map.put(map.size(), "b");
-		map.put(map.size(), "c");
-		System.out.println(map);
+		maListe.add("b");
+		maListe.add("a");
+		maListe.add("c");
+		maListe.add("d");
+		maListe.add("e");
 		
-		// vérifier si la valeur existe déjà et si non, l'ajoute
-		if (!map.containsValue("a"))
-			map.put(map.size(), "a");
-		System.out.println(map);
-		
-		// supprime une valeur en décalant les indices
-		int i = 0;
-		while (!map.get(i).equals("b"))
-			++i;
-		map.remove(i);
-		for (int j = i; j < map.size(); j++) {
-			map.put(j, map.get(j + 1));
-			map.remove(j + 1);
-		}
-		map.put(map.size(), "a");
-		map.put(map.size(), "b");
-		map.put(map.size(), "c");
-		
-		
-		
-		Collection<String> col = map.values();
-		System.out.println(col);
-		col.remove("a");
-		System.out.println(col);
-		System.out.println(col.contains("a"));
-		
+		System.out.println(maListe.indexOf("a"));
+		System.out.println(maListe.toString());
 	}
 }

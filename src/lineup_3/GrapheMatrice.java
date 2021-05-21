@@ -324,7 +324,32 @@ public class GrapheMatrice<T> {
 			return indiceS1 != -1 && indiceS2 != -1 && matrice.read(indiceS1, indiceS2) != 0;
 		}
 		
-		// TODO voisinsDe
+		/**
+		 * Donne un set de tous les voisins d'un sommet.
+		 * 
+		 * @param s Le sommet duquel chercher les voisins
+		 * @return Un set null s'il y a une erreur et contenant les voisins sinon 
+		 */
+		public Set<T> voisinsDe(T s) {
+			if (s == null || !existeSommet(s))
+				return null;
+			
+			Set<T> voisins = new HashSet<>();
+			int indiceS = sommets.indexOf(s);
+			
+			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+				if (matrice.read(indiceS, i) != 0 && indiceS != i)
+					voisins.add(sommets.get(i));
+			}
+			
+			if (type.isDirected())
+				for (int i = 0; i < matrice.getTaille().getX(); i++) {
+					if (matrice.read(i, indiceS) != 0 && indiceS != i)
+						voisins.add(sommets.get(i));
+				}
+			
+			return voisins;
+		}
 		
 		/**
 		 * Permet de savoir si le graphe est dirigé ou non.

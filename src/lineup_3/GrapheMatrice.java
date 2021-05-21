@@ -207,7 +207,7 @@ public class GrapheMatrice<T> {
 		 */
 		public boolean ajouterSommet(T s) {
 			// si le sommet proposé n'existe pas et qu'il n'est pas nul alors on l'ajoute à la pile de sommets.
-			if (s == null || this.sommets.contains(s))
+			if (s == null || existeSommet(s))
 				return false;
 			else {
 				this.sommets.add(s);
@@ -223,7 +223,7 @@ public class GrapheMatrice<T> {
 		 * @return true si le sommet a bien été enlevé et false sinon
 		 */
 		public boolean enleverSommet(T s) {
-			if (s == null || !this.sommets.contains(s))
+			if (s == null || !existeSommet(s))
 				return false;
 			else {
 				this.sommets.remove(s);
@@ -245,7 +245,7 @@ public class GrapheMatrice<T> {
 		 * @return true si l'ajout a pu se faire et false sinon.
 		 */
 		public boolean ajouterArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || !this.sommets.contains(s1) || !this.sommets.contains(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
 				return false;
 			else {
 				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 1);
@@ -267,7 +267,7 @@ public class GrapheMatrice<T> {
 		 * @return true si l'ajout a pu se faire et false sinon.
 		 */
 		public boolean ajouterArrete(T s1, T s2, int valeur) {
-			if (s1 == null || s2 == null || !this.sommets.contains(s1) || !this.sommets.contains(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
 				return false;
 			else {
 				if (!this.type.isWeighted() || valeur == 0)

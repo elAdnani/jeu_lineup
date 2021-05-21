@@ -164,8 +164,8 @@ public class GrapheMatrice<T> {
 		public List<T> getSommets() {
 			List<T> contenu = new ArrayList<T>();
 			
-			for (int i = 0; i < this.sommets.size(); i++)
-				contenu.add(i, this.sommets.get(i));
+			for (int i = 0; i < sommets.size(); i++)
+				contenu.add(i, sommets.get(i));
 			
 			return contenu;
 		}
@@ -176,7 +176,7 @@ public class GrapheMatrice<T> {
 		 * @return La matrice d'adjacence
 		 */
 		public Matrice getMatrice() {
-			return new Matrice(this.matrice.getMatrice());
+			return new Matrice(matrice.getMatrice());
 		}
 		
 		
@@ -210,7 +210,7 @@ public class GrapheMatrice<T> {
 			if (s == null || existeSommet(s))
 				return false;
 			else {
-				this.sommets.add(s);
+				sommets.add(s);
 				return true;
 			}
 		}
@@ -226,14 +226,14 @@ public class GrapheMatrice<T> {
 			if (s == null || !existeSommet(s))
 				return false;
 			else {
-				this.sommets.remove(s);
+				sommets.remove(s);
 				
 				return true;
 			}
 		}
 		
 		public boolean existeSommet(T s) {
-			return this.sommets.contains(s);
+			return sommets.contains(s);
 		}
 		
 		/**
@@ -248,10 +248,10 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
-				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 1);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), 1);
 				
 				if (!type.isDirected())
-					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), 1);
+					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 1);
 				
 				return true;
 			}
@@ -270,13 +270,13 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
-				if (!this.type.isWeighted() || valeur == 0)
+				if (!type.isWeighted() || valeur == 0)
 					valeur = 1;
 				
-				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), valeur);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), valeur);
 				
 				if (!type.isDirected())
-					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), valeur);
+					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), valeur);
 				
 				return true;
 			}
@@ -293,10 +293,10 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
 				return false;
 			else {
-				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 0);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), 0);
 				
 				if (!type.isDirected())
-					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), 0);
+					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 0);
 				
 				return true;
 			}
@@ -310,10 +310,10 @@ public class GrapheMatrice<T> {
 		 * @return true si l'arrête existe, false sinon
 		 */
 		public boolean existeArrete(T s1, T s2) {
-			int indiceS1 = this.sommets.indexOf(s1);
-			int indiceS2 = this.sommets.indexOf(s2);
+			int indiceS1 = sommets.indexOf(s1);
+			int indiceS2 = sommets.indexOf(s2);
 			
-			return indiceS1 != -1 && indiceS2 != -1 && this.matrice.read(indiceS1, indiceS2) != 0;
+			return indiceS1 != -1 && indiceS2 != -1 && matrice.read(indiceS1, indiceS2) != 0;
 		}
 		
 		// TODO voisinsDe

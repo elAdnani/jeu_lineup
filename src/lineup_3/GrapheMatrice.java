@@ -245,7 +245,7 @@ public class GrapheMatrice<T> {
 		 * @return true si l'ajout a pu se faire et false sinon.
 		 */
 		public boolean ajouterArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
 				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 1);
@@ -267,7 +267,7 @@ public class GrapheMatrice<T> {
 		 * @return true si l'ajout a pu se faire et false sinon.
 		 */
 		public boolean ajouterArrete(T s1, T s2, int valeur) {
-			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2)) // TODO ajouter une condition s'il existe pas déjà une arrête
+			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
 				if (!this.type.isWeighted() || valeur == 0)
@@ -282,7 +282,25 @@ public class GrapheMatrice<T> {
 			}
 		}
 		
-		// TODO enleverArrete
+		/**
+		 * Enlève une arrête entre deux sommets donnés.
+		 * 
+		 * @param s1 Sommet duquel part l'arrête.
+		 * @param s2 Sommet duquel arrive l'arrête.
+		 * @return true si la suppression a pu se faire et false sinon.
+		 */
+		public boolean enleverArrete(T s1, T s2) {
+			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
+				return false;
+			else {
+				this.matrice.write(this.sommets.indexOf(s1), this.sommets.indexOf(s1), 0);
+				
+				if (!type.isDirected())
+					this.matrice.write(this.sommets.indexOf(s2), this.sommets.indexOf(s1), 0);
+				
+				return true;
+			}
+		}
 		
 		/**
 		 * Vérifie s'il existe une arrête entre deux sommets.

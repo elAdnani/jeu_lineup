@@ -280,7 +280,19 @@ public class GrapheMatrice<T> {
 		
 		// TODO enleverArrete
 		
-		// TODO existeArrete
+		/**
+		 * Vérifie s'il existe une arrête entre deux sommets.
+		 * 
+		 * @param s1 sommet théorique de départ
+		 * @param s2 sommet théorique d'arrivée
+		 * @return true si l'arrête existe, false sinon
+		 */
+		public boolean existeArrete(T s1, T s2) {
+			int indiceS1 = this.sommets.indexOf(s1);
+			int indiceS2 = this.sommets.indexOf(s2);
+			
+			return indiceS1 != -1 && indiceS2 != -1 && this.matrice.read(indiceS1, indiceS2) != 0;
+		}
 		
 		// TODO voisinsDe
 		
@@ -338,5 +350,6 @@ public class GrapheMatrice<T> {
 		
 		System.out.println(maListe.indexOf("a"));
 		System.out.println(maListe.toString());
+		System.out.println(maListe.indexOf("z"));
 	}
 }

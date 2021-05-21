@@ -14,14 +14,8 @@
  */
 package lineup_3;
 
-import java.util.HashSet;
-
-/*
- * 
- */
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 
@@ -161,7 +155,7 @@ public class PlateauPolynomial extends Plateau{
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
 		System.out.println(" coo 1 : " +coordonnee_un.toString());
-		return estVoisin(coordonnee_un.coordonnee, coordonnee_deux.coordonnee);
+		return estVoisin(coordonnee_un.getCoordonnees(), coordonnee_deux.getCoordonnees());
 	}
 	
 	/**
@@ -206,13 +200,13 @@ public class PlateauPolynomial extends Plateau{
 	
 	public int retrouverSommet(Paire coordonnee) {
 		for( Case sommet : this.getListSommet()) {
-			if(sommet.coordonnee.equals(coordonnee))
+			if(sommet.getCoordonnees().equals(coordonnee))
 				return this.getListSommet().indexOf(sommet);
 		}
 		return -1;
 	}
 	/**
-	 * permet à partir de coordonnée de retrouver un sommet. </br>
+	 * permet à partir de coordonnées de retrouver un sommet. </br>
 	 * On cherche à partir de la liste des sommets, les coordonnées correspondant à celui indiqué en paramètre.
 	 * @param x
 	 * @param y

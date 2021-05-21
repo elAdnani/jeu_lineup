@@ -20,13 +20,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GrapheTest {
+	Graphe uG;
+	Graphe diG;
+	Graphe uwG;
+	Graphe diwG;
 	@BeforeAll
 	public static void beforeAllTests() {
 		System.out.println("Début des tests pour la classe Graphe\n");
-		Graphe uG;
-		Graphe diG;
-		Graphe uwG;
-		Graphe diwG;
 	}
 
 	@AfterAll

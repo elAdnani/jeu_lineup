@@ -1,5 +1,7 @@
 package lineup_3;
 
+import java.util.List;
+
 /**
  * Cette classe représente une Case de plateau puvant stocker différentes infos comme sa disponibilité, si elle possède
  * une caractéristique spéciale(comme un piège) ou autre.
@@ -31,6 +33,11 @@ public class Case {
 	 * Représente le Pion qui occupe la case courante.
 	 */
 	private Pion pion;
+
+	/**
+	 * Correspond à la liste de Case du Plateau.
+	 */
+	private List<Case> cases;
 	
 			// Getters & Setters
 	
@@ -59,6 +66,8 @@ public class Case {
 	public Case(int couche, int point) {
 		this.coordonnees = new Paire(couche, point);
 	}
+	
+	public Case() {}
 	
 			// Methods
 	
@@ -118,6 +127,68 @@ public class Case {
 		} else if (!pion.equals(other.pion))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * caseSuivante cherche la case adjacente dans le sens horaire à celle courante selon ses coordonnées.
+	 * @return Retourne la case adjacente dans le sens horaire à celle courante.
+	 * Si elle n'existe pas, elle retourne une Case null.
+	 */
+	public Case caseSuivante() {
+		Case tmp = new Case();
+		for (Case c : cases) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()+1) {
+				tmp = c;
+			}
+		}
+		return tmp;
+	}
+	
+	/**
+	 * casePrecedente cherche la case adjacente dans le sens anti-horaire à celle courante selon ses coordonnées.
+	 * @return Retourne la case adjacente dans le sens anti-horaire à celle courante.
+	 * Si elle n'existe pas, elle retourne une Case null.
+	 */
+	public Case casePrecedente() {
+		Case tmp = new Case();
+		for (Case c : cases) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()-1) {
+				tmp = c;
+			}
+		}
+		return tmp;
+	}
+	
+	/**
+	 * caseInferieure cherche la case adjacente de la couche en-dessous par rapport à celle
+	 * courante selon ses coordonnées.
+	 * @return Retourne la case adjacente de la couche en-dessous par rapport à celle courante.
+	 * Si elle n'existe pas, elle retourne une Case null.
+	 */
+	public Case caseInferieure() {
+		Case tmp = new Case();
+		for (Case c : cases) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()-1) {
+				tmp = c;
+			}
+		}
+		return tmp;
+	}
+	
+	/**
+	 * caseSuperieure cherche la case adjacente de la couche au-dessus par rapport à celle
+	 * courante selon ses coordonnées.
+	 * @return Retourne la case adjacente de la couche au-dessus par rapport à celle courante.
+	 * Si elle n'existe pas, elle retourne une Case null.
+	 */
+	public Case caseSuperieure() {
+		Case tmp = new Case();
+		for (Case c : cases) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()+1) {
+				tmp = c;
+			}
+		}
+		return tmp;
 	}
 
 	@Override

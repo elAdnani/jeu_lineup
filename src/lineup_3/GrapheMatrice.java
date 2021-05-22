@@ -199,19 +199,20 @@ public class GrapheMatrice<T> {
 		 */
 		@Override
 		public String toString() {
-			String arretes = "";
+			StringBuilder arretes = new StringBuilder();
 			
 			if (estPondere())
 				for (T s1 : sommets) {
-					arretes += "\n - " + s1 + " : [";
+					arretes.append("\n - " + s1 + " : [");
 					for (T s2 : enfantsDe(s1))
-						arretes += s2 + " ("+ matrice.read(sommets.indexOf(s1), sommets.indexOf(s2)) + "), ";
-					arretes = arretes.substring(0, arretes.length() - 2);
-					arretes += "]";
+						arretes.append(s2 + " ("+ matrice.read(sommets.indexOf(s1), sommets.indexOf(s2)) + "), ");
+					if (!enfantsDe(s1).isEmpty())
+						arretes.delete(arretes.length() - 2, arretes.length());
+					arretes.append("]");
 				}
 			else
 				for (T s : sommets)
-					arretes += "\n - " + s + " : " + enfantsDe(s);
+					arretes.append("\n - " + s + " : " + enfantsDe(s));
 			
 			return "# GrapheMatrice\n"
 				 + "type  : " + type + "\n"

@@ -1,14 +1,9 @@
 package lineup_3;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Un graphe est un ensemble de sommets. Ceux-ci peuvent être connectés entre eux par des arrêtes. Ces arrêtes peuvent avoir une direction, pouvant ainsi rendre impossible le passage (en sens inverse) entre deux sommets.
@@ -475,20 +470,5 @@ public class GrapheMatrice<T> {
 		 */
 		public boolean estPondere() {
 			return type.isWeighted();
-		}
-		
-		public static void main(String[] args) {
-			GrapheMatrice<String> monGraphe = new GrapheMatrice<>(GrapheType.DIWGRAPH);
-
-			monGraphe.ajouterSommet("A");
-			monGraphe.ajouterSommet("B");
-			monGraphe.ajouterSommet("C");
-			monGraphe.ajouterSommet("D");
-			monGraphe.ajouterSommet("E");
-
-			monGraphe.ajouterArrete("A", "B", 12);
-			monGraphe.ajouterArrete("A", "C", 12);
-			
-			System.out.println(monGraphe);
 		}
 }

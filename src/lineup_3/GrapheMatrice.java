@@ -206,8 +206,17 @@ public class GrapheMatrice<T> {
 		public String toString() {
 			String arretes = "";
 			
-			for (T s : sommets)
-				arretes += "\n - " + s + " : " + enfantsDe(s);
+			if (estPondere())
+				for (T s1 : sommets) {
+					arretes += "\n - " + s1 + " : [";
+					for (T s2 : enfantsDe(s1))
+						arretes += s2 + " ("+ matrice.read(sommets.indexOf(s1), sommets.indexOf(s2)) + "), ";
+					arretes = arretes.substring(0, arretes.length() - 2);
+					arretes += "]";
+				}
+			else
+				for (T s : sommets)
+					arretes += "\n - " + s + " : " + enfantsDe(s);
 			
 			return "# GrapheMatrice\n"
 				 + "type  : " + type + "\n"
@@ -466,5 +475,20 @@ public class GrapheMatrice<T> {
 		 */
 		public boolean estPondere() {
 			return type.isWeighted();
+		}
+		
+		public static void main(String[] args) {
+			GrapheMatrice<String> monGraphe = new GrapheMatrice<>(GrapheType.DIWGRAPH);
+
+			monGraphe.ajouterSommet("A");
+			monGraphe.ajouterSommet("B");
+			monGraphe.ajouterSommet("C");
+			monGraphe.ajouterSommet("D");
+			monGraphe.ajouterSommet("E");
+
+			monGraphe.ajouterArrete("A", "B", 12);
+			monGraphe.ajouterArrete("A", "C", 12);
+			
+			System.out.println(monGraphe);
 		}
 }

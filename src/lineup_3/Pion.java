@@ -14,9 +14,13 @@ import java.util.List;
  */
 
 
-public abstract class Pion {
+public abstract class Pion implements Comparable<Pion>{
 		// Class Attributes
 	
+	/**
+	 * Correspond aux cases du Plateau.
+	 */
+	private List<Case> cases;
 	/**
 	 * Correspond aux paramètre de la partie.
 	 */
@@ -66,6 +70,16 @@ public abstract class Pion {
 	public Chifumi getNature() {
 		return this.nature;
 	}
+	
+		// CompareTo
+
+	public int compareTo(Pion p) {
+		if (this.joueur == p.getJoueur()) {
+			return 1;
+		}
+		return -1;
+	}
+	
 
 		// Constructors
 	
@@ -80,6 +94,7 @@ public abstract class Pion {
 		this.nbCote = nbCote;
 		this.NBCOUCHE = nbCouche;
 	}
+
 	/**
 	 * Instancie un pion avec ses coordonnées.
 	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
@@ -181,6 +196,7 @@ public abstract class Pion {
 		} else {
 			return false;
 		}
+		this.alignements();
 	}
 
 	/**
@@ -212,6 +228,54 @@ public abstract class Pion {
 		return result;
 	}
 
+		/*public boolean alignements(Plateau p) {
+		//Peu importe le point, il y a toujours des points à gauche et à droite.
+			Paire pair = new Paire(this.c.getCoordonnees().getX()-1, this.c.getCoordonnees().getY());
+			if(this.cases.get(p.retrouverSommet(pair)).EstLibre()) {
+				
+			}
+			this.possibilites.add(Deplacement.DROITE);
+
+		/*Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.*/
+			/*if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {//TODO ajouter un attribut param là où besoin.
+				this.possibilites.add(Deplacement.BAS);
+			} else if (this.c.getCoordonnees().getX() == 0) {
+				this.possibilites.add(Deplacement.HAUT);
+			} else if (this.c.getCoordonnees().getX()%2 != 0) {
+				this.possibilites.add(Deplacement.BAS);
+				this.possibilites.add(Deplacement.HAUT);	
+			}
+		}*/
+	
+	/**
+	 * alignements regarde si autour de la case du Pion courant d'autres Pion 
+	 * @return
+	 */
+	public boolean alignements() {
+		
+		if (this.c.caseSuivante().getPion().compareTo(this) == 1
+				&& this.c.casePrecedente().getPion().compareTo(this) == 1) {
+			return true;
+		}
+		
+		if (this.c.getCoordonnees().getY()%2 != 0) {
+			
+			if (this.c.getCoordonnees().getX() == param.getNBCOUCHE()) {
+				if (this.c.caseInferieure().getPion().compareTo(this) == 1
+						&& this.c.caseInferieure().caseInferieure().getPion().compareTo(this) == 1) {
+					return true;
+				}
+			} else if(this.c.getCoordonnees().getX() == 0) {
+				if(this.c.caseSuperieure().getPion().getJoueur() == this.joueur
+						&& this.c.caseSuperieure().caseSuperieure().getPion().compareTo(this) == 1){
+					
+				}
+			} else {
+				this.c.caseInferieure();
+				this.c.caseSuperieure();
+			}
+		}
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -248,11 +312,17 @@ public abstract class Pion {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Pion(");
-		builder.append(c.getCoordonnees().getX());
-		builder.append(";");
-		builder.append(c.getCoordonnees().getY());
-		builder.append(")");
+		builder.append("Pion [c=");
+		builder.append(c);
+		builder.append(", joueur=");
+		builder.append(joueur);
+		builder.append(", possibilites=");
+		builder.append(possibilites);
+		if (param.getCHIFUMI()) {
+			builder.append(", nature=");
+			builder.append(nature);
+		}
+		builder.append("]");
 		return builder.toString();
 	}
 }

@@ -211,25 +211,25 @@ public class GrapheListe<T> extends Graphe<T> {
 		/**
 		 * Remplace un sommet par un autre sans modifier les arrêtes qui lui sont liées.
 		 * 
-		 * @param before Le sommet à remplacer.
-		 * @param after Le nouveau sommet.
+		 * @param avant Le sommet à remplacer.
+		 * @param apres Le nouveau sommet.
 		 * @return true si l'opération s'est bien déroulée et false sinon.
 		 */
-		public boolean renommerSommet(T before, T after) {
-			if (after != null && existeSommet(before) && !existeSommet(after)) {
+		public boolean renommerSommet(T avant, T apres) {
+			if (apres != null && existeSommet(avant) && !existeSommet(apres)) {
 				
 				// recrée la liste du sommet
-				Set<T> save = arretes.remove(before);
-				arretes.put(after, save);
+				Set<T> save = arretes.remove(avant);
+				arretes.put(apres, save);
 				
 				// Modifie l'ancien élément dans chacune des listes de sommets
 				for (T s : arretes.keySet())
-					if (arretes.get(s).remove(before))
-						arretes.get(s).add(after);
+					if (arretes.get(s).remove(avant))
+						arretes.get(s).add(apres);
 				
 				// renomme le sommet dans la liste des sommets
-				sommets.remove(before);
-				sommets.add(after);
+				sommets.remove(avant);
+				sommets.add(apres);
 				
 				return true;
 			} else

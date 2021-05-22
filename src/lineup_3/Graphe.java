@@ -10,7 +10,7 @@ public abstract class Graphe<T> {
 	
 	// Manipulation des sommets
 	public abstract boolean ajouterSommet(T s);
-	public abstract boolean renommerSommet(T before, T after);
+	public abstract boolean renommerSommet(T avant, T apres);
 	public abstract boolean enleverSommet(T s);
 	public abstract boolean existeSommet(T s);
 	

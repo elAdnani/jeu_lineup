@@ -236,9 +236,9 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			}
 		}
 		
-		public boolean renommerSommet(T before, T after) {
-			if (after != null && existeSommet(before) && !existeSommet(after)) {
-				sommets.set(sommets.indexOf(before), after);
+		public boolean renommerSommet(T avant, T apres) {
+			if (apres != null && existeSommet(avant) && !existeSommet(apres)) {
+				sommets.set(sommets.indexOf(avant), apres);
 				
 				return true;
 			} else

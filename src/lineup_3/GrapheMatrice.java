@@ -232,6 +232,12 @@ public class GrapheMatrice<T> {
 			}
 		}
 		
+		/**
+		 * Vérifie si un sommet donné existe.
+		 * 
+		 * @param s Le sommet à vérifier.
+		 * @return true si le sommet existe et false sinon.
+		 */
 		public boolean existeSommet(T s) {
 			return sommets.contains(s);
 		}

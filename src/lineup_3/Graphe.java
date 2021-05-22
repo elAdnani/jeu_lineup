@@ -21,6 +21,15 @@ public abstract class Graphe<T> {
 	
 	// Le type du graphe
 	/**
+	 * Récupère le type du graphe
+	 * 
+	 * @return Le type de graphe
+	 */
+	public GrapheType getType() {
+		return type;
+	}
+	
+	/**
 	 * Permet de savoir si le graphe est dirigé ou non.
 	 * 
 	 * @return true s'il est dirigé et false sinon.

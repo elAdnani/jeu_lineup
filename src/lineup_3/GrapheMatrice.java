@@ -137,16 +137,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		
 		
-	/* ACCESSEURS ______________________________ */
-		/**
-		 * Récupère le type du graphe
-		 * 
-		 * @return Le type de graphe
-		 */
-		public GrapheType getType() {
-			return type;
-		}
-		
+	/* ACCESSEURS ______________________________ */		
 		/**
 		 * Donne la liste des sommets composant le graphe
 		 * 

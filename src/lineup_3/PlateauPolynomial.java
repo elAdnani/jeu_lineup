@@ -48,7 +48,7 @@ public class PlateauPolynomial extends Plateau{
 	private  int        nbcote  ;
 	public  static final int   NBCOUCHE = 3;
 	
-	public final Graphe<Case> grph;
+	public final GrapheListe<Case> grph;
 	
 	
 	/**
@@ -59,7 +59,7 @@ public class PlateauPolynomial extends Plateau{
 	
 	public PlateauPolynomial(int nombreCote) {
 		
-		this( nombreCote , new Graphe<Case> ("Plateau", GrapheType.UGRAPH) );
+		this( nombreCote , new GrapheListe<Case> ("Plateau", GrapheType.UGRAPH) );
 	
 	}
 
@@ -71,12 +71,12 @@ public class PlateauPolynomial extends Plateau{
 	 * @param joueursDuJeu
 	 */
 	
-	public PlateauPolynomial(int nombreCote, Graphe<Case> grph) {
+	public PlateauPolynomial(int nombreCote, GrapheListe<Case> grph) {
 		if(grph.getType()==GrapheType.UGRAPH) {
 			this.grph = grph;
 		}
 		else {
-			this.grph= new Graphe<Case> ("Plateau", GrapheType.UGRAPH);
+			this.grph= new GrapheListe<Case> ("Plateau", GrapheType.UGRAPH);
 		}
 		this.nbcote = nombreCote;
 	}

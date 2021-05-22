@@ -33,7 +33,7 @@ public class Partie {
 		int nbPions = 6;
 		List<String> nodes = new ArrayList<String>();
 		nodes.add("a");
-		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
+		GrapheListe g1 = new GrapheListe("Grahpe1", GrapheType.UGRAPH);
 		
 		Joueur j1 = new Joueur("Joueur1", nbPions);
 		Joueur j2 = new Joueur("Joueur2", nbPions);

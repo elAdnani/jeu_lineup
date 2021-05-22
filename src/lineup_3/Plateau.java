@@ -15,9 +15,7 @@
 package lineup_3;
 
 
-import java.util.List;
 import java.util.Set;
-import java.util.function.BooleanSupplier;
 
 /**
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
@@ -42,7 +40,7 @@ public abstract class Plateau {
 
 	public abstract int retrouverSommet(Paire paire);
 	
-	public abstract List<Case> getListSommet();
+	public abstract Set<Case> getListSommet();
 	
 	
 

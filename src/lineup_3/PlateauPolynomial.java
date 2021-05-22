@@ -19,7 +19,6 @@ import java.util.HashSet;
 /*
  * 
  */
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -130,7 +129,7 @@ public class PlateauPolynomial extends Plateau{
 	 * Si elle remarque qu'un sommet est voisin d'un autre, alors son arêtes est créées.
 	 * @param listeDesSommets
 	 */
-	private void generationListArret(Map<Case, List<Case>> listeDesSommets) {
+	private void generationListArret(Map<Case, Set<Case>> listeDesSommets) {
 		
 		for ( Case sommet : grph.getNodes() ) {
 
@@ -250,7 +249,7 @@ public class PlateauPolynomial extends Plateau{
 	 * la liste de sommet que ce plateau possède
 	 * @return 
 	 */
-	public List<Case> getListSommet() {
+	public Set<Case> getListSommet() {
 		
 		return this.grph.getNodes();
 	}
@@ -259,7 +258,7 @@ public class PlateauPolynomial extends Plateau{
 	 * la liste des arêtes que ce plateau possède
 	 * @return
 	 */
-	protected Map< Case, List<Case> > getListArret() {
+	protected Map< Case, Set<Case> > getListArret() {
 		
 		return this.grph.getEdges();
 	}

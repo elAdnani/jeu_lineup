@@ -33,8 +33,8 @@ import java.util.Set;
  *
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
  *         IUT-A Informatique, Université de Lille.
- * @date 15 avr. 2021
- * @version v1-2
+ * @date 22 mai 2021
+ * @version v2
  */
 
 public class PlateauPolynomial extends Plateau{
@@ -81,13 +81,14 @@ public class PlateauPolynomial extends Plateau{
 		this.nbcote = nombreCote;
 	}
 	
+	
 	/**
-	 * Génère le nombre de pions qu'il existe dans un polynome. </br>
+	 * Génère le nombre de pions qu'il existe dans un polynôme. </br>
 	 *
 	 * @return nombre de pion qu'il est possible d'avoir dans une couche
 	 */
 	public int getNbPionMax() {
-		return 6;
+		return 2* nbcote;
 	}
 	
 
@@ -95,27 +96,18 @@ public class PlateauPolynomial extends Plateau{
 	
 	/**
 	 * Est destiné a être l'affichage du plateau permettant de jouer
-	 * @return un plateau composé de ses pions
+	 * @return un plateau en  composé de ses pions
 	 */
 	public String affichagePlateau() {
 		
 		String plateauEnString="";
-		for(int nombreDeCote=1; nombreDeCote<=this.nbcote; nombreDeCote++) {
-			
-			plateauEnString= plateauEnString + "  ";
-			for(int colonne=0; colonne<10; colonne++) {
-				
-				
-			}
-			
-			
-		}
 		return plateauEnString;
 	}
-
+	
 
 	/**
 	 * Génère tous les sommets du plateau, à partir du nombre de pion maximum qu'il peut y avoir. </br>
+	 * Il commence par générer les sommets puis génère les arrêts grâce aux coordonnée des sommets.
 	 * 
 	 */
 
@@ -128,7 +120,6 @@ public class PlateauPolynomial extends Plateau{
 
 				this.grph.addNode(new Case(i,j) );
 		
-		System.out.println(this.getListSommet());
 		// génération des arêtes
 		generationListArret(this.grph.getEdges());
 	}
@@ -160,7 +151,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
-		System.out.println(" coo 1 : " +coordonnee_un.toString());
+		
 		return estVoisin(coordonnee_un.coordonnee, coordonnee_deux.coordonnee);
 	}
 	
@@ -206,7 +197,9 @@ public class PlateauPolynomial extends Plateau{
 	
 	public int retrouverSommet(Paire coordonnee) {
 		for( Case sommet : this.getListSommet()) {
+			
 			if(sommet.coordonnee.equals(coordonnee))
+				
 				return this.getListSommet().indexOf(sommet);
 		}
 		return -1;
@@ -220,8 +213,8 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	
 	protected int retrouverSommet (int x, int y) {
+		
 		return retrouverSommet( new Paire(x, y) );
-	
 	}
 	
 
@@ -236,7 +229,23 @@ public class PlateauPolynomial extends Plateau{
 		
 		return this.nbcote;
 	}
-
+	
+	/**
+	 * Modifie, le nombre de côté d'un plateau, si le plateau est déjà généré son nombre de côté ne pourra être changé.
+	 * @param nb
+	 * @return
+	 */
+	public boolean setNBCOTE(int nb) {
+		
+		if(this.grph.getNodes()==null) {
+			
+			this.nbcote=nb;
+			return true;
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * la liste de sommet que ce plateau possède
 	 * @return 
@@ -254,7 +263,7 @@ public class PlateauPolynomial extends Plateau{
 		
 		return this.grph.getEdges();
 	}
-	
+
 	
 	
 }

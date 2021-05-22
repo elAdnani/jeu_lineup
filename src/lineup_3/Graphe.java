@@ -1,9 +1,9 @@
 package lineup_3;
-// TODO gérer le cas des graphes avec poids
-import java.util.List;
-import java.util.ArrayList;
+
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Permet la lecture et l'utilisation des graphes avec un ordinateur.
@@ -17,8 +17,8 @@ public class Graphe<T> {
 	private static int cpt = 0;
 	private String name;
 	private GrapheType type;
-	private List<T> nodes; // TODO uitiliser Set<> qui évite les doublons
-	private Map<T, List<T>> edges;
+	private Set<T> nodes;
+	private Map<T, Set<T>> edges;
 	
 	
 	
@@ -29,7 +29,7 @@ public class Graphe<T> {
 	 * @param nodes
 	 * @param edges
 	 */
-	public Graphe(String name, GrapheType type, List<T> nodes, Map<T, List<T>> edges) {
+	public Graphe(String name, GrapheType type, Set<T> nodes, Map<T, Set<T>> edges) {
 		if (name == null)
 			this.name = "Graphe";
 		else
@@ -40,24 +40,9 @@ public class Graphe<T> {
 		else
 			this.type = type;
 		
-		boolean valide = nodes != null && edges != null && !nodes.isEmpty() && !edges.isEmpty();
-		
-		if (valide) {
-			for (T s : nodes)
-				valide = valide && nodes.indexOf(s) == nodes.lastIndexOf(s); // on vérifie que chaque sommet est bien unique
-		
-			for (T s : edges.keySet()) {
-				for (T e : edges.get(s))
-					valide = valide && edges.get(s).indexOf(e) == edges.get(s).lastIndexOf(e);
-				valide = valide; // TODO vérifier que tous les sommets donnés sont présents et qu'il n'y a qu'eux.
-			}
-			
-			this.nodes = nodes;
-			this.edges = edges;
-		} else {
-			this.nodes = new ArrayList<T>();
-			this.edges = new HashMap<T, List<T>>();
-		}
+
+		this.nodes = nodes;
+		this.edges = edges;
 	}
 	
 	/**
@@ -99,12 +84,12 @@ public class Graphe<T> {
 	}
 	
 	/** Permet d'obtenir la liste des sommets */
-	public List<T> getNodes() {
+	public Set<T> getNodes() {
 		return this.nodes;
 	}
 	
 	/** Permet d'obtenir les arrêtes du graphe */
-	public Map<T, List<T>> getEdges() {
+	public Map<T, Set<T>> getEdges() {
 		return this.edges;
 	}
 	
@@ -116,7 +101,7 @@ public class Graphe<T> {
 			return false;
 		else {
 			this.nodes.add(name);
-			this.edges.put(name, new ArrayList<T>());
+			this.edges.put(name, new HashSet<T>());
 			return true;
 		}
 	}	
@@ -126,7 +111,7 @@ public class Graphe<T> {
 		if (after != null && this.nodes.contains(before) && !this.nodes.contains(after)) {
 			
 			// recrée la liste du sommet
-			List<T> save = this.edges.remove(before);
+			Set<T> save = this.edges.remove(before);
 			this.edges.put(after, save);
 			
 			// Modifie l'ancien élément dans chacune des listes de sommets
@@ -219,17 +204,17 @@ public class Graphe<T> {
 	
 	
 	public static void main(String[] args) {
-		List<String> sommets = new ArrayList<>();
+		Set<String> sommets = new HashSet<>();
 		sommets.add("A");
 		sommets.add("B");
 		sommets.add("C");
 		sommets.add("D");
 		
-		Map<String, List<String>> arretes = new HashMap<String, List<String>>();
+		Map<String, Set<String>> arretes = new HashMap<String, Set<String>>();
 		for (String s : sommets)
-			arretes.put(s, new ArrayList<String>());
+			arretes.put(s, new HashSet<String>());
 		
-		Graphe G = new Graphe("Plateau", GrapheType.UGRAPH, sommets, arretes);
+		Graphe<String> G = new Graphe<>("Plateau", GrapheType.UGRAPH, sommets, arretes);
 
 		G.addNode("E");
 		G.addEdge("A", "B");

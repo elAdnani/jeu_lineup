@@ -31,7 +31,7 @@ import java.util.TreeSet;
  * Si deux sommets sont reliés entre eux
  * <br>
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
- * @param <T>
+ * @param <T> Un type quelconque à placer aux sommets du graphe.
  */
 public class GrapheMatrice<T> {
 	/* ATTRIBUTS ______________________________ */
@@ -95,16 +95,19 @@ public class GrapheMatrice<T> {
 		 */
 		public GrapheMatrice(GrapheType type, Set<T> sommets) {
 			// Attribut du type
-			if (type.isDirected())
-				this.type = GrapheType.DIGRAPH;
+			this.type = type;
 			
 			// Attribut des sommets
 			this.sommets = new ArrayList<T>();
-			for (T t : sommets)
-				this.sommets.add(t);
+			if (sommets != null) {
+				for (T t : sommets)
+					this.sommets.add(t);
 			
-			// Attribut de la matrice
-			this.matrice = Matrice.nulle(sommets.size(), sommets.size());
+				// Attribut de la matrice
+				matrice = new Matrice(sommets.size());
+			} else {
+				matrice = new Matrice(0);
+			}
 		}
 		
 		/**
@@ -183,14 +186,33 @@ public class GrapheMatrice<T> {
 		
 		
 		
-	/* toString ______________________________ */
+	/* TOSTRING ______________________________ */
 		/**
-		 * TODO doc de toString
+		 * Représente sous la forme d'une chaîne de caractères le graphe créé.
+		 * De la forme suivante :
+		 * 
+		 * # GrapheMatrice<br>
+		 * type  : UGRAPH<br>
+		 * nodes : [a, b, c, d]<br>
+		 * edges :<br>
+		 *  - a : [b, c]<br>
+		 *  - b : [a, c, d]<br>
+		 *  - c : [a, b]<br>
+		 *  - d : [b]<br>
+		 * 
+		 * @return Une chaîne de caractères
 		 */
 		@Override
 		public String toString() {
-			// TODO Auto-generated method stub
-			return super.toString();
+			String arretes = "";
+			
+			for (T s : sommets)
+				arretes += "\n - " + s + " : " + enfantsDe(s);
+			
+			return "# GrapheMatrice\n"
+				 + "type  : " + type + "\n"
+				 + "nodes : " + sommets.toString() + "\n"
+				 + "edges : " + arretes;
 		}
 		
 		
@@ -211,6 +233,16 @@ public class GrapheMatrice<T> {
 				return false;
 			else {
 				sommets.add(s);
+				
+				if (matrice.getTaille().getX() < sommets.size()) {
+					Matrice oldMatrice = new Matrice(matrice.getMatrice());
+					matrice = new Matrice(sommets.size());
+					
+					for (int i = 0; i < oldMatrice.getTaille().getX(); i++)
+						for (int j = 0; j < oldMatrice.getTaille().getY(); j++)
+							matrice.write(i, j, oldMatrice.read(i, j));
+				}
+				
 				return true;
 			}
 		}
@@ -226,7 +258,28 @@ public class GrapheMatrice<T> {
 			if (s == null || !existeSommet(s))
 				return false;
 			else {
+				int index = sommets.indexOf(s);
 				sommets.remove(s);
+				
+				Matrice oldMatrice = new Matrice(matrice.getMatrice());
+				matrice = new Matrice(sommets.size());
+				
+				if (sommets.size() > 0) {
+					int ligne = 0;
+					for (int i = 0; i < oldMatrice.getTaille().getX(); i++) {
+
+						int colonne = 0;
+						for (int j = 0; j < oldMatrice.getTaille().getY(); j++) {
+							matrice.write(ligne, colonne, oldMatrice.read(i, j));
+							if (j != index) {
+								colonne++;
+							}
+						}
+						if (i != index) {
+							ligne++;
+						}
+					}
+				}
 				
 				return true;
 			}
@@ -254,7 +307,7 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
 				return false;
 			else {
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), 1);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), 1);
 				
 				if (!type.isDirected())
 					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 1);
@@ -287,7 +340,7 @@ public class GrapheMatrice<T> {
 						type = GrapheType.UWGRAPH;
 				}
 				
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), valeur);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), valeur);
 				
 				if (!type.isDirected())
 					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), valeur);
@@ -307,7 +360,7 @@ public class GrapheMatrice<T> {
 			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
 				return false;
 			else {
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s1), 0);
+				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), 0);
 				
 				if (!type.isDirected())
 					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 0);
@@ -358,6 +411,46 @@ public class GrapheMatrice<T> {
 		}
 		
 		/**
+		 * 
+		 * @param s
+		 * @return
+		 */
+		public Set<T> parentsDe(T s) {
+			if (s == null || !existeSommet(s))
+				return null;
+			
+			Set<T> parents = new HashSet<>();
+			int indiceS = sommets.indexOf(s);
+			
+			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+				if (matrice.read(i, indiceS) != 0 && indiceS != i)
+					parents.add(sommets.get(i));
+			}
+			
+			return parents;
+		}
+		
+		/**
+		 * 
+		 * @param s
+		 * @return
+		 */
+		public Set<T> enfantsDe(T s) {
+			if (s == null || !existeSommet(s))
+				return null;
+			
+			Set<T> enfants = new HashSet<>();
+			int indiceS = sommets.indexOf(s);
+			
+			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+				if (matrice.read(indiceS, i) != 0 && indiceS != i)
+					enfants.add(sommets.get(i));
+			}
+			
+			return enfants;
+		}
+		
+		/**
 		 * Permet de savoir si le graphe est dirigé ou non.
 		 * 
 		 * @return true s'il est dirigé et false sinon.
@@ -374,57 +467,4 @@ public class GrapheMatrice<T> {
 		public boolean estPondere() {
 			return type.isWeighted();
 		}
-		
-	
-	
-	
-	
-	
-	/* Test d'algorithmes pour les méthodes */
-	public static void main(String[] args) {
-//		Map<Integer, String> map = new HashMap<Integer, String>();
-//
-//		map.put(map.size(), "a");
-//		map.put(map.size(), "b");
-//		map.put(map.size(), "c");
-//		System.out.println(map);
-//		
-//		// vérifier si la valeur existe déjà et si non, l'ajoute
-//		if (!map.containsValue("a"))
-//			map.put(map.size(), "a");
-//		System.out.println(map);
-//		
-//		// supprime une valeur en décalant les indices
-//		int i = 0;
-//		while (!map.get(i).equals("b"))
-//			++i;
-//		map.remove(i);
-//		for (int j = i; j < map.size(); j++) {
-//			map.put(j, map.get(j + 1));
-//			map.remove(j + 1);
-//		}
-//		map.put(map.size(), "a");
-//		map.put(map.size(), "b");
-//		map.put(map.size(), "c");
-//		
-//		
-//		
-//		Collection<String> col = map.values();
-//		System.out.println(col);
-//		col.remove("a");
-//		System.out.println(col);
-//		System.out.println(col.contains("a"));
-		
-		List<String> maListe = new ArrayList<>();
-
-		maListe.add("b");
-		maListe.add("a");
-		maListe.add("c");
-		maListe.add("d");
-		maListe.add("e");
-		
-		System.out.println(maListe.indexOf("a"));
-		System.out.println(maListe.toString());
-		System.out.println(maListe.indexOf("z"));
-	}
 }

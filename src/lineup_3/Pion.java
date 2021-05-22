@@ -34,7 +34,7 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * joueur correspond au Joueur à qui appartient le Pion.
 	 */
-	private String joueur;
+	private Joueur joueur;
 	
 	/**
 	 * Liste des déplacements possibles pour un Pion donné
@@ -59,11 +59,11 @@ public abstract class Pion implements Comparable<Pion>{
 	
 		// Getters & Setters
 
-	public String getJoueur() {
+	public Joueur getJoueur() {
 		return joueur;
 	}
 	
-	public void setJoueur(String joueur) {
+	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
 	}
 	
@@ -89,7 +89,7 @@ public abstract class Pion implements Comparable<Pion>{
 	 * @param nbCote représente le nombre de côté du Plateau.(Utile pour savoir où se déplacer).
 	 * @param nbCouche représente le nombre de couche du Plateau.(Utile pour savoir où se déplacer).
 	 */
-	public Pion(String j, int nbCote, int nbCouche) {
+	public Pion(Joueur j, int nbCote, int nbCouche) {
 		this.joueur = j;
 		this.nbCote = nbCote;
 		this.NBCOUCHE = nbCouche;
@@ -99,7 +99,7 @@ public abstract class Pion implements Comparable<Pion>{
 	 * Instancie un pion avec ses coordonnées.
 	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
 	 */
-	public Pion(String j) {
+	public Pion(Joueur j) {
 		this(j, 0, 0);
 	}
 	

@@ -79,6 +79,47 @@ public class Joueur {
 		return main.getMain().length;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((main == null) ? 0 : main.hashCode());
+		result = prime * result + nbCoups;
+		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
+		result = prime * result + ((temps == null) ? 0 : temps.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Joueur other = (Joueur) obj;
+		if (main == null) {
+			if (other.main != null)
+				return false;
+		} else if (!main.equals(other.main))
+			return false;
+		if (nbCoups != other.nbCoups)
+			return false;
+		if (pseudo == null) {
+			if (other.pseudo != null)
+				return false;
+		} else if (!pseudo.equals(other.pseudo))
+			return false;
+		if (temps == null) {
+			if (other.temps != null)
+				return false;
+		} else if (!temps.equals(other.temps))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

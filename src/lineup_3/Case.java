@@ -39,6 +39,11 @@ public class Case {
 	 */
 	private List<Case> cases;
 	
+	/**
+	 * Correspond aux paramètres de la partie
+	 */
+	private Parametres param;
+	
 			// Getters & Setters
 	
 	public Paire getCoordonnees() {
@@ -54,6 +59,10 @@ public class Case {
 	public boolean EstPiege() {
 		return estPiege;
 	}
+	
+	public Pion getPion() {
+		return this.pion;
+	}
 
 	
 			// Constructors
@@ -65,6 +74,11 @@ public class Case {
 	 */
 	public Case(int couche, int point) {
 		this.coordonnees = new Paire(couche, point);
+	}
+	
+	public Case(int couche, int point, Parametres p) {
+		this.coordonnees = new Paire(couche, point);
+		this.param = p;
 	}
 	
 	public Case() {}
@@ -137,7 +151,7 @@ public class Case {
 	public Case caseSuivante() {
 		Case tmp = new Case();
 		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()+1) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()+1%(2*param.getNBCOTE())) {
 				tmp = c;
 			}
 		}
@@ -152,7 +166,7 @@ public class Case {
 	public Case casePrecedente() {
 		Case tmp = new Case();
 		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()-1) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()-1%(2*param.getNBCOTE())) {
 				tmp = c;
 			}
 		}
@@ -168,8 +182,11 @@ public class Case {
 	public Case caseInferieure() {
 		Case tmp = new Case();
 		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()-1) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()-1) {
 				tmp = c;
+				if (tmp.getCoordonnees().getX()<0) {
+					tmp = null;
+				}
 			}
 		}
 		return tmp;
@@ -184,11 +201,35 @@ public class Case {
 	public Case caseSuperieure() {
 		Case tmp = new Case();
 		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()+1) {
+			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()+1) {
 				tmp = c;
+				if (tmp.getCoordonnees().getX()>param.getNBCOUCHE()) {
+					tmp = null;
+				}
 			}
 		}
 		return tmp;
+	}
+	
+	/**
+	 * estVoisin regarde si une Case est voisine à celle courante.
+	 * @param c Représente la Case potentiellement voisine de la celle courante.
+	 * @return Retourne vrai si les deux Case sont voisine, faux sinon.
+	 */
+	public boolean estVoisin(Case c) {
+		
+		if (this.coordonnees.getX() == c.getCoordonnees().getX()) {
+			if ((this.coordonnees.getY() == c.getCoordonnees().getY()-1%(2*param.getNBCOTE()))
+					|| (this.coordonnees.getY() == c.getCoordonnees().getY()+1%(2*param.getNBCOTE()))) {
+				return true;
+			}
+		} else if (this.coordonnees.getY() == c.getCoordonnees().getY()) {
+			if ((this.coordonnees.getX() == c.getCoordonnees().getX()-1)
+					|| (this.coordonnees.getX() == c.getCoordonnees().getX()+1)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

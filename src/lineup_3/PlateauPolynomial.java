@@ -117,10 +117,10 @@ public class PlateauPolynomial extends Plateau{
 
 			for (int j = 0; j < this.getNbPionMax(); j++)
 
-				this.grph.addNode(new Case(i,j) );
+				this.grph.ajouterSommet(new Case(i,j) );
 		
 		// génération des arêtes
-		generationListArret(this.grph.getEdges());
+		generationListArret(this.grph.getArretes());
 	}
 	
 	/**
@@ -131,13 +131,13 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	private void generationListArret(Map<Case, Set<Case>> listeDesSommets) {
 		
-		for ( Case sommet : grph.getNodes() ) {
+		for ( Case sommet : grph.getSommets() ) {
 
-			for ( Case voisin : grph.getNodes() ) {
+			for ( Case voisin : grph.getSommets() ) {
 
 				if(estVoisin(sommet, voisin)) 
 			
-					grph.addEdge(sommet, voisin);
+					grph.ajouterArrete(sommet, voisin);
 			}
 		}
 	}
@@ -236,7 +236,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	public boolean setNBCOTE(int nb) {
 		
-		if(this.grph.getNodes()==null) {
+		if(this.grph.getSommets()==null) {
 			
 			this.nbcote=nb;
 			return true;
@@ -251,7 +251,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	public Set<Case> getListSommet() {
 		
-		return this.grph.getNodes();
+		return this.grph.getSommets();
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	protected Map< Case, Set<Case> > getListArret() {
 		
-		return this.grph.getEdges();
+		return this.grph.getArretes();
 	}
 
 	

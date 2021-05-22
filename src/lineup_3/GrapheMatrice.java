@@ -28,15 +28,8 @@ import java.util.Set;
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  * @param <T> Un type quelconque à placer aux sommets du graphe.
  */
-public class GrapheMatrice<T> {
+public class GrapheMatrice<T> extends Graphe<T> {
 	/* ATTRIBUTS ______________________________ */
-		/**
-		 * Spécifie le type du graphe.
-		 * Influence également l'ajout et la suppression des arrêtes lorsque le graphe est orienté ou non.
-		 * Cet attribut est modifié lorsqu'un poids se rajoute sur une arrête afin de spécifier que le graphe est pondéré.
-		 */
-		private GrapheType type;
-		
 		/**
 		 * Regroupe l'ensemble des sommets du graphe dans une pile.
 		 * Ceux-ci sont triés par ordre d'ajout afin de correspondre à la matrice d'adjacence.
@@ -252,6 +245,15 @@ public class GrapheMatrice<T> {
 			}
 		}
 		
+		public boolean renommerSommet(T before, T after) {
+			if (after != null && existeSommet(before) && !existeSommet(after)) {
+				sommets.set(sommets.indexOf(before), after);
+				
+				return true;
+			} else
+				return false;
+		}
+		
 		/**
 		 * Enlève un certain sommet au graphe.
 		 * Il faut que celui-ci existe.
@@ -271,18 +273,18 @@ public class GrapheMatrice<T> {
 				
 				if (sommets.size() > 0) {
 					int ligne = 0;
+					
 					for (int i = 0; i < oldMatrice.getTaille().getX(); i++) {
-
 						int colonne = 0;
+						
 						for (int j = 0; j < oldMatrice.getTaille().getY(); j++) {
 							matrice.write(ligne, colonne, oldMatrice.read(i, j));
-							if (j != index) {
+							
+							if (j != index)
 								colonne++;
-							}
 						}
-						if (i != index) {
+						if (i != index)
 							ligne++;
-						}
 					}
 				}
 				
@@ -323,7 +325,7 @@ public class GrapheMatrice<T> {
 		
 		/**
 		 * Ajoute une arrête avec un certain poids entre deux sommets donnés.
-		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent, que le poids soit non nul. Mais aussi que l'arrête ne soit pas encore créée.
+		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent, que le poids soit non nul. Mais aussi que l'arrête ne soit pas encore créée et que les sommets donnés ne soient pas identiques.
 		 * Attention ! Cette méthode transforme le graphe en graphe pondéré !
 		 * 
 		 * @param s1 Un sommet duquel faire partir l'arrête.
@@ -332,7 +334,7 @@ public class GrapheMatrice<T> {
 		 * @return true si l'ajout a pu se faire et false sinon.
 		 */
 		public boolean ajouterArrete(T s1, T s2, int valeur) {
-			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
+			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2)) // 
 				return false;
 			else {
 				if (valeur == 0)
@@ -362,7 +364,7 @@ public class GrapheMatrice<T> {
 		 * @return true si la suppression a pu se faire et false sinon.
 		 */
 		public boolean enleverArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
+			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
 				return false;
 			else {
 				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), 0);
@@ -401,24 +403,23 @@ public class GrapheMatrice<T> {
 			Set<T> voisins = new HashSet<>();
 			int indiceS = sommets.indexOf(s);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+			for (int i = 0; i < matrice.getTaille().getX(); i++) 
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
 					voisins.add(sommets.get(i));
-			}
 			
 			if (type.isDirected())
-				for (int i = 0; i < matrice.getTaille().getX(); i++) {
+				for (int i = 0; i < matrice.getTaille().getX(); i++) 
 					if (matrice.read(i, indiceS) != 0 && indiceS != i)
 						voisins.add(sommets.get(i));
-				}
 			
 			return voisins;
 		}
 		
 		/**
+		 * Donne un set de tous les sommets desquels partent les arrêtent qui arrivent sur le sommet donné
 		 * 
-		 * @param s
-		 * @return
+		 * @param s Le sommet enfant
+		 * @return Un set null s'il y a une erreur et contenant les parents du sommet sinon.
 		 */
 		public Set<T> parentsDe(T s) {
 			if (s == null || !existeSommet(s))
@@ -427,18 +428,18 @@ public class GrapheMatrice<T> {
 			Set<T> parents = new HashSet<>();
 			int indiceS = sommets.indexOf(s);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+			for (int i = 0; i < matrice.getTaille().getX(); i++)
 				if (matrice.read(i, indiceS) != 0 && indiceS != i)
 					parents.add(sommets.get(i));
-			}
 			
 			return parents;
 		}
 		
 		/**
+		 * Donne un set de tous les sommets vers lesquels arrivent des arrêtes partant du sommet donné
 		 * 
-		 * @param s
-		 * @return
+		 * @param s Le sommet parent
+		 * @return Un set null s'il y a une erreur et contenant les enfants du sommet sinon.
 		 */
 		public Set<T> enfantsDe(T s) {
 			if (s == null || !existeSommet(s))
@@ -447,29 +448,10 @@ public class GrapheMatrice<T> {
 			Set<T> enfants = new HashSet<>();
 			int indiceS = sommets.indexOf(s);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++) {
+			for (int i = 0; i < matrice.getTaille().getX(); i++)
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
 					enfants.add(sommets.get(i));
-			}
 			
 			return enfants;
-		}
-		
-		/**
-		 * Permet de savoir si le graphe est dirigé ou non.
-		 * 
-		 * @return true s'il est dirigé et false sinon.
-		 */
-		public boolean estDirige() {
-			return type.isDirected();
-		}
-		
-		/**
-		 * Permet de savoir si le graphe est pondéré ou non.
-		 * 
-		 * @return true s'il est pondéré et false sinon.
-		 */
-		public boolean estPondere() {
-			return type.isWeighted();
 		}
 }

@@ -13,7 +13,7 @@ import java.util.HashSet;
  * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  */
-public class Graphe<T> {
+public class GrapheListe<T> {
 	private static int cpt = 0;
 	private String name;
 	private GrapheType type;
@@ -29,7 +29,7 @@ public class Graphe<T> {
 	 * @param nodes
 	 * @param edges
 	 */
-	public Graphe(String name, GrapheType type, Set<T> nodes, Map<T, Set<T>> edges) {
+	public GrapheListe(String name, GrapheType type, Set<T> nodes, Map<T, Set<T>> edges) {
 		if (name == null)
 			this.name = "Graphe";
 		else
@@ -50,7 +50,7 @@ public class Graphe<T> {
 	 * @param name
 	 * @param type
 	 */
-	public Graphe(String name, GrapheType type) {
+	public GrapheListe(String name, GrapheType type) {
 		this(name, type, null, null);
 	}
 	
@@ -58,11 +58,11 @@ public class Graphe<T> {
 	 * Contructeur qui crée un graphe non orienté dont le nom est donné en paramètres
 	 * @param name
 	 */
-	public Graphe(String name) {
+	public GrapheListe(String name) {
 		this(name, null);
 	}
 	
-	public Graphe() {
+	public GrapheListe() {
 		this("Graphe n°" + ++cpt);
 	}
 	
@@ -214,7 +214,7 @@ public class Graphe<T> {
 		for (String s : sommets)
 			arretes.put(s, new HashSet<String>());
 		
-		Graphe<String> G = new Graphe<>("Plateau", GrapheType.UGRAPH, sommets, arretes);
+		GrapheListe<String> G = new GrapheListe<>("Plateau", GrapheType.UGRAPH, sommets, arretes);
 
 		G.addNode("E");
 		G.addEdge("A", "B");

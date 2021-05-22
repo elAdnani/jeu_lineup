@@ -15,7 +15,9 @@
 package lineup_3;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -31,9 +33,9 @@ public class Partie {
 	public static void main(String[] args) {
 		
 		int nbPions = 6;
-		List<String> nodes = new ArrayList<String>();
+		Set<String> nodes = new HashSet<String>();
 		nodes.add("a");
-		Graphe g1 = new Graphe("Grahpe1", GrapheType.UGRAPH);
+		GrapheListe<String> g1 = new GrapheListe("Grahpe1", GrapheType.UGRAPH);
 		
 		Joueur j1 = new Joueur("Joueur1", nbPions);
 		Joueur j2 = new Joueur("Joueur2", nbPions);

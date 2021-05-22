@@ -29,17 +29,23 @@ public class Parametres {
 	private final boolean PIEGES;
 	
 	/**
+	 * Correspond au nombre de Pion par joueur souhaité.
+	 */
+	private final int NBPION;
+	
+	/**
 	 * Correspond au choix du mode Chifumi.
 	 */
 	private final boolean CHIFUMI;
 	
 		// Constructor
 	
-	public Parametres(int nbCouche, int nbCote, boolean piege, boolean chifumi) {
+	public Parametres(int nbCouche, int nbCote, boolean piege, boolean chifumi, int nbPion) {
 		this.NBCOUCHE = nbCouche;
 		this.NBCOTE = nbCote;
 		this.PIEGES = piege;
 		this.CHIFUMI = chifumi;
+		this.NBPION = nbPion;
 	}
 
 		// Methods
@@ -62,5 +68,9 @@ public class Parametres {
 	
 	public boolean getCHIFUMI() {
 		return this.CHIFUMI;
+	}
+	
+	public int getNBPION() {
+		return this.NBPION;
 	}
 }

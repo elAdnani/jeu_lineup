@@ -1,8 +1,9 @@
  package test_lineup_3;
 
- import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+ import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -10,8 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import lineup_3.Case;
-import lineup_3.Deplacement;
+import lineup_3.ChifumiPion;
+import lineup_3.DeckPions;
 import lineup_3.Joueur;
 import lineup_3.Paire;
 import lineup_3.Pion;
@@ -104,6 +105,44 @@ public class JeuPolynomialTest {
 			
 	}
 
+	
+	
+	@Test
+	public void affichagePlateau() {
+		
+		PlateauATroisCotes.generationDuPlateau();
+		
+		System.out.println(PlateauATroisCotes.toString());
+		
+		int nbPion=1;
+		Map<Joueur,Character> assignation = new HashMap<>();
+		
+		// On donne les joueurs :
+		// - on a son pseudo, le nombre de pion égal à un
+		// - Sa représentation dans le plateau
+		// - Sa main, c'est à dire la liste des pions qu'il possède
+		Joueur un = new Joueur("Gerard", nbPion);
+		assignation.put(un, '#');
+		DeckPions mainJoueurUn = new DeckPions(nbPion, un);
+		
+		Joueur deux = new Joueur("Jean", nbPion);
+		assignation.put(deux, '@');
+		DeckPions mainJoueurDeux = new DeckPions(nbPion, deux);
+		
+		Joueur trois = new Joueur("Rima", nbPion);
+		assignation.put(trois, '$');
+		DeckPions mainJoueurTrois = new DeckPions(nbPion, trois);
+		
+		// représentation de base du plateau :
+		PlateauATroisCotes.affichagePlateau(NMBREDECOTE, assignation);
+
+		mainJoueurUn.addPions(new ChifumiPion(un, 2, 0));
+		//if(PlateauATroisCotes.getListSommet().get(PlateauATroisCotes.retrouverSommet(new Paire(2, 0))).addPion(new ChifumiPion(un, 2, 0))) {
+		//	PlateauATroisCotes.affichagePlateau(NMBREDECOTE, assignation);
+		//}
+		
+		
+	}
 
 
 	@Test

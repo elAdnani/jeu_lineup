@@ -205,53 +205,6 @@ public class Matrice {
 	public static Matrice nulle(Matrice m) {
 		return nulle(m.taille.getX(), m.taille.getX());
 	}
-
-	/**
-	 * Crée une matrice identité en fonction de la taille fournie en paramètre.
-	 * 
-	 * @param taille - correspond au nombre de ligne et de colonnes de la matrice
-	 * @return une matrice identité aux dimensions de la taille
-	 */
-	public Matrice identite() {
-		if (this.estCarre()) {
-			this.nulle();
-			for (int i = 0; i < this.taille.getX(); i++)
-				this.write(i, i, 1);
-		
-			return this;
-		} else 
-			return Matrice.nulle(this);
-	}
-
-	/**
-	 * Crée une matrice identité en fonction de la taille fournie en paramètre.
-	 * 
-	 * @param taille - correspond au nombre de ligne et de colonnes de la matrice
-	 * @return une matrice identité aux dimensions de la taille
-	 */
-	public static Matrice identite(int taille) {
-		// On part d'une matrice nulle
-		Matrice resultat = Matrice.nulle(taille, taille);
-		
-		// Et on lui ajoute un 1 dans la diagonale
-		for (int i = 0; i < taille; i++)
-			resultat.write(i, i, 1);
-		
-		return resultat;
-	}
-	
-	/**
-	 * Si la matrice donnée est bien carrée, alors on crée une matrice identité aux dimensions de la matrice fournie, sinon on retourne une matrice nulle
-	 * 
-	 * @param m - la matrice de référence
-	 * @return une matrice identité aux dimensions de la matrice de référence
-	 */
-	public static Matrice identite(Matrice m) {
-		if (m.estCarre())
-			return identite(m.taille.getX());
-		else
-			return Matrice.nulle(m);
-	}
 	
 	/**
 	 * Permet d'additionner à la première matrice, une autre matrice de même taille.
@@ -276,25 +229,6 @@ public class Matrice {
 	}
 	
 	/**
-	 * Additionne les deux matrices passées en paramètres et retourne le résultat dans une nouvelle matrice.
-	 * 
-	 * @param terme1 - première matrice
-	 * @param terme2 - seconde matrice
-	 * @return une matrice résultant de ma somme des deux termes
-	 */
-	public static Matrice addition(Matrice terme1, Matrice terme2) {
-		Matrice resultat = new Matrice(terme1.matrice);
-		
-		// si l'addition s'est bien déroulée
-		if (resultat.addition(terme2))
-			// alors on retourne son résultat
-			return resultat;
-		else
-			// sinon, on retourne une matrice nulle aux dimensions de celle du premier terme
-			return Matrice.nulle(terme1); 
-	}
-	
-	/**
 	 * Soustrait à la matrice courante la matrice passée en paramètre.
 	 * 
 	 * @param terme2 - matrice à enlever à la matrice courante
@@ -303,18 +237,6 @@ public class Matrice {
 	public boolean soustraction(Matrice terme2) {
 		// additionne l'opposé du deuxième terme au premier terme, ce qui revient à soustraire au premier terme le second.
 		return this.addition(terme2.multiplication(-1));
-	}
-
-	/**
-	 * Soustrait le premier terme donné au second terme et retourne le résultat dans une nouvelle matrice.
-	 * 
-	 * @param terme1 - matrice à soustraire
-	 * @param terme2 - matrice à enlever du premier terme
-	 * @return une matrice résultant de la soustraction
-	 */
-	public static Matrice soustraction(Matrice terme1, Matrice terme2) {
-		// additionne l'opposé du deuxième terme au premier terme, ce qui revient à soustraire au premier terme le second.
-		return addition(terme1, terme2.multiplication(-1));
 	}
 
 	/**
@@ -331,18 +253,6 @@ public class Matrice {
 				this.write(ligne, colonne, this.read(ligne, colonne) * reel);
 		
 		return new Matrice(this.matrice);
-	}
-	
-	/**
-	 * Multiplie chaque valeur de la matrice donnée par le réel fourni.
-	 * 
-	 * @param reel - facteur du produit
-	 * @param m - matrice à multiplier
-	 * @return une matrice résultant du produit de la matrice par l'entier donné.
-	 */
-	public static Matrice multiplication(double reel, Matrice m) {
-		Matrice resultat = new Matrice(m.matrice);
-		return resultat.multiplication(reel);
 	}
 	
 	/**
@@ -374,220 +284,6 @@ public class Matrice {
 	}
 	
 	/**
-	 * Multiplie deux matrices entre elles.
-	 * 
-	 * @param terme1 - première matrice
-	 * @param terme2 - deuxième matrice
-	 * @return une matrice résultant de la multiplication des deux matrices données
-	 */
-	public static Matrice multiplication(Matrice terme1, Matrice terme2) {
-		Matrice resultat = new Matrice(terme1.matrice);
-		
-		// si la multiplication s'est bien déroulée
-		if (resultat.multiplication(terme2))
-			// alors on retourne son résultat
-			return resultat;
-		else
-			// sinon on retourne une matrice vide aux dimensions minimum d'un résultat de multiplication de deux matrices
-			return Matrice.nulle(terme1.taille.getX(), 1);
-	}
-	
-	/**
-	 * Effectue la puissance de la matrice courante par l'entier donné
-	 * 
-	 * @param p - puissance
-	 * @return la réussite de l'opération
-	 */
-	public boolean puissance(int p) {
-		Matrice origine = new Matrice(this.matrice);
-		boolean valide = p >= -1;
-		
-		if (valide && p < 0)
-			valide = valide && this.inverse();
-		int i = 0;
-		// Tant que le calcul est possible et que l'on n'a pas atteint la puissance voulue
-		while (valide && ++i < p) // on réitère i après l'avoir vérifié
-			// 
-			valide = valide && this.multiplication(origine);
-		
-		return valide;
-	}
-	
-	/**
-	 * Effectue la puissance de la matrice donnée par l'entier fourni
-	 * 
-	 * @param m - matrice
-	 * @param p - puissance
-	 * @return une matrice résultant du calcul de puissance sur la matrice par la puissance.
-	 */
-	public static Matrice puissance(Matrice m, int p) {
-		Matrice resultat = new Matrice(m.matrice);
-		
-		// si le calcul s'est bien passé
-		if (resultat.puissance(p))
-			// alors on retourne le résultat
-			return resultat;
-		else
-			// sinon on retourne une matrice vide aux dimensions de la matrice donnée
-			return Matrice.nulle(m);
-	}
-	
-	/**
-	 * Échange les deux lignes qui lui sont passées en paramètre
-	 * 
-	 * @param l1 - indice de la première ligne
-	 * @param l2 - indice de la seconde ligne
-	 */
-	public void echangerLignes(int l1, int l2) {
-		if (this.canRead(l1, 0) && this.canRead(l2, 0)) {
-			double[] save = this.matrice[l1];
-			this.matrice[l1] = this.matrice[l2];
-			this.matrice[l2] = save;
-		}
-	}
-	
-	/**
-	 * Crée une nouvelle matrice basée sur celle donnée et échange deux lignes de cette nouvelle matrice qui sont spécifiées dans les paramètres
-	 * 
-	 * @param m - la matrice sur laquelle se baser
-	 * @param l1 - indice de la première ligne
-	 * @param l2 - indice de la seconde ligne
-	 * @return une matrice avec les deux lignes d'échangées ou la même matrice que l'originale s'il y a une erreur dans les indices donnés
-	 */
-	public static Matrice echangerLignes(Matrice m, int l1, int l2) {
-		Matrice resultat = new Matrice(m.matrice);
-		resultat.echangerLignes(l1, l2);
-		
-		return resultat;
-	}
-	
-	/**
-	 * Multiplie l'une des lignes par un réel
-	 * 
-	 * @param n - le réel
-	 * @param l - l'indice de la ligne
-	 */
-	public void produitLigne(double n, int l) {
-		if (this.canRead(l, 0))
-			for (int colonne = 0; colonne < this.taille.getY(); colonne++)
-				this.write(l, colonne, n * this.read(l, colonne));
-	}
-	
-	/**
-	 * Crée une nouvelle matrice à partir de celle donnée et multiplie la ligne précisée par un réel.
-	 * 
-	 * @param m - la matrice de base
-	 * @param n - le réel
-	 * @param l - l'indice de la ligne
-	 * @return une nouvelle matrice dont la ligne a été multipliée par le réel
-	 */
-	
-	public static Matrice produitLigne(Matrice m, double n, int l) {
-		Matrice resultat = new Matrice(m.matrice);
-		resultat.produitLigne(n, l);
-		
-		return resultat;
-	}
-	
-	/**
-	 * Modifie la première ligne donnée de la matrice courante en y ajoutant les valeurs de la seconde ligne fournie
-	 * 
-	 * @param l1 - première ligne
-	 * @param l2 - seconde ligne
-	 */
-	
-	public void sommeLignes(int l1, int l2) {
-		if (this.canRead(l1, 0) && this.canRead(l2, 0))
-			for (int colonne = 0; colonne < this.taille.getY(); colonne++)
-				this.write(l1, colonne, this.read(l1, colonne) + this.read(l2, colonne));
-	}
-	
-	/**
-	 * Crée une nouvelle matrice dont la première ligne a été modifiée avec les valeurs de la seconde ligne en plus
-	 * 
-	 * @param m - matrice de base
-	 * @param l1 - indice de la première ligne
-	 * @param l2 - indice de la seconde ligne
-	 * @return une nouvelle matrice
-	 */
-	
-	public static Matrice sommeLigne(Matrice m, int l1, int l2) {
-		Matrice resultat = new Matrice(m.matrice);
-		resultat.sommeLignes(l1, l2);
-		
-		return resultat;
-	}
-	
-	
-	public boolean inverse() { // TODO écrire la fonction inverse avec le pivot de Gauss
-		// si la matrice est carrée
-		if (this.estCarre()) {
-			// et de taille 2
-			if (this.taille.getX() == 2) {
-				double n = this.read(0, 0) * this.read(1, 1) - this.read(0, 1) * this.read(1, 0); // a*d - b*c
-				Matrice old = new Matrice(this.matrice);
-				
-				// alors on vérifie qu'elle est inversible
-				if (n != 0) {
-					// on inverse la matrice
-					this.write(0, 0,  n * old.read(1, 1)); // 
-					this.write(0, 1, -n * old.read(0, 1)); // | a  b |  __\  n * | d -b |
-					this.write(1, 0, -n * old.read(1, 0)); // | c  d |    /      |-c  a |
-					this.write(1, 1,  n * old.read(0, 0)); //
-					
-					return true;
-				} else
-					return false;
-			} else {
-				// Initialisation des matrices
-				Matrice old = new Matrice(this.matrice); // matrice d'origine
-				Matrice fin = Matrice.inverse(this); // matrice finale qui sera inversée
-				
-				int taille = old.taille.getX();			
-				boolean valide = true; // si l'inversion s'avère impossible, permet de ne pas retourner true.
-				
-				int diagonale = 0; // vise à parcourir la diagonale
-				while (valide && diagonale < taille) {
-					int ligne = diagonale; // on ne vérifie pas les lignes ayant leurs premières colonnes de bonnes
-					while (old.read(ligne, diagonale) == 0)
-						if(++ligne == taille) // sert aussi à incrémenter
-							return false;
-
-					// on place la ligne courante après la dernière ligne vérifiée
-					if (ligne != diagonale) {
-						old.echangerLignes(diagonale, ligne);
-						fin.echangerLignes(diagonale, ligne);
-					}
-					
-					// on vérifie que que la ligne courante soit bien avec un indice de 1
-					if (old.read(diagonale, diagonale) != 1) {
-						old.produitLigne(1 / old.read(diagonale, diagonale), ligne);
-						fin.produitLigne(1 / fin.read(diagonale, diagonale), ligne);
-					}
-					
-					// On modifie les autres lignes pour mettre à zéro leur indice
-					for (ligne = 0; ligne < matrice.length; ligne++) {
-						if (ligne != diagonale) {
-							old = sommeLigne(produitLigne(old, old.read(ligne, diagonale), diagonale), ligne, diagonale);
-							fin = sommeLigne(produitLigne(fin, fin.read(ligne, diagonale), diagonale), ligne, diagonale);
-						}
-					}
-					
-					++diagonale;
-				}
-				
-				return valide;
-			}
-		} else
-			return false;
-	}
-	
-	public static Matrice inverse(Matrice m) { // TODO écrire la fonction inverse static
-		return null;
-	}
-	
-	
-	/**
 	 * Vérifie si la matrice courante est nulle ou non
 	 * 
 	 * @return true si la matrice donnée est nulle, false sinon
@@ -605,18 +301,6 @@ public class Matrice {
 		return verifie;
 	}
 	
-	
-	/**
-	 * Vérifie si la matrice fournie est nulle ou non
-	 * 
-	 * @param m - la matrice à vérifier
-	 * @return true si cette matrice est nulle, false sinon
-	 */
-	public static boolean estNulle(Matrice m) {
-		return m.estNulle();
-	}
-	
-	
 	/**
 	 * Vérifie si la matrice courante est carrée ou pas
 	 * 
@@ -625,18 +309,6 @@ public class Matrice {
 	public boolean estCarre() {
 		return this.taille.getX() == this.taille.getY();
 	}
-	
-	
-	/**
-	 * Vérifie si la matrice fournie est carrée ou pas
-	 * 
-	 * @param m - la matrice à vérifier
-	 * @return true si cette matrice est carrée, false sinon
-	 */
-	public static boolean estCarre(Matrice m) {
-		return m.estCarre();
-	}
-	
 	
 	/**
 	 * Vérifie si la matrice courante est bien symétrique
@@ -657,44 +329,5 @@ public class Matrice {
 			return verifie;
 		} else
 			return false;
-	}
-	
-	
-	/**
-	 * Vérifie si la matrice passée en paramètre est bien symétrique
-	 * @param m - la matrice à vérifier
-	 * @return true si cette matrice est bien symétrique, false sinon
-	 */
-	public static boolean estSymetrique(Matrice m) {
-		return m.estSymetrique();
-	}
-	
-	
-	public boolean estTriangulaire() { // TODO écrire estTriangulaire
-		return true;
-	}
-	
-	
-	public static boolean estTriangulaire(Matrice m) { // TODO écrire la fonction statique de estTriangulaire
-		return true;
-	}
-	
-	
-	
-	
-	public static void main(String[] args) {
-		Matrice m1 = new Matrice(3);
-		m1.write(0, 0, 1);  m1.write(0, 1, 0);  m1.write(0, 2, 4);
-		m1.write(1, 0, 2);  m1.write(1, 1, -1); m1.write(1, 2, 5);
-		m1.write(2, 0, 30); m1.write(2, 1, 1);  m1.write(2, 2, 6);
-		
-		Matrice m2 = new Matrice(2);
-		m2.write(0, 0, 3);
-		m2.write(0, 1, 4);
-		m2.write(1, 0, -2);
-		m2.write(1, 1, -3);
-
-		System.out.println(m1);
-		System.out.println(m2);
 	}
 }

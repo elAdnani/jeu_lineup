@@ -15,7 +15,8 @@
 package lineup_3;
 
 
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
@@ -34,14 +35,15 @@ import java.util.Set;
 public abstract class Plateau {
 	
 	
-	public abstract String affichagePlateau();
+	public abstract void affichagePlateau(int niveau, Map<Joueur, Character> pion);
 
 	public abstract void generationDuPlateau();
 
 	public abstract int retrouverSommet(Paire paire);
 	
-	public abstract Set<Case> getListSommet();
+	public abstract List<Case> getListSommet();
 	
 	
 
 }
+

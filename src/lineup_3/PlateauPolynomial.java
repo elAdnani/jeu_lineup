@@ -14,8 +14,17 @@
  */
 package lineup_3;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.Buffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashSet;
-
+import java.util.List;
 /*
  * 
  */
@@ -71,7 +80,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	
 	public PlateauPolynomial(int nombreCote, GrapheListe<Case> grph) {
-		if(grph.getType()==GrapheType.UGRAPH) {
+		if(grph.estPondere()) {
 			this.grph = grph;
 		}
 		else {
@@ -87,20 +96,99 @@ public class PlateauPolynomial extends Plateau{
 	 * @return nombre de pion qu'il est possible d'avoir dans une couche
 	 */
 	public int getNbPionMax() {
-		return 2* nbcote;
+		
+		return 2* this.nbcote;
 	}
 	
+	/**
+	 * Récupère les coordonnées d'une chaîne de caractère.
+	 * @param est une chaîne de caractère, sous la forme : x1;y1|x2;y2|x3;y3 formant trois coordonnées
+	 * @return est une liste de coordonnée, une liste de Paire  {@link Paire }
+	 */
+	private List<Case> recuperationDesCoordonnees(String ligne){
+		List<Case> coordonnees = new ArrayList<>();
+		String[] separationDesCoordoonees;
+		separationDesCoordoonees = ligne.split(" ");
 
-	
+		String[] paire= new String[2];
+		
+		for(int i=0; i< separationDesCoordoonees.length ; i++) {
+			
+			paire = separationDesCoordoonees[i].split(";");
+			
+			coordonnees.add( this.getListSommet().get( retrouverSommet(Integer.valueOf(paire[0]), Integer.valueOf(paire[1])) ) );
+		}
+		
+		return coordonnees;
+		
+	}
 	
 	/**
 	 * Est destiné a être l'affichage du plateau permettant de jouer
 	 * @return un plateau en  composé de ses pions
 	 */
-	public String affichagePlateau() {
+	public void affichagePlateau(int niveau, Map<Joueur, Character> pion) {
 		
-		String plateauEnString="";
-		return plateauEnString;
+		 String myPath = System.getProperty("user.dir")
+				+ File.separator + "res"
+				+ File.separator + "Plateau";
+		 
+			File FichierDuNiveau = null ;
+			try{
+				FichierDuNiveau = new File(myPath+niveau+".txt");
+				String ligne=" ";
+				
+				RandomAccessFile raf = new RandomAccessFile(FichierDuNiveau, "rw");
+				raf.seek(0);
+
+				ligne = raf.readLine();
+
+				List<Case> coordonneeDesCases = recuperationDesCoordonnees(ligne);
+
+				
+				while(ligne != null) {
+					
+					ligne = raf.readLine();
+					if(ligne != null) {
+						int compteurDePaire = 0;
+						for(int i=0; i< ligne.length() ;i++) {
+							
+							
+							
+							if(ligne.charAt(i)!='O') {
+								
+								System.out.print(ligne.charAt(i) );
+							}
+							else {
+								
+								if( ! coordonneeDesCases.get(compteurDePaire).EstLibre()) {
+									
+									System.out.print( pion.get( coordonneeDesCases.get( compteurDePaire ).getPion().getJoueur() ) );
+								}
+								else {
+									System.out.print("O");
+								}
+								compteurDePaire = compteurDePaire + 1;
+							}
+							
+						}
+						System.out.println("");
+					}
+	
+				}
+				
+				raf.close();
+			}
+			catch(FileNotFoundException o) {
+				
+				o.printStackTrace();
+				
+			} catch (IOException e){
+				
+				e.printStackTrace();
+			}	
+
+
 	}
 	
 
@@ -115,9 +203,10 @@ public class PlateauPolynomial extends Plateau{
 		
 		for (int i = 0; i < NBCOUCHE; i++)
 
-			for (int j = 0; j < this.getNbPionMax(); j++)
-
+			for (int j = 0; j < this.getNbPionMax(); j++) 
+				
 				this.grph.ajouterSommet(new Case(i,j) );
+				
 		
 		// génération des arêtes
 		generationListArret(this.grph.getArretes());
@@ -129,7 +218,7 @@ public class PlateauPolynomial extends Plateau{
 	 * Si elle remarque qu'un sommet est voisin d'un autre, alors son arêtes est créées.
 	 * @param listeDesSommets
 	 */
-	private void generationListArret(Map<Case, Set<Case>> listeDesSommets) {
+	private void generationListArret(Map<Case, List<Case>> listeDesSommets) {
 		
 		for ( Case sommet : grph.getSommets() ) {
 
@@ -151,7 +240,7 @@ public class PlateauPolynomial extends Plateau{
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
 		
-		return estVoisin(coordonnee_un.coordonnee, coordonnee_deux.coordonnee);
+		return estVoisin(coordonnee_un.getCoordonnees(), coordonnee_deux.getCoordonnees());
 	}
 	
 	/**
@@ -197,7 +286,7 @@ public class PlateauPolynomial extends Plateau{
 	public int retrouverSommet(Paire coordonnee) {
 		for( Case sommet : this.getListSommet()) {
 			
-			if(sommet.coordonnee.equals(coordonnee))
+			if(sommet.getCoordonnees().equals(coordonnee))
 				
 				return this.getListSommet().indexOf(sommet);
 		}
@@ -214,6 +303,11 @@ public class PlateauPolynomial extends Plateau{
 	protected int retrouverSommet (int x, int y) {
 		
 		return retrouverSommet( new Paire(x, y) );
+	}
+	
+	@Override
+	public String toString() {
+		return this.grph.toString();
 	}
 	
 
@@ -249,7 +343,7 @@ public class PlateauPolynomial extends Plateau{
 	 * la liste de sommet que ce plateau possède
 	 * @return 
 	 */
-	public Set<Case> getListSommet() {
+	public List<Case> getListSommet() {
 		
 		return this.grph.getSommets();
 	}
@@ -258,10 +352,13 @@ public class PlateauPolynomial extends Plateau{
 	 * la liste des arêtes que ce plateau possède
 	 * @return
 	 */
-	protected Map< Case, Set<Case> > getListArret() {
+	protected Map< Case, List<Case> > getListArret() {
 		
 		return this.grph.getArretes();
 	}
+
+
+
 
 	
 	

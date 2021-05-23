@@ -56,19 +56,29 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param arretes Les arrêtes reliant les sommets.
 		 */
 		public GrapheListe(String nom, GrapheType type, Set<T> sommets, Map<T, Set<T>> arretes) {
+			// Nom
 			if (nom == null)
-				this.nom = "Graphe";
+				this.nom = "Graphe n°" + ++cpt;
 			else
 				this.nom = nom;
 			
+			// Type
 			if (type == null)
 				this.type = GrapheType.UGRAPH;
 			else
 				this.type = type;
 			
-	
-			this.sommets = sommets;
-			this.arretes = arretes;
+			// Sommets
+			if (sommets == null)
+				this.sommets = new HashSet<>();
+			else
+				this.sommets = sommets;
+			
+			// Arrêtes
+			if (arretes == null)
+				this.arretes = new HashMap<T, Set<T>>();
+			else
+				this.arretes = arretes;
 		}
 		
 		/**

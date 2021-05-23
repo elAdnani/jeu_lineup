@@ -103,9 +103,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param type Le type du graphe.
 		 * @param ensembleSommets La liste de sommets du graphe.
 		 */
-		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets) {
-			this(nom, type, ensembleSommets, null);
-		}
+		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets) { this(nom, type, ensembleSommets, null); }
 		
 		/**
 		 * <p>Constructeur avec le nom et le type du graphe</p>
@@ -114,9 +112,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param nom Le nom à donner au graphe.
 		 * @param type Le type du graphe.
 		 */
-		public GrapheListe(String nom, GrapheType type) {
-			this(nom, type, null);
-		}
+		public GrapheListe(String nom, GrapheType type) { this(nom, type, null); }
 		
 		/**
 		 * <p>Constructeur avec seulement le nom du graphe.</p>
@@ -124,9 +120,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * 
 		 * @param nom Le nom à donner au graphe.
 		 */
-		public GrapheListe(String nom) {
-			this(nom, null);
-		}
+		public GrapheListe(String nom) { this(nom, null); }
 		
 		/**
 		 * <p>Constructeur sans paramètres.</p>
@@ -134,9 +128,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * <p>Son nom sera généré en fonction de la valeur d'un compteur</p>
 		 * <p>Par défaut, il ne sera pas orienté</p>
 		 */
-		public GrapheListe() {
-			this(null);
-		}
+		public GrapheListe() { this(null); }
 		
 		
 		
@@ -148,18 +140,14 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * 
 		 * @return Une chaîne de caractères contenant le nom du graphe.
 		 */
-		public String getNom() {
-			return nom;
-		}
+		public String getNom() { return nom; }
 		
 		/**
 		 * Mutateur, permet de modifier le nom du graphe en un nouveau.
 		 * 
 		 * @param nom Le nouveau nom du graphe.
 		 */
-		public void setNom(String nom) {
-			this.nom = nom;
-		}
+		public void setNom(String nom) { this.nom = nom; }
 		
 		/**
 		 * Accesseur, permet d'obtenir une copie de la liste des sommets.
@@ -284,9 +272,7 @@ public class GrapheListe<T> extends Graphe<T> {
 				return false;
 		}
 		
-		public boolean existeSommet(T sommet) {
-			return ensembleSommets.contains(sommet);
-		}
+		public boolean existeSommet(T sommet) { return ensembleSommets.contains(sommet); }
 		
 		public boolean ajouterArrete(T depart, T arrivee) {		
 			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))
@@ -314,9 +300,7 @@ public class GrapheListe<T> extends Graphe<T> {
 			}
 		}
 		
-		public boolean existeArrete(T depart, T arrivee) {
-			return arretes.get(depart).contains(arrivee);
-		}
+		public boolean existeArrete(T depart, T arrivee) { return arretes.get(depart).contains(arrivee); }
 		
 		/**
 		 * Donne un set de tous les voisins d'un sommet.

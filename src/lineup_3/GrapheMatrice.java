@@ -235,9 +235,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			}
 		}
 
-		public boolean existeSommet(T sommet) {
-			return ensembleSommets.contains(sommet);
-		}
+		public boolean existeSommet(T sommet) { return ensembleSommets.contains(sommet); }
 		
 		public boolean ajouterArrete(T depart, T arrivee) {
 			if (depart == null || arrivee == null || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))

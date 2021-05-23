@@ -319,10 +319,51 @@ public class GrapheListe<T> extends Graphe<T> {
 		}
 		
 		/**
+		 * Donne un set de tous les voisins d'un sommet.
+		 * 
+		 * @param sommet Le sommet duquel chercher les voisins
+		 * 
+		 * @return - Un Set des voisins du sommet<br>
+		 *         - null en cas de sommet non valide
+		 */
+		public Set<T> voisinsDe(T sommet) {
+			if (sommet == null || !existeSommet(sommet))
+				return null;
+			
+			Set<T> voisins = parentsDe(sommet);
+			voisins.addAll(enfantsDe(sommet));
+			
+			return voisins;
+		}
+		
+		/**
+		 * <p>Donne un set de tous les parents d'un sommet.</p>
+		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X -> Y (enfant)</p>
+		 * 
+		 * @param enfant Le sommet enfant
+		 * 
+		 * @return - Un Set des parents du sommet<br>
+		 *         - null en cas d'enfant non valide
+		 */
+		public Set<T> parentsDe(T enfant) {
+			if (enfant == null || !existeSommet(enfant))
+				return null;
+			
+			Set<T> parents = new HashSet<>();
+			
+			for (T sommetCourant : ensembleSommets)
+				if (arretes.containsKey(sommetCourant))
+					parents.add(sommetCourant);
+			
+			return parents;
+		}
+		
+		/**
 		 * <p>Donne un set de tous les enfants d'un sommet.</p>
 		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
 		 * 
 		 * @param parent Le sommet parent
+		 * 
 		 * @return - Un Set des enfants du sommet<br>
 		 *         - null en cas de parent non valide
 		 */
@@ -332,9 +373,8 @@ public class GrapheListe<T> extends Graphe<T> {
 			
 			Set<T> enfants = new HashSet<>();
 			
-			for (T t : arretes.get(parent)) {
+			for (T t : arretes.get(parent))
 				enfants.add(t);
-			}
 			
 			return enfants;
 		}

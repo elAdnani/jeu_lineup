@@ -38,7 +38,7 @@ public class DeckPions {
 	 * @param nbPions nombre de Pion souhaité pour la main.
 	 * @param joueur Joueur à qui la main appartient.
 	 */
-	public DeckPions(int nbPions, String joueur) {
+	public DeckPions(int nbPions, Joueur joueur) {
 		this.idx = nbPions;
 		this.main = new Pion[nbPions];
 		this.initialiserMain(joueur);
@@ -54,11 +54,13 @@ public class DeckPions {
 		return main[idx];
 	}
 	
+	//TODO Surcharger la méthode getPion(), pour pourvoir choisir celui qu'on veut en mode Chifumi.
+	
 	/**
 	 * Permet de remplir la main avec des Pions sans position.
 	 * @param joueur Correspond au propriétaire de la main en cours d'initialisation.
 	 */
-	private void initialiserMain(String joueur) {
+	private void initialiserMain(Joueur joueur) {
 		for (int i = 0; i < main.length; i++) {
 			main[i] = new ChifumiPion();
 			main[i].setJoueur(joueur);

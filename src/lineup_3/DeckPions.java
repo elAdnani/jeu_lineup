@@ -25,10 +25,19 @@ public class DeckPions {
 	 */
 	private int idx;	
 	
+	/**
+	 * Correspond aux paramètres de la partie.
+	 */
+	private Parametres param;
+	
 		// Getters
 	
 	public Pion[] getMain() {
 		return main;
+	}
+	
+	public int getIdx() {
+		return this.idx;
 	}
 	
 		// Constructor
@@ -38,19 +47,20 @@ public class DeckPions {
 	 * @param nbPions nombre de Pion souhaité pour la main.
 	 * @param joueur Joueur à qui la main appartient.
 	 */
-	public DeckPions(int nbPions, Joueur joueur) {
-		this.idx = nbPions;
-		this.main = new Pion[nbPions];
+	public DeckPions(Joueur joueur, Parametres p) {
+		this.idx = param.getNBPION();
+		this.main = new Pion[idx];
 		this.initialiserMain(joueur);
+		this.param = p;
 	}
 	
 		// Methods
 	
 	/**
-	 * Permet d'obtenir le prochain Pion de la main.
+	 * getPion Permet d'obtenir le prochain Pion de la main en mode de partie Normal.
 	 * @return Retourne un Objet de type Pion.
 	 */
-	public Pion getPion() {
+	public Pion getProchainPion() {
 		return main[idx];
 	}
 	
@@ -62,7 +72,7 @@ public class DeckPions {
 	 */
 	private void initialiserMain(Joueur joueur) {
 		for (int i = 0; i < main.length; i++) {
-			main[i] = new ChifumiPion();
+			main[i] = new ChifumiPion(joueur, param);
 			main[i].setJoueur(joueur);
 		}
 	}

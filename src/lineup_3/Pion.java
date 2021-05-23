@@ -1,6 +1,7 @@
 package lineup_3;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -20,7 +21,7 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * Correspond aux cases du Plateau.
 	 */
-	private List<Case> cases;
+	private Set<Case> cases;
 	/**
 	 * Correspond aux paramètre de la partie.
 	 */
@@ -40,16 +41,6 @@ public abstract class Pion implements Comparable<Pion>{
 	 * Liste des déplacements possibles pour un Pion donné
 	 */
 	private List<Deplacement> possibilites;
-	
-	/**
-	 * Correspond au nombre de côté par couche du Plateau.
-	 */
-	private int nbCote;
-	
-	/**
-	 * Correspond au nombre de couches du Plateau. 
-	 */
-	private final int NBCOUCHE;
 	
 	/**
 	 * Correspond à la nature du pion
@@ -86,28 +77,11 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * Instancie un Pion avec un maximum d'information.
 	 * @param j représente le pseudo du Joueur à qui appartient ce Pion.
-	 * @param nbCote représente le nombre de côté du Plateau.(Utile pour savoir où se déplacer).
-	 * @param nbCouche représente le nombre de couche du Plateau.(Utile pour savoir où se déplacer).
+	 * @param p Représente les paramètres de la partie en cours.
 	 */
-	public Pion(Joueur j, int nbCote, int nbCouche) {
+	public Pion(Joueur j, Parametres p) {
 		this.joueur = j;
-		this.nbCote = nbCote;
-		this.NBCOUCHE = nbCouche;
-	}
-
-	/**
-	 * Instancie un pion avec ses coordonnées.
-	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
-	 */
-	public Pion(Joueur j) {
-		this(j, 0, 0);
-	}
-	
-	/**
-	 * Instancie un pion sans paramètre particulier.
-	 */
-	public Pion()  {
-		this(null);
+		this.param = p;
 	}
 	
 		// Methods
@@ -141,7 +115,6 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	* deplacementsPossibles détermine, dans l'absolu, les possibles mouvements du Pion courant.
 	*/
-
 	public void deplacementsPossibles() {
 		if(this.possibilites != null) {
 			this.possibilites.clear();
@@ -151,42 +124,30 @@ public abstract class Pion implements Comparable<Pion>{
 		this.possibilites.add(Deplacement.GAUCHE);
 		this.possibilites.add(Deplacement.DROITE);
 
-	/*Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.*/
-		if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {//TODO ajouter un attribut param là où besoin.
+	//Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.
+		if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {
 			this.possibilites.add(Deplacement.BAS);
 		} else if (this.c.getCoordonnees().getX() == 0) {
 			this.possibilites.add(Deplacement.HAUT);
-		} else if (this.c.getCoordonnees().getX()%2 != 0) {
+		} else if (this.c.getCoordonnees().getY()%2 != 0) {
 			this.possibilites.add(Deplacement.BAS);
 			this.possibilites.add(Deplacement.HAUT);	
 		}
 	}
 	
-	/* A finir si on a le temps, dans le but de surligner les possibilités en vert sur le plateau.
-		/**
-		* estLibre Vérifie si les cases autour de celle passée en paramètre sont libre ou non.
-		* @param listeC Représente la liste des cases du plateau.
-		*/
-	/*
-		public boolean estLibre(List<Case> listeC) {
-			deplacementsPossibles();
-			for (Déplacement d : this.possibilites) {
-				if (this.c.getCoordonnees().getX()) {
-					
-				}
-			}
-		}
+	/*TODO Vérifier (si on a le temps) les cases sans Pion autour la case courante
+	* dans le but de surligner les possibilités en vert sur le plateau.
 	*/
 
 	/**
-	* deplacerPion permet de déplacer le Pion courant vers la case de la direction passée en paramètre.
+	* deplacerPion permet de déplacer le Pion courant vers la case de la direction passée en paramètre si celle-ci est libre..
 	* @param direction Représente la direction vers laquelle on souhaite déplacer le Pion courant.
 	* @return Retourne vrai si le déplacement s'est correctement effectué, faux sinon.
 	*/
 	public boolean deplacerPion(String direction) {
 		this.deplacementsPossibles();
 
-		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {
+		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {//TODO Vérifier que la case suivante est bien Libre!
 			this.setPosition(
 				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getX()),
 				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getY())%param.getNBPOINT()
@@ -196,86 +157,21 @@ public abstract class Pion implements Comparable<Pion>{
 		} else {
 			return false;
 		}
-		this.alignements();
-	}
-
-	/**
-	* poserPion permet de mettre un Pion qui était dans la main du Joueur sur le Plateau.
-	* @param c Représente la case où l'on souhaite poser le Pion courant.
-	* @return Retourne vrai si le Pion se pose correctement, faux s'il était déjà poser.
-	*/
-
-	public boolean poserPion(Case c) {
-		if (this.c != null) {
-			return false;
-		} else {
-			this.c = c;
-			return true;
-		}
-		//TODO update l'attribut Pion de l'ancienne case et celui de la nouvelle.
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + NBCOUCHE;
-		result = prime * result + ((c.getCoordonnees() == null) ? 0 : c.getCoordonnees().hashCode());
+		result = prime * result + ((c == null) ? 0 : c.hashCode());
+		result = prime * result + ((cases == null) ? 0 : cases.hashCode());
 		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
 		result = prime * result + ((nature == null) ? 0 : nature.hashCode());
-		result = prime * result + nbCote;
+		result = prime * result + ((param == null) ? 0 : param.hashCode());
 		result = prime * result + ((possibilites == null) ? 0 : possibilites.hashCode());
 		return result;
 	}
-
-		/*public boolean alignements(Plateau p) {
-		//Peu importe le point, il y a toujours des points à gauche et à droite.
-			Paire pair = new Paire(this.c.getCoordonnees().getX()-1, this.c.getCoordonnees().getY());
-			if(this.cases.get(p.retrouverSommet(pair)).EstLibre()) {
-				
-			}
-			this.possibilites.add(Deplacement.DROITE);
-
-		/*Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.*/
-			/*if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {//TODO ajouter un attribut param là où besoin.
-				this.possibilites.add(Deplacement.BAS);
-			} else if (this.c.getCoordonnees().getX() == 0) {
-				this.possibilites.add(Deplacement.HAUT);
-			} else if (this.c.getCoordonnees().getX()%2 != 0) {
-				this.possibilites.add(Deplacement.BAS);
-				this.possibilites.add(Deplacement.HAUT);	
-			}
-		}*/
 	
-	/**
-	 * alignements regarde si autour de la case du Pion courant d'autres Pion 
-	 * @return
-	 */
-	public boolean alignements() {
-		
-		if (this.c.caseSuivante().getPion().compareTo(this) == 1
-				&& this.c.casePrecedente().getPion().compareTo(this) == 1) {
-			return true;
-		}
-		
-		if (this.c.getCoordonnees().getY()%2 != 0) {
-			
-			if (this.c.getCoordonnees().getX() == param.getNBCOUCHE()) {
-				if (this.c.caseInferieure().getPion().compareTo(this) == 1
-						&& this.c.caseInferieure().caseInferieure().getPion().compareTo(this) == 1) {
-					return true;
-				}
-			} else if(this.c.getCoordonnees().getX() == 0) {
-				if(this.c.caseSuperieure().getPion().getJoueur() == this.joueur
-						&& this.c.caseSuperieure().caseSuperieure().getPion().compareTo(this) == 1){
-					
-				}
-			} else {
-				this.c.caseInferieure();
-				this.c.caseSuperieure();
-			}
-		}
-	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -285,12 +181,15 @@ public abstract class Pion implements Comparable<Pion>{
 		if (getClass() != obj.getClass())
 			return false;
 		Pion other = (Pion) obj;
-		if (NBCOUCHE != other.NBCOUCHE)
-			return false;
-		if (c.getCoordonnees() == null) {
-			if (other.c.getCoordonnees() != null)
+		if (c == null) {
+			if (other.c != null)
 				return false;
-		} else if (!c.getCoordonnees().equals(other.c.getCoordonnees()))
+		} else if (!c.equals(other.c))
+			return false;
+		if (cases == null) {
+			if (other.cases != null)
+				return false;
+		} else if (!cases.equals(other.cases))
 			return false;
 		if (joueur == null) {
 			if (other.joueur != null)
@@ -299,7 +198,10 @@ public abstract class Pion implements Comparable<Pion>{
 			return false;
 		if (nature != other.nature)
 			return false;
-		if (nbCote != other.nbCote)
+		if (param == null) {
+			if (other.param != null)
+				return false;
+		} else if (!param.equals(other.param))
 			return false;
 		if (possibilites == null) {
 			if (other.possibilites != null)

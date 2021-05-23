@@ -1,6 +1,6 @@
 package lineup_3;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Cette classe représente une Case de plateau puvant stocker différentes infos comme sa disponibilité, si elle possède
@@ -37,7 +37,7 @@ public class Case {
 	/**
 	 * Correspond à la liste de Case du Plateau.
 	 */
-	private List<Case> cases;
+	private Set<Case> cases;
 	
 	/**
 	 * Correspond aux paramètres de la partie
@@ -76,6 +76,7 @@ public class Case {
 		this.coordonnees = new Paire(couche, point);
 	}
 	
+	//TODO javadoc.
 	public Case(int couche, int point, Parametres p) {
 		this.coordonnees = new Paire(couche, point);
 		this.param = p;
@@ -112,35 +113,19 @@ public class Case {
 		}
 		return false;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (estLibre ? 1231 : 1237);
-		result = prime * result + (estPiege ? 1231 : 1237);
-		result = prime * result + ((pion == null) ? 0 : pion.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Case other = (Case) obj;
-		if (estLibre != other.estLibre)
-			return false;
-		if (estPiege != other.estPiege)
-			return false;
-		if (pion == null) {
-			if (other.pion != null)
-				return false;
-		} else if (!pion.equals(other.pion))
-			return false;
-		return true;
+	
+	/**
+	 * caseA Cherche une case aux coordonnées passées en paramètres.
+	 * @param p Représente une Paire de coordonnées.
+	 * @return Retourne la case aux coordonnées voulu et null si elle n'existe pas.
+	 */
+	public Case caseA(Paire p) {
+		for (Case c : cases) {
+			if (c.getCoordonnees() == p) {
+				return c;
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -149,13 +134,12 @@ public class Case {
 	 * Si elle n'existe pas, elle retourne une Case null.
 	 */
 	public Case caseSuivante() {
-		Case tmp = new Case();
-		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()+1%(2*param.getNBCOTE())) {
-				tmp = c;
+			for (Case c : cases) {
+			if (c.getCoordonnees().getY() == this.getCoordonnees().getY()+1%(2*param.getNBCOTE())) {
+				return c;
 			}
 		}
-		return tmp;
+		return null;
 	}
 	
 	/**
@@ -166,7 +150,7 @@ public class Case {
 	public Case casePrecedente() {
 		Case tmp = new Case();
 		for (Case c : cases) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getY()-1%(2*param.getNBCOTE())) {
+			if (c.getCoordonnees().getY() == this.getCoordonnees().getY()-1%(2*param.getNBCOTE())) {
 				tmp = c;
 			}
 		}
@@ -180,16 +164,12 @@ public class Case {
 	 * Si elle n'existe pas, elle retourne une Case null.
 	 */
 	public Case caseInferieure() {
-		Case tmp = new Case();
 		for (Case c : cases) {
 			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()-1) {
-				tmp = c;
-				if (tmp.getCoordonnees().getX()<0) {
-					tmp = null;
-				}
+				return c;
 			}
 		}
-		return tmp;
+		return null;
 	}
 	
 	/**
@@ -199,16 +179,12 @@ public class Case {
 	 * Si elle n'existe pas, elle retourne une Case null.
 	 */
 	public Case caseSuperieure() {
-		Case tmp = new Case();
 		for (Case c : cases) {
 			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()+1) {
-				tmp = c;
-				if (tmp.getCoordonnees().getX()>param.getNBCOUCHE()) {
-					tmp = null;
-				}
+				return c;
 			}
 		}
-		return tmp;
+		return null;
 	}
 	
 	/**
@@ -231,7 +207,104 @@ public class Case {
 		}
 		return false;
 	}
+	
+	/**
+	 * alignements regarde si autour du Pion de la Case courante, d'autres Pion appartiennent au même Joueur.
+	 * Auquel cas, il y a d'éventuels alignements.
+	 * @return Retourne vrai si un alignements de trois Pion est détecté, faux sinon.
+	 */
+	public boolean alignements() {
+		
+		// On regarde les éventuels alignements sur la même couche.
+			if (this.caseSuivante().getPion().compareTo(this.pion) == 1
+					&& this.casePrecedente().getPion().compareTo(this.pion) == 1) {
+				return true;
+			}
+			
+			if (this.caseSuivante().getPion().compareTo(this.pion) == 1
+					&& this.caseSuivante().caseSuivante().getPion().compareTo(this.pion) == 1) {
+				return true;			
+			}
+			
+			if (this.casePrecedente().getPion().compareTo(this.pion) == 1
+					&& this.casePrecedente().casePrecedente().getPion().compareTo(this.pion) == 1) {
+				return true;
+			}
+		
+		// S'il n'y a pas d'alignements sur la même couche, on regarde les éventuels alignements inter-couche.
+			if (this.getCoordonnees().getY()%2 != 0) {
+				
+				if (this.getCoordonnees().getX() == param.getNBCOUCHE()) {
+					if (this.caseInferieure().getPion().compareTo(this.pion) == 1
+							&& this.caseInferieure().caseInferieure().getPion().compareTo(this.pion) == 1) {
+						return true;
+					}
+				}
+				
+				if(this.getCoordonnees().getX() == 0) {
+					if(this.caseSuperieure().getPion().compareTo(this.pion)== 1
+							&& this.caseSuperieure().caseSuperieure().getPion().compareTo(this.pion) == 1){
+						return true;
+					}
+				}
+				
+				if(this.caseInferieure().getPion().compareTo(this.pion) == 1
+						&& this.caseSuperieure().getPion().compareTo(this.pion) == 1) {
+					return true;
+				}
+			}
+			return false;
+		}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cases == null) ? 0 : cases.hashCode());
+		result = prime * result + ((coordonnees == null) ? 0 : coordonnees.hashCode());
+		result = prime * result + (estLibre ? 1231 : 1237);
+		result = prime * result + (estPiege ? 1231 : 1237);
+		result = prime * result + ((param == null) ? 0 : param.hashCode());
+		result = prime * result + ((pion == null) ? 0 : pion.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Case other = (Case) obj;
+		if (cases == null) {
+			if (other.cases != null)
+				return false;
+		} else if (!cases.equals(other.cases))
+			return false;
+		if (coordonnees == null) {
+			if (other.coordonnees != null)
+				return false;
+		} else if (!coordonnees.equals(other.coordonnees))
+			return false;
+		if (estLibre != other.estLibre)
+			return false;
+		if (estPiege != other.estPiege)
+			return false;
+		if (param == null) {
+			if (other.param != null)
+				return false;
+		} else if (!param.equals(other.param))
+			return false;
+		if (pion == null) {
+			if (other.pion != null)
+				return false;
+		} else if (!pion.equals(other.pion))
+			return false;
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -149,10 +149,12 @@ public class Paire {
 		/**
 		 * Permet d'inverser les deux valeurs de la paire courante.
 		 */
-		public void inverser() {
+		public Paire inverser() {
 			int save = x;
 			x = y;
 			y = save;
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -178,9 +180,11 @@ public class Paire {
 		 * 
 		 * @param terme2 - paire à ajouter à la paire courante
 		 */
-		public void sommeAvec(Paire terme2) {
+		public Paire sommeAvec(Paire terme2) {
 			ajouterX(terme2.x);
 			ajouterY(terme2.y);
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -188,9 +192,11 @@ public class Paire {
 		 * 
 		 * @param terme2 - paire à enlever à la paire courante
 		 */
-		public void soustractionAvec(Paire terme2) {
+		public Paire soustractionAvec(Paire terme2) {
 			enleverX(terme2.x);
 			enleverY(terme2.y);
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -198,8 +204,10 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à ajouter au premier argument.
 		 */
-		public void ajouterX(int i) {
+		public Paire ajouterX(int i) {
 			x += i;
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -207,8 +215,10 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à enlever au premier argument.
 		 */
-		public void enleverX(int i) {
+		public Paire enleverX(int i) {
 			ajouterX(-i);
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -216,8 +226,10 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à ajouter au deuxième argument.
 		 */
-		public void ajouterY(int i) {
+		public Paire ajouterY(int i) {
 			y += i;
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -225,8 +237,10 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à enlever au deuxième argument.
 		 */
-		public void enleverY(int i) {
+		public Paire enleverY(int i) {
 			ajouterY(-i);
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -234,9 +248,11 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à ajouter aux arguments.
 		 */
-		public void ajouter(int i) {
+		public Paire ajouter(int i) {
 			ajouterX(i);
 			ajouterY(i);
+			
+			return new Paire(x, y);
 		}
 		
 		/**
@@ -244,7 +260,9 @@ public class Paire {
 		 * 
 		 * @param i - la valeur à enlever aux arguments.
 		 */
-		public void enlever(int i) {
+		public Paire enlever(int i) {
 			ajouter(-i);
+			
+			return new Paire(x, y);
 		}
 }

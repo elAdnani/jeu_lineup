@@ -6,9 +6,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * Un graphe est un ensemble de sommets. Ceux-ci peuvent être connectés entre eux par des arrêtes. Ces arrêtes peuvent avoir une direction, pouvant ainsi rendre impossible le passage (en sens inverse) entre deux sommets.
- * Cette classe offre donc la possibilité de créer des graphes, de leur ajouter ou supprimer des sommets et des arrêtes
- * <br>
+ * <p>Utilisation d'un graphe non pondéré avec des listes</p>
+ * <p>
+ * 	Un graphe est un ensemble de sommets.<br>
+ *  Ceux-ci peuvent être connectés entre eux par des arrêtes.<br>
+ *  Ces arrêtes peuvent avoir une direction, pouvant ainsi rendre impossible le passage (en sens inverse) entre deux sommets.<br>
+ * 	Cette classe offre donc la possibilité de créer des graphes, de leur ajouter ou supprimer des sommets et des arrêtes
+ * </p>
+ * <p>
  * Lors de la création du graphe, les constructeurs offrent la possibilité de :
  * <ul>
  * 	<li>Créer un graphe vide, c'est à dire avec aucun sommet ni arrête.</li>
@@ -16,16 +21,23 @@ import java.util.HashSet;
  * 	<li>Créer un graphe avec uniquement un nom et le type du graphe.</li>
  * 	<li>Créer un graphe complètement spécifié</li>
  * </ul>
- * Par défaut le graphe est non orienté.
- * <br>
- * Les getters fournis permettent de récupérer la liste de sommets, les arrêtes et le nom du graphe.
- * Le seul setter proposé permet de changer le nom du graphe. Les autres sont bloqués pour forcer l'utilisateur à utiliser les méthodes proposées pour ne pas casser le graphe.
- * <br>
- * Les méthodes fournies permettent d'ajouter ou de supprimer des sommets ou des arrêtes.
- * D'autres méthodes servent à vérifier si le graphe est orienté et/ou pondéré.
- * Si deux sommets sont reliés entre eux...
- * <br>
+ * </p>
+ * <p>
+ * Par défaut le graphe est n'est pas orienté.
+ * </p>
+ * <p>
+ * 	Les getters fournis permettent de récupérer la liste de sommets, les arrêtes et le nom du graphe.<br>
+ * 	Le seul setter proposé permet de changer le nom du graphe.<br>
+ * 	Les autres sont bloqués pour forcer l'utilisateur à utiliser les méthodes proposées pour ne pas casser le graphe.
+ * </p>
+ * <p>
+ * 	Les méthodes fournies permettent d'ajouter ou de supprimer des sommets ou des arrêtes.<br>
+ * 	D'autres méthodes servent à vérifier si le graphe est orienté et/ou pondéré.<br>
+ * 	Si deux sommets sont reliés entre eux...
+ * </p>
+ * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
+ * 
  * @param <T> Un type quelconque à placer aux sommets du graphe.
  */
 public class GrapheListe<T> extends Graphe<T> {
@@ -37,7 +49,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		private String nom;
 		
 		/** La liste de sommets du graphe. Celle-ci ne peut contenir aucun doublon. */
-		private Set<T> sommets;
+		private Set<T> ensembleSommets;
 		
 		/** Cette map regroupe toutes les arrêtes du graphe. Une arrête part de l'indice et se dirige vers chacun des sommets qui lui sont renseignés dans la liste. */
 		private Map<T, Set<T>> arretes;
@@ -48,14 +60,15 @@ public class GrapheListe<T> extends Graphe<T> {
 		
 	/* CONSTRUCTEURS ______________________________ */
 		/**
-		 * Constructeur complètement spécifié.
+		 * <p>Constructeur complètement spécifié.</p>
+		 * <p>Il va créer un graphe grâce aux paramètres qui lui sont donnés et vérifie leur cohérence.</p>
 		 * 
 		 * @param nom Le nom à donner au graphe.
 		 * @param type Le type du graphe.
-		 * @param sommets La liste de sommets du graphe.
+		 * @param ensembleSommets La liste de sommets du graphe.
 		 * @param arretes Les arrêtes reliant les sommets.
 		 */
-		public GrapheListe(String nom, GrapheType type, Set<T> sommets, Map<T, Set<T>> arretes) {
+		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets, Map<T, Set<T>> arretes) {
 			// Nom
 			if (nom == null)
 				this.nom = "Graphe n°" + ++cpt;
@@ -69,10 +82,10 @@ public class GrapheListe<T> extends Graphe<T> {
 				this.type = type;
 			
 			// Sommets
-			if (sommets == null)
-				this.sommets = new HashSet<>();
+			if (ensembleSommets == null)
+				this.ensembleSommets = new HashSet<>();
 			else
-				this.sommets = sommets;
+				this.ensembleSommets = ensembleSommets;
 			
 			// Arrêtes
 			if (arretes == null)
@@ -82,17 +95,32 @@ public class GrapheListe<T> extends Graphe<T> {
 		}
 		
 		/**
-		 * Constructeur ne nécessitant que le nom et le type du graphe.
+		 * <p>Constructeur avec le nom, le type et des sommets</p>
+		 * <p>Il va créer un graphe avec les sommets donnés.</p>
+		 * <p>Le type et le nom sont également donnés en paramètres</p>
+		 * 
+		 * @param nom Le nom à donner au graphe.
+		 * @param type Le type du graphe.
+		 * @param ensembleSommets La liste de sommets du graphe.
+		 */
+		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets) {
+			this(nom, type, ensembleSommets, null);
+		}
+		
+		/**
+		 * <p>Constructeur avec le nom et le type du graphe</p>
+		 * <p>Il va créer un graphe nul ayant pour nom et pour type, ceux passés en paramètres.</p>
 		 * 
 		 * @param nom Le nom à donner au graphe.
 		 * @param type Le type du graphe.
 		 */
 		public GrapheListe(String nom, GrapheType type) {
-			this(nom, type, null, null);
+			this(nom, type, null);
 		}
 		
 		/**
-		 * Constructeur qui crée un graphe non orienté dont le nom est donné en paramètres.
+		 * <p>Constructeur avec seulement le nom du graphe.</p>
+		 * <p>Il va créer un graphe nul non orienté dont le nom est donné en paramètres.</p>
 		 * 
 		 * @param nom Le nom à donner au graphe.
 		 */
@@ -101,10 +129,13 @@ public class GrapheListe<T> extends Graphe<T> {
 		}
 		
 		/**
-		 * Constructeur sans paramètres.
+		 * <p>Constructeur sans paramètres.</p>
+		 * <p>Il va créer un graphe nul, sans sommet.</p>
+		 * <p>Son nom sera généré en fonction de la valeur d'un compteur</p>
+		 * <p>Par défaut, il ne sera pas orienté</p>
 		 */
 		public GrapheListe() {
-			this("Graphe n°" + ++cpt);
+			this(null);
 		}
 		
 		
@@ -138,7 +169,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		public Set<T> getSommets() {
 			Set<T> nouveau = new HashSet<>();
 			
-			for (T s : sommets) 
+			for (T s : ensembleSommets) 
 				nouveau.add(s);
 			
 			return nouveau;
@@ -152,7 +183,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		public Map<T, Set<T>> getArretes() {
 			Map<T, Set<T>> nouvelleMap = new HashMap<>();
 			
-			for (T s : sommets) {
+			for (T s : ensembleSommets) {
 				Set<T> nouveauSet = new HashSet<>();
 				
 				for (T t : arretes.get(s)) {
@@ -171,9 +202,10 @@ public class GrapheListe<T> extends Graphe<T> {
 		
 	/* TOSTRING ______________________________ */
 		/**
-		 * Renvoie une chaîne de caractères de la forme suivante :<br>
-		 * <br>
-		 * # Nom du graphe<br>
+		 * <p>Représente sous la forme d'une chaîne de caractères le graphe créé.</p>
+		 * <p>De la forme suivante :</p>
+		 * <code>
+		 * # GrapheMatrice<br>
 		 * type  : UGRAPH<br>
 		 * nodes : [a, b, c, d]<br>
 		 * edges :<br>
@@ -181,6 +213,9 @@ public class GrapheListe<T> extends Graphe<T> {
 		 *  - b : [a, c, d]<br>
 		 *  - c : [a, b]<br>
 		 *  - d : [b]<br>
+		 *  </code>
+		 * 
+		 * @return Une chaîne de caractères représentant le graphe.
 		 */
 		@Override
 		public String toString() {
@@ -191,7 +226,7 @@ public class GrapheListe<T> extends Graphe<T> {
 			
 			return "# " + nom + "\n"
 				 + "type  : " + type + "\n"
-				 + "nodes : " + sommets.toString() + "\n"
+				 + "nodes : " + ensembleSommets.toString() + "\n"
 				 + "edges : " + affichageArretes;
 		}
 		
@@ -200,137 +235,104 @@ public class GrapheListe<T> extends Graphe<T> {
 		
 		
 	/* MÉTHODES ______________________________ */
-		/**
-		 * Ajoute un sommet au graphe.
-		 * Ne fonctionne pas si celui-ci existe déjà.
-		 * 
-		 * @param s Le nouveau sommet
-		 * @return true si l'opération s'est bien passée et false sinon
-		 */
-		public boolean ajouterSommet(T s) {
-			if (s == null || existeSommet(s)) // si le nom existe déjà ou s'il est vide
+		public boolean ajouterSommet(T sommet) {
+			if (sommet == null || existeSommet(sommet)) // si le nom existe déjà ou s'il est vide
 				return false;
 			else {
-				sommets.add(s);
-				arretes.put(s, new HashSet<T>());
+				ensembleSommets.add(sommet);
+				arretes.put(sommet, new HashSet<T>());
 				
 				return true;
 			}
 		}	
 		
-		/**
-		 * Remplace un sommet par un autre sans modifier les arrêtes qui lui sont liées.
-		 * 
-		 * @param avant Le sommet à remplacer.
-		 * @param apres Le nouveau sommet.
-		 * @return true si l'opération s'est bien déroulée et false sinon.
-		 */
-		public boolean renommerSommet(T avant, T apres) {
-			if (apres != null && existeSommet(avant) && !existeSommet(apres)) {
+		public boolean remplacerSommet(T actuel, T nouveau) {
+			if (nouveau != null && existeSommet(actuel) && !existeSommet(nouveau)) {
 				
 				// recrée la liste du sommet
-				Set<T> save = arretes.remove(avant);
-				arretes.put(apres, save);
+				Set<T> save = arretes.remove(actuel);
+				arretes.put(nouveau, save);
 				
 				// Modifie l'ancien élément dans chacune des listes de sommets
 				for (T s : arretes.keySet())
-					if (arretes.get(s).remove(avant))
-						arretes.get(s).add(apres);
+					if (arretes.get(s).remove(actuel))
+						arretes.get(s).add(nouveau);
 				
 				// renomme le sommet dans la liste des sommets
-				sommets.remove(avant);
-				sommets.add(apres);
+				ensembleSommets.remove(actuel);
+				ensembleSommets.add(nouveau);
 				
 				return true;
 			} else
 				return false;
 		}
 		
-		/**
-		 * Enlève un certain sommet au graphe.
-		 * Il faut que celui-ci existe.
-		 * 
-		 * @param s Le sommet à enlever.
-		 * @return true si le sommet a bien été enlevé et false sinon.
-		 */
-		public boolean enleverSommet(T s) {
-			if (existeSommet(s)) {
-				for (T sommet : arretes.keySet())
-					arretes.get(sommet).remove(s);
+		public boolean enleverSommet(T sommet) {
+			if (existeSommet(sommet)) {
+				// on enlève le sommet de la liste des sommets
+				ensembleSommets.remove(sommet);
 				
-				arretes.remove(s);
-				sommets.remove(s);
+				// Pour chaque sommet, on enlève les arrêtes qui se dirigent vers le sommet à supprimer
+				for (T sommetCourant : ensembleSommets)
+					arretes.get(sommetCourant).remove(sommet);
+				
+				// on enlève toutes les arrêtes du sommet à supprimer
+				arretes.remove(sommet);
 				
 				return true;
 			} else
 				return false;
 		}
 		
-		/**
-		 * Vérifie si un sommet donné existe.
-		 * 
-		 * @param s Le sommet à vérifier.
-		 * @return true si le sommet existe et false sinon.
-		 */
-		public boolean existeSommet(T s) {
-			return sommets.contains(s);
+		public boolean existeSommet(T sommet) {
+			return ensembleSommets.contains(sommet);
 		}
 		
-		/**
-		 * Permet d'ajouter une arrête au graphe.<br>
-		 * Dans le cas d'un graphe orienté, l'arrête part du sommet s1 et se dirige vers le sommet s2.
-		 */
-		public boolean ajouterArrete(T s1, T s2) {		
-			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
+		public boolean ajouterArrete(T depart, T arrivee) {		
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))
 				return false;
 			else {
-				arretes.get(s1).add(s2);
+				arretes.get(depart).add(arrivee);
 				
 				if (!type.isDirected())
-					arretes.get(s2).add(s1);
+					arretes.get(arrivee).add(depart);
 				
 				return true;
 			}	
 		}	
 		
-		/** Supprime une arrête entre deux sommets. */
-		public boolean enleverArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
+		public boolean enleverArrete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArrete(depart, arrivee))
 				return false;
 			else {
-				boolean reussite = arretes.get(s1).remove(s2);
+				boolean reussite = arretes.get(depart).remove(arrivee);
 				
-				if (!type.isDirected()) // si le graphe n'est pas dirigé
-					reussite = arretes.get(s2).remove(s1);
+				if (!type.isDirected())
+					reussite = arretes.get(arrivee).remove(depart);
 				
 				return reussite;
 			}
 		}
 		
-		/**
-		 * Vérifie s'il existe une arrête entre deux sommets.
-		 * 
-		 * @param s1 sommet théorique de départ
-		 * @param s2 sommet théorique d'arrivée
-		 * @return true si l'arrête existe, false sinon
-		 */
-		public boolean existeArrete(T s1, T s2) {
-			return arretes.get(s1).contains(s2);
+		public boolean existeArrete(T depart, T arrivee) {
+			return arretes.get(depart).contains(arrivee);
 		}
 		
 		/**
-		 * Donne un set de tous les sommets vers lesquels arrivent des arrêtes partant du sommet donné
+		 * <p>Donne un set de tous les enfants d'un sommet.</p>
+		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
 		 * 
-		 * @param s Le sommet parent
-		 * @return Un set null s'il y a une erreur et contenant les enfants du sommet sinon.
+		 * @param parent Le sommet parent
+		 * @return - Un Set des enfants du sommet<br>
+		 *         - null en cas de parent non valide
 		 */
-		public Set<T> enfantsDe(T s) {
-			if (s == null || !existeSommet(s))
+		public Set<T> enfantsDe(T parent) {
+			if (parent == null || !existeSommet(parent))
 				return null;
 			
 			Set<T> enfants = new HashSet<>();
 			
-			for (T t : arretes.get(s)) {
+			for (T t : arretes.get(parent)) {
 				enfants.add(t);
 			}
 			

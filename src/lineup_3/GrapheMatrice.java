@@ -6,26 +6,40 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Un graphe est un ensemble de sommets. Ceux-ci peuvent être connectés entre eux par des arrêtes. Ces arrêtes peuvent avoir une direction, pouvant ainsi rendre impossible le passage (en sens inverse) entre deux sommets.
- * Cette classe offre donc la possibilité de créer des graphes, de leur ajouter ou supprimer des sommets et des arrêtes
- * <br>
+ * <p>Utilisation d'un graphe pouvant être pondéré et/ou dirigé grâce selon une matrice d'adjacence</p>
+ * <p>
+ * 	Un graphe est un ensemble de sommets.<br>
+ * 	Ceux-ci peuvent être connectés entre eux par des arrêtes.<br>
+ * 	Ces arrêtes peuvent avoir une direction, pouvant ainsi rendre impossible le passage (en sens inverse) entre deux sommets.<br>
+ * 	Ils peuvent également avoir une valeur qui leur est propre que l'on appelle poids.
+ * </p>
+ * <p>
+ * 	Cette classe offre donc la possibilité de créer des graphes, de leur ajouter ou enlever des sommets ou des arrêtes
+ * </p>
+ * <p>
  * Lors de la création du graphe, les constructeurs offrent la possibilité de :
  * <ul>
  * 	<li>Créer un graphe vide, c'est à dire avec aucun sommet et une matrice vide.</li>
- * 	<li>Créer un graphe avec uniquement des sommets, selon les sommets donnés, une matrice nulle aux dimensions adéquats est créée.</li>
+ * 	<li>Créer un graphe avec uniquement des sommets, selon les sommets donnés, une matrice nulle aux dimensions adéquates est créée.</li>
  * 	<li>Créer un graphe complètement spécifié</li>
  * </ul>
- * Par défaut le graphe est non orienté, mais si le premier paramètre précise un type, alors il le respectera.
- * Pour le constructeur complètement spécifié, il détectera le type de graphe grâce à la matrice et pourra donc sélectionner seul son type.
- * <br>
- * Les getters fournis permettent de récupérer la liste de sommets et la matrice d'adjacence du graphe, pratique pour les utiliser dans un constructeur complètement spécifié.
- * Les setters eux sont bloqués. C'est pour éviter toute modification non souhaitée, ainsi il faut passer par les méthodes de modification.
- * <br>
- * Les méthodes fournies permettent d'ajouter ou de supprimer des sommets ou des arrêtes.
- * D'autres méthodes servent à vérifier si le graphe est orienté et/ou pondéré.
- * Si deux sommets sont reliés entre eux
- * <br>
+ * </p>
+ * <p>
+ * 	Par défaut, le graphe n'est pas orienté, mais si le premier paramètre précise un type, alors il le respectera.<br>
+ * 	Pour le constructeur complètement spécifié, il détectera le type de graphe grâce à la matrice et pourra donc sélectionner seul son type.
+ * </p>
+ * <p>
+ * 	Aucun getter ni setter n'est fourni pour éviter des erreurs.<br>
+ * 	Ceci oblige donc à utiliser les méthodes pour paramétrer le graphe.
+ * </p>
+ * <p>
+ * 	Les méthodes fournies permettent d'ajouter ou de supprimer des sommets ou des arrêtes.<br>
+ * 	D'autres méthodes servent à vérifier si le graphe est orienté et/ou pondéré.<br>
+ * 	Si deux sommets sont reliés entre eux
+ * </p>
+ * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
+ * 
  * @param <T> Un type quelconque à placer aux sommets du graphe.
  */
 public class GrapheMatrice<T> extends Graphe<T> {
@@ -34,7 +48,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 * Regroupe l'ensemble des sommets du graphe dans une pile.
 		 * Ceux-ci sont triés par ordre d'ajout afin de correspondre à la matrice d'adjacence.
 		 */
-		private List<T> sommets;
+		private List<T> ensembleSommets;
 		
 		/**
 		 * Matrice d'adjacence du graphe.
@@ -50,115 +64,66 @@ public class GrapheMatrice<T> extends Graphe<T> {
 	
 	/* CONSTRUCTEURS ______________________________ */
 		/**
-		 * Ce constructeur sans paramètres va créer un graphe nul, sans sommet.
-		 * Par défaut, il ne sera ni orienté ni pondéré.
+		 * <p>Constructeur sans paramètres.</p>
+		 * <p>Il va créer un graphe nul, sans sommet.</p>
+		 * <p>Par défaut, il ne sera ni orienté ni pondéré.</p>
 		 */
-		public GrapheMatrice() {
-			this(GrapheType.UGRAPH);
-		}
+		public GrapheMatrice() { this(GrapheType.UGRAPH); }
 		
 		/**
-		 * Ce constructeur avec pour seul paramètre un type de graphe va créer un graphe nul dont le type sera celui donné en paramètres
+		 * <p>Constructeur typé.</p>
+		 * <p>Il va créer un graphe nul dont le type sera celui donné en paramètres.</p>
 		 * 
-		 * @param type Précision du type de graphe à construire
+		 * @param type Le type de graphe à construire.
 		 */
-		public GrapheMatrice(GrapheType type) {
-			this(type, null);
-		}
+		public GrapheMatrice(GrapheType type) { this(type, null); }
 		
 		/**
-		 * Ce constructeur créé un graphe ayant pour sommets ceux spécifiés en paramètres
+		 * <p>Constructeur avec un ensemble de sommets.</p>
+		 * <p>Il créé un graphe ayant pour sommets ceux spécifiés dans le Set donné en paramètre.</p>
 		 * 
-		 * @param sommets Contient les sommets à insérer dans le graphe
+		 * @param ensembleSommets Contient les sommets à insérer dans le graphe.
 		 */
-		public GrapheMatrice(Set<T> sommets) {
-			this(GrapheType.UGRAPH, sommets);
-		}
+		public GrapheMatrice(Set<T> ensembleSommets) { this(null, ensembleSommets); }
 		
 		/**
-		 * Ce constructeur créé un graphe ayant pour sommets ceux spécifiés en paramètres et ayant pour type, celui donné en premier paramètre.
+		 * <p>Constructeur typé avec un ensemble de sommets.</p>
+		 * <p>Il créé un graphe ayant pour sommets ceux spécifiés en paramètres et ayant pour type, celui donné en premier paramètre.</p>
 		 * 
-		 * @param type Précision du type de graphe à construire
-		 * @param sommets Contient les sommets à insérer dans le graphe
+		 * @param type Le type de graphe à construire
+		 * @param ensembleSommets Contient les sommets à insérer dans le graphe
 		 */
-		public GrapheMatrice(GrapheType type, Set<T> sommets) {
+		public GrapheMatrice(GrapheType type, Set<T> ensembleSommets) {
 			// Attribut du type
-			this.type = type;
+			if (type == null)
+				this.type = GrapheType.UGRAPH;
+			else
+				this.type = type;
 			
-			// Attribut des sommets
-			this.sommets = new ArrayList<T>();
-			if (sommets != null) {
-				for (T t : sommets)
-					this.sommets.add(t);
-			
-				// Attribut de la matrice
-				matrice = new Matrice(sommets.size());
-			} else {
-				matrice = new Matrice(0);
-			}
-		}
-		
-		/**
-		 * Ce constructeur créé un graphe ayant pour sommets ceux spécifiés en paramètres et leurs arrêtes de précisées par la matrice d'adjacence.
-		 * Il est conseillé de l'utiliser à partir du contenu d'un autre graphe afin d'éviter de commettre des erreurs.
-		 * 
-		 * @param sommets Contient les sommets à insérer dans le graphe
-		 * @param matrice Contient la matrice d'adjacence
-		 */
-		public GrapheMatrice(List<T> sommets, Matrice matrice) {
-			// dans les getters, une copie est déjà faite, ce ne sont donc pas les mêmes listes et matrices
-			this.sommets = sommets;
-			this.matrice = matrice;
-			
-			this.type = GrapheType.UGRAPH;
-			
-			if (!matrice.estSymetrique())
-				this.type = GrapheType.DIGRAPH;
-			
-			int i = 0;
-			
-			while (!this.type.isWeighted() && i < matrice.getTaille().getX()) {
-				int j = 0;
+			// Attribut des sommets et de la matrice
+			this.ensembleSommets = new ArrayList<T>();
+			if (ensembleSommets != null) {
+				for (T t : ensembleSommets)
+					this.ensembleSommets.add(t);
 				
-				while (!this.type.isWeighted() && j < matrice.getTaille().getY()) {
-					if (matrice.read(i, j) > 1 || matrice.read(i, j) < 0) {
-						if (this.type.isDirected())
-							this.type = GrapheType.DIWGRAPH;
-						else
-							this.type = GrapheType.UWGRAPH;
-					}
-					++j;
-				}
-				++i;
-			}
-		}
-		
-		
-		
-		
-		
-	/* ACCESSEURS ______________________________ */		
-		/**
-		 * Donne la liste des sommets composant le graphe
-		 * 
-		 * @return La liste des sommets
-		 */
-		public List<T> getSommets() {
-			List<T> contenu = new ArrayList<T>();
-			
-			for (int i = 0; i < sommets.size(); i++)
-				contenu.add(i, sommets.get(i));
-			
-			return contenu;
+				matrice = new Matrice(ensembleSommets.size());
+			} else
+				matrice = new Matrice(0);
 		}
 		
 		/**
-		 * Donne la matrice d'adjacence du graphe
+		 * <p>Constructeur à partir d'un autre graphe</p>
+		 * <p>Ce constructeur créé un nouveau graphe ayant les mêmes caractéristiques que celui passé en paramètres.</p>
 		 * 
-		 * @return La matrice d'adjacence
+		 * @param reference Le graphe à copier.
 		 */
-		public Matrice getMatrice() {
-			return new Matrice(matrice.getMatrice());
+		public GrapheMatrice(GrapheMatrice<T> reference) {
+			type = reference.type;
+			matrice = new Matrice(reference.matrice.getMatrice());
+			ensembleSommets = new ArrayList<T>();
+			
+			for (int i = 0; i < reference.ensembleSommets.size(); i++)
+				ensembleSommets.add(i, reference.ensembleSommets.get(i));
 		}
 		
 		
@@ -167,9 +132,9 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 	/* TOSTRING ______________________________ */
 		/**
-		 * Représente sous la forme d'une chaîne de caractères le graphe créé.
-		 * De la forme suivante :
-		 * 
+		 * <p>Représente sous la forme d'une chaîne de caractères le graphe créé.</p>
+		 * <p>De la forme suivante :</p>
+		 * <code>
 		 * # GrapheMatrice<br>
 		 * type  : UGRAPH<br>
 		 * nodes : [a, b, c, d]<br>
@@ -178,29 +143,30 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 *  - b : [a, c, d]<br>
 		 *  - c : [a, b]<br>
 		 *  - d : [b]<br>
+		 *  </code>
 		 * 
-		 * @return Une chaîne de caractères
+		 * @return Une chaîne de caractères représentant le graphe.
 		 */
 		@Override
 		public String toString() {
 			StringBuilder arretes = new StringBuilder();
 			
 			if (estPondere())
-				for (T s1 : sommets) {
+				for (T s1 : ensembleSommets) {
 					arretes.append("\n - " + s1 + " : [");
 					for (T s2 : enfantsDe(s1))
-						arretes.append(s2 + " ("+ matrice.read(sommets.indexOf(s1), sommets.indexOf(s2)) + "), ");
+						arretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
 					if (!enfantsDe(s1).isEmpty())
 						arretes.delete(arretes.length() - 2, arretes.length());
 					arretes.append("]");
 				}
 			else
-				for (T s : sommets)
+				for (T s : ensembleSommets)
 					arretes.append("\n - " + s + " : " + enfantsDe(s));
 			
 			return "# GrapheMatrice\n"
 				 + "type  : " + type + "\n"
-				 + "nodes : " + sommets.toString() + "\n"
+				 + "nodes : " + ensembleSommets.toString() + "\n"
 				 + "edges : " + arretes;
 		}
 		
@@ -209,23 +175,16 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		
 	/* MÉTHODES ______________________________ */
-		/**
-		 * Ajoute un sommet au graphe.
-		 * Ne fonctionne pas si celui-ci existe déjà.
-		 * 
-		 * @param s Le nouveau sommet
-		 * @return true si l'opération s'est bien passée et false sinon
-		 */
-		public boolean ajouterSommet(T s) {
+		public boolean ajouterSommet(T sommet) {
 			// si le sommet proposé n'existe pas et qu'il n'est pas nul alors on l'ajoute à la pile de sommets.
-			if (s == null || existeSommet(s))
+			if (sommet == null || existeSommet(sommet))
 				return false;
 			else {
-				sommets.add(s);
+				ensembleSommets.add(sommet);
 				
-				if (matrice.getTaille().getX() < sommets.size()) {
+				if (matrice.getTaille().getX() < ensembleSommets.size()) {
 					Matrice oldMatrice = new Matrice(matrice.getMatrice());
-					matrice = new Matrice(sommets.size());
+					matrice = new Matrice(ensembleSommets.size());
 					
 					for (int i = 0; i < oldMatrice.getTaille().getX(); i++)
 						for (int j = 0; j < oldMatrice.getTaille().getY(); j++)
@@ -236,33 +195,26 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			}
 		}
 		
-		public boolean renommerSommet(T avant, T apres) {
-			if (apres != null && existeSommet(avant) && !existeSommet(apres)) {
-				sommets.set(sommets.indexOf(avant), apres);
+		public boolean remplacerSommet(T actuel, T nouveau) {
+			if (nouveau != null && existeSommet(actuel) && !existeSommet(nouveau)) {
+				ensembleSommets.set(ensembleSommets.indexOf(actuel), nouveau);
 				
 				return true;
 			} else
 				return false;
 		}
-		
-		/**
-		 * Enlève un certain sommet au graphe.
-		 * Il faut que celui-ci existe.
-		 * 
-		 * @param s Le sommet à enlever
-		 * @return true si le sommet a bien été enlevé et false sinon
-		 */
-		public boolean enleverSommet(T s) {
-			if (s == null || !existeSommet(s))
+
+		public boolean enleverSommet(T sommet) {
+			if (sommet == null || !existeSommet(sommet))
 				return false;
 			else {
-				int index = sommets.indexOf(s);
-				sommets.remove(s);
+				int index = ensembleSommets.indexOf(sommet);
+				ensembleSommets.remove(sommet);
 				
 				Matrice oldMatrice = new Matrice(matrice.getMatrice());
-				matrice = new Matrice(sommets.size());
+				matrice = new Matrice(ensembleSommets.size());
 				
-				if (sommets.size() > 0) {
+				if (ensembleSommets.size() > 0) {
 					int ligne = 0;
 					
 					for (int i = 0; i < oldMatrice.getTaille().getX(); i++) {
@@ -282,50 +234,38 @@ public class GrapheMatrice<T> extends Graphe<T> {
 				return true;
 			}
 		}
-		
-		/**
-		 * Vérifie si un sommet donné existe.
-		 * 
-		 * @param s Le sommet à vérifier.
-		 * @return true si le sommet existe et false sinon.
-		 */
-		public boolean existeSommet(T s) {
-			return sommets.contains(s);
+
+		public boolean existeSommet(T sommet) {
+			return ensembleSommets.contains(sommet);
 		}
 		
-		/**
-		 * Ajoute une arrête entre deux sommets donnés.
-		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent mais aussi que l'arrête ne soit pas encore créée.
-		 * 
-		 * @param s1 Un sommet duquel faire partir l'arrête.
-		 * @param s2 Un sommet vers lequel se dirige l'arrête.
-		 * @return true si l'ajout a pu se faire et false sinon.
-		 */
-		public boolean ajouterArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2))
+		public boolean ajouterArrete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))
 				return false;
 			else {
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), 1);
+				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 1);
 				
 				if (!type.isDirected())
-					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 1);
+					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 1);
 				
 				return true;
 			}
 		}
 		
 		/**
-		 * Ajoute une arrête avec un certain poids entre deux sommets donnés.
-		 * Pour que cela réussisse, il faut évidemment que les deux sommets existent, que le poids soit non nul. Mais aussi que l'arrête ne soit pas encore créée et que les sommets donnés ne soient pas identiques.
-		 * Attention ! Cette méthode transforme le graphe en graphe pondéré !
+		 * <p>Ajoute une arrête avec un poids entre deux sommets.</p>
+		 * <p>Pour que cela réussisse, il faut évidemment que les deux sommets existent mais aussi que l'arrête ne soit pas encore créée.</p>
+		 * <p>Si le graphe est orienté, l'arrête sera en sens unique et s'il ne l'est pas, l'arrête sera en double sens.</p>
 		 * 
-		 * @param s1 Un sommet duquel faire partir l'arrête.
-		 * @param s2 Un sommet vers lequel se dirige l'arrête.
-		 * @param valeur Le poids à donner à l'arrête.
-		 * @return true si l'ajout a pu se faire et false sinon.
+		 * @param depart  Un sommet duquel faire partir l'arrête.
+		 * @param arrivee Un sommet vers lequel se dirige l'arrête.
+		 * @param valeur  La valeur du poids
+		 * 
+		 * @return - true si l'ajout a pu se faire<br>
+		 *         - false si rien n'a été modifié.
 		 */
-		public boolean ajouterArrete(T s1, T s2, int valeur) {
-			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || existeArrete(s1, s2)) // 
+		public boolean ajouterArrete(T depart, T arrivee, int valeur) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee)) // 
 				return false;
 			else {
 				if (valeur == 0)
@@ -338,110 +278,103 @@ public class GrapheMatrice<T> extends Graphe<T> {
 						type = GrapheType.UWGRAPH;
 				}
 				
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), valeur);
+				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), valeur);
 				
 				if (!type.isDirected())
-					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), valeur);
+					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), valeur);
 				
 				return true;
 			}
 		}
 		
-		/**
-		 * Enlève une arrête entre deux sommets donnés.
-		 * 
-		 * @param s1 Sommet duquel part l'arrête.
-		 * @param s2 Sommet duquel arrive l'arrête.
-		 * @return true si la suppression a pu se faire et false sinon.
-		 */
-		public boolean enleverArrete(T s1, T s2) {
-			if (s1 == null || s2 == null || s1.equals(s2) || !existeSommet(s1) || !existeSommet(s2) || !existeArrete(s1, s2))
+		public boolean enleverArrete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArrete(depart, arrivee))
 				return false;
 			else {
-				matrice.write(sommets.indexOf(s1), sommets.indexOf(s2), 0);
+				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 0);
 				
 				if (!type.isDirected())
-					matrice.write(sommets.indexOf(s2), sommets.indexOf(s1), 0);
+					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 0);
 				
 				return true;
 			}
 		}
 		
-		/**
-		 * Vérifie s'il existe une arrête entre deux sommets.
-		 * 
-		 * @param s1 sommet théorique de départ
-		 * @param s2 sommet théorique d'arrivée
-		 * @return true si l'arrête existe, false sinon
-		 */
-		public boolean existeArrete(T s1, T s2) {
-			int indiceS1 = sommets.indexOf(s1);
-			int indiceS2 = sommets.indexOf(s2);
+		public boolean existeArrete(T depart, T arrivee) {
+			int indiceDepart  = ensembleSommets.indexOf(depart);
+			int indiceArrivee = ensembleSommets.indexOf(arrivee);
 			
-			return indiceS1 != -1 && indiceS2 != -1 && matrice.read(indiceS1, indiceS2) != 0;
+			return indiceDepart != -1 && indiceArrivee != -1 && matrice.read(indiceDepart, indiceArrivee) != 0;
 		}
 		
 		/**
 		 * Donne un set de tous les voisins d'un sommet.
 		 * 
-		 * @param s Le sommet duquel chercher les voisins
-		 * @return Un set null s'il y a une erreur et contenant les voisins sinon 
+		 * @param sommet Le sommet duquel chercher les voisins
+		 * 
+		 * @return - Un Set des voisins du sommet<br>
+		 *         - null en cas de sommet non valide
 		 */
-		public Set<T> voisinsDe(T s) {
-			if (s == null || !existeSommet(s))
+		public Set<T> voisinsDe(T sommet) {
+			if (sommet == null || !existeSommet(sommet))
 				return null;
 			
 			Set<T> voisins = new HashSet<>();
-			int indiceS = sommets.indexOf(s);
+			int indiceS = ensembleSommets.indexOf(sommet);
 			
 			for (int i = 0; i < matrice.getTaille().getX(); i++) 
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
-					voisins.add(sommets.get(i));
+					voisins.add(ensembleSommets.get(i));
 			
 			if (type.isDirected())
 				for (int i = 0; i < matrice.getTaille().getX(); i++) 
 					if (matrice.read(i, indiceS) != 0 && indiceS != i)
-						voisins.add(sommets.get(i));
+						voisins.add(ensembleSommets.get(i));
 			
 			return voisins;
 		}
 		
 		/**
-		 * Donne un set de tous les sommets desquels partent les arrêtent qui arrivent sur le sommet donné
+		 * <p>Donne un set de tous les parents d'un sommet.</p>
+		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X -> Y (enfant)</p>
 		 * 
-		 * @param s Le sommet enfant
-		 * @return Un set null s'il y a une erreur et contenant les parents du sommet sinon.
+		 * @param enfant Le sommet enfant
+		 * 
+		 * @return - Un Set des parents du sommet<br>
+		 *         - null en cas d'enfant non valide
 		 */
-		public Set<T> parentsDe(T s) {
-			if (s == null || !existeSommet(s))
+		public Set<T> parentsDe(T enfant) {
+			if (enfant == null || !existeSommet(enfant))
 				return null;
 			
 			Set<T> parents = new HashSet<>();
-			int indiceS = sommets.indexOf(s);
+			int indiceS = ensembleSommets.indexOf(enfant);
 			
 			for (int i = 0; i < matrice.getTaille().getX(); i++)
 				if (matrice.read(i, indiceS) != 0 && indiceS != i)
-					parents.add(sommets.get(i));
+					parents.add(ensembleSommets.get(i));
 			
 			return parents;
 		}
 		
 		/**
-		 * Donne un set de tous les sommets vers lesquels arrivent des arrêtes partant du sommet donné
+		 * <p>Donne un set de tous les enfants d'un sommet.</p>
+		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
 		 * 
-		 * @param s Le sommet parent
-		 * @return Un set null s'il y a une erreur et contenant les enfants du sommet sinon.
+		 * @param parent Le sommet parent
+		 * @return - Un Set des enfants du sommet<br>
+		 *         - null en cas de parent non valide
 		 */
-		public Set<T> enfantsDe(T s) {
-			if (s == null || !existeSommet(s))
+		public Set<T> enfantsDe(T parent) {
+			if (parent == null || !existeSommet(parent))
 				return null;
 			
 			Set<T> enfants = new HashSet<>();
-			int indiceS = sommets.indexOf(s);
+			int indiceS = ensembleSommets.indexOf(parent);
 			
 			for (int i = 0; i < matrice.getTaille().getX(); i++)
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
-					enfants.add(sommets.get(i));
+					enfants.add(ensembleSommets.get(i));
 			
 			return enfants;
 		}

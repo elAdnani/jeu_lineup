@@ -31,20 +31,21 @@ import java.util.Set;
 public class Partie {
 	
 	public static void main(String[] args) {
+		Parametres parametrePartie = new Parametres(3, 3, false, false, 6);
 		
-		int nbPions = 6;
-		Set<String> nodes = new HashSet<String>();
-		nodes.add("a");
-		GrapheListe<String> g1 = new GrapheListe("Grahpe1", GrapheType.UGRAPH);
+		//TODO Adnan : doit écrire une méthode pour initialiser une liste de Case.
 		
-		Joueur j1 = new Joueur("Joueur1", nbPions);
-		Joueur j2 = new Joueur("Joueur2", nbPions);
+		//TODO Adnan : instancie un plateau.
+		Plateau plateauPartie = new PlateauPolynomial(parametrePartie.getNBCOTE());
+		//TODO Adnan : Rajoute les initialisations directement dans les constructeurs.
+		plateauPartie.generationDuPlateau();//TODO changer le list en set ou l'inverse : voir l'erreur à l'éxécution.
 		
-		System.out.println(j1);
-		System.out.println(j1.getMain().toString());
-		//System.out.println(j2);
-		//System.out.println(g1);
+		Joueur joueur1 = new Joueur("Joueur1", parametrePartie);
+		Joueur joueur2 = new Joueur("Joueur2", parametrePartie);
 		
+		System.out.println(plateauPartie);
+		System.out.println();
+		System.out.println(joueur1);
 		
 	}
 }

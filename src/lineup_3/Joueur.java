@@ -23,7 +23,7 @@ public class Joueur {
 	/**
 	 * le nom du que le joueur choisi.
 	 */
-	private Joueur joueur;
+	private String pseudo;
 	
 	/**
 	 * Le temps total de réflexion qu'a pris le joueur lors d'une partie.
@@ -42,8 +42,8 @@ public class Joueur {
 	
 		// Getters
 	
-	public Joueur getJoueur() {
-		return this.joueur;
+	public String getJoueur() {
+		return this.pseudo;
 	}
 
 	public LocalTime getTemps() {
@@ -65,10 +65,10 @@ public class Joueur {
 	 * @param p Correspond au pseudo utilisé pour désigner le joueur.
 	 * @param nbPions Correspond au nombre de pion disponible dans la main en début de partie.
 	 */
-	public Joueur(Joueur j, Parametres p) {
-		this.joueur = j;
-		this.param = p;
-		main = new DeckPions(joueur, param);
+	public Joueur(String pseudo, Parametres param) {
+		this.pseudo = pseudo;
+		this.param = param;
+		main = new DeckPions(this, param);
 	}
 	
 		// Methods
@@ -91,7 +91,7 @@ public class Joueur {
 		int result = 1;
 		result = prime * result + ((main == null) ? 0 : main.hashCode());
 		result = prime * result + nbCoups;
-		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
+		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
 		result = prime * result + ((temps == null) ? 0 : temps.hashCode());
 		return result;
 	}
@@ -112,10 +112,10 @@ public class Joueur {
 			return false;
 		if (nbCoups != other.nbCoups)
 			return false;
-		if (joueur == null) {
-			if (other.joueur != null)
+		if (pseudo == null) {
+			if (other.pseudo != null)
 				return false;
-		} else if (!joueur.equals(other.joueur))
+		} else if (!pseudo.equals(other.pseudo))
 			return false;
 		if (temps == null) {
 			if (other.temps != null)
@@ -129,7 +129,7 @@ public class Joueur {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("# ");
-		builder.append(joueur);
+		builder.append(pseudo);
 		builder.append("\nPions restant :");
 		builder.append(this.countPions());
 		builder.append("\nNombre de Coups :");

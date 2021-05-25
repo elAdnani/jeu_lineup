@@ -20,5 +20,4 @@ public class ChifumiPion extends Pion{
 	}
 	
 		// Methods
-	
 }

@@ -195,7 +195,7 @@ public class Case {
 	public boolean estVoisin(Case c) {
 		
 		if (this.coordonnees.getX() == c.getCoordonnees().getX()) {
-			if ((this.coordonnees.getY() == c.getCoordonnees().getY()-1%(2*param.getNBCOTE()))
+			if ((this.coordonnees.getY() == Math.abs(c.getCoordonnees().getY()-1%(2*param.getNBCOTE())))
 					|| (this.coordonnees.getY() == c.getCoordonnees().getY()+1%(2*param.getNBCOTE()))) {
 				return true;
 			}

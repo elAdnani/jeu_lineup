@@ -48,10 +48,10 @@ public class DeckPions {
 	 * @param joueur Joueur à qui la main appartient.
 	 */
 	public DeckPions(Joueur joueur, Parametres p) {
-		this.idx = param.getNBPION();
 		this.main = new Pion[idx];
 		this.initialiserMain(joueur);
 		this.param = p;
+		this.idx = param.getNBPION();
 	}
 	
 		// Methods
@@ -64,7 +64,7 @@ public class DeckPions {
 		return main[idx];
 	}
 	
-	//TODO Surcharger la méthode getPion(), pour pourvoir choisir celui qu'on veut en mode Chifumi.
+	//TODO écrire la méthode getPion(), pour pourvoir choisir celui qu'on veut en mode Chifumi.
 	
 	/**
 	 * Permet de remplir la main avec des Pions sans position.

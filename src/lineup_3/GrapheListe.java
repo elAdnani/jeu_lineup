@@ -2,8 +2,10 @@ package lineup_3;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * <p>Utilisation d'un graphe non pondéré avec des listes</p>
@@ -49,7 +51,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		private String nom;
 		
 		/** La liste de sommets du graphe. Celle-ci ne peut contenir aucun doublon. */
-		private Set<T> ensembleSommets;
+		private List<T> ensembleSommets;
 		
 		/** Cette map regroupe toutes les arrêtes du graphe. Une arrête part de l'indice et se dirige vers chacun des sommets qui lui sont renseignés dans la liste. */
 		private Map<T, Set<T>> arretes;
@@ -68,7 +70,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param ensembleSommets La liste de sommets du graphe.
 		 * @param arretes Les arrêtes reliant les sommets.
 		 */
-		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets, Map<T, Set<T>> arretes) {
+		public GrapheListe(String nom, GrapheType type, List<T> ensembleSommets, Map<T, Set<T>> arretes) {
 			// Nom
 			if (nom == null)
 				this.nom = "Graphe n°" + ++cpt;
@@ -83,7 +85,7 @@ public class GrapheListe<T> extends Graphe<T> {
 			
 			// Sommets
 			if (ensembleSommets == null)
-				this.ensembleSommets = new HashSet<>();
+				this.ensembleSommets = new ArrayList<>();
 			else
 				this.ensembleSommets = ensembleSommets;
 			
@@ -103,7 +105,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param type Le type du graphe.
 		 * @param ensembleSommets La liste de sommets du graphe.
 		 */
-		public GrapheListe(String nom, GrapheType type, Set<T> ensembleSommets) { this(nom, type, ensembleSommets, null); }
+		public GrapheListe(String nom, GrapheType type, List<T> ensembleSommets) { this(nom, type, ensembleSommets, null); }
 		
 		/**
 		 * <p>Constructeur avec le nom et le type du graphe</p>
@@ -112,7 +114,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param nom Le nom à donner au graphe.
 		 * @param type Le type du graphe.
 		 */
-		public GrapheListe(String nom, GrapheType type) { this(nom, type, null); }
+		public GrapheListe(String nom, GrapheType type) { this(nom, type, null, null); }
 		
 		/**
 		 * <p>Constructeur avec seulement le nom du graphe.</p>
@@ -120,7 +122,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * 
 		 * @param nom Le nom à donner au graphe.
 		 */
-		public GrapheListe(String nom) { this(nom, null); }
+		public GrapheListe(String nom) { this(nom, null, null, null); }
 		
 		/**
 		 * <p>Constructeur sans paramètres.</p>
@@ -128,7 +130,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * <p>Son nom sera généré en fonction de la valeur d'un compteur</p>
 		 * <p>Par défaut, il ne sera pas orienté</p>
 		 */
-		public GrapheListe() { this(null); }
+		public GrapheListe() { this(null, null, null, null); }
 		
 		
 		
@@ -154,34 +156,13 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * 
 		 * @return Un set contenant les sommets.
 		 */
-		public Set<T> getSommets() {
-			Set<T> nouveau = new HashSet<>();
+		public List<T> getSommets() {
+			List<T> nouveau = new ArrayList<>();
 			
 			for (T s : ensembleSommets) 
 				nouveau.add(s);
 			
 			return nouveau;
-		}
-		
-		/**
-		 * Accesseur, permet d'obtenir une copie des arrêtes entre les sommets.
-		 * 
-		 * @return Une map regroupant les arrêtes.
-		 */
-		public Map<T, Set<T>> getArretes() {
-			Map<T, Set<T>> nouvelleMap = new HashMap<>();
-			
-			for (T s : ensembleSommets) {
-				Set<T> nouveauSet = new HashSet<>();
-				
-				for (T t : arretes.get(s)) {
-					nouveauSet.add(t);
-				}
-				
-				nouvelleMap.put(s, nouveauSet);
-			}
-			
-			return nouvelleMap;
 		}
 		
 		

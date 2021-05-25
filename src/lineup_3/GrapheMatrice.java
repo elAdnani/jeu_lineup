@@ -29,7 +29,7 @@ import java.util.Set;
  * 	Pour le constructeur complètement spécifié, il détectera le type de graphe grâce à la matrice et pourra donc sélectionner seul son type.
  * </p>
  * <p>
- * 	Aucun getter ni setter n'est fourni pour éviter des erreurs.<br>
+ * 	Aucun getter ni setter n'est fourni pour éviter des erreurs.<br> TODO finalement il y a un getter
  * 	Ceci oblige donc à utiliser les méthodes pour paramétrer le graphe.
  * </p>
  * <p>
@@ -68,7 +68,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 * <p>Il va créer un graphe nul, sans sommet.</p>
 		 * <p>Par défaut, il ne sera ni orienté ni pondéré.</p>
 		 */
-		public GrapheMatrice() { this(GrapheType.UGRAPH); }
+		public GrapheMatrice() { this(GrapheType.UGRAPH, null); }
 		
 		/**
 		 * <p>Constructeur typé.</p>
@@ -124,6 +124,20 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			
 			for (int i = 0; i < reference.ensembleSommets.size(); i++)
 				ensembleSommets.add(i, reference.ensembleSommets.get(i));
+		}
+		
+		
+		
+		
+		
+	/* GETTER ______________________________ */
+		public List<T> getSommets() {
+			List<T> copieSommets = new ArrayList<>();
+			
+			for (T sommet : ensembleSommets)
+				copieSommets.add(sommet);
+			
+			return ensembleSommets;
 		}
 		
 		

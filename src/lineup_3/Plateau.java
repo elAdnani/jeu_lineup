@@ -24,6 +24,7 @@ import java.util.Map;
  * Un Plateau consiste à :  </br> 
  * 	- former le schéma de la partie, en donnant les sommets qui en sommant une partie, forment pour la plupart du temps des arêtes  </br> 
  *  - former les cases permettant les déplacements et le fonctionnement logique du jeu </br> 
+ *  
  * 
  *	</br> 
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
@@ -34,14 +35,58 @@ import java.util.Map;
 
 public abstract class Plateau {
 	
+	public final GrapheMatrice<Case> grapheDuPlateau;
+	
+	
+	
+	
+	public Plateau(GrapheMatrice<Case> grapheDuPlateau) {
+		
+		this.grapheDuPlateau=grapheDuPlateau;
+	}
+	
+	
+	public Plateau(GrapheMatrice<Case> grapheDuPlateau,  GrapheType TypeDuGraphe) {
+		
+		if(grapheDuPlateau!=null && grapheDuPlateau.getType()==TypeDuGraphe)
+			
+			this.grapheDuPlateau=grapheDuPlateau;
+		else
+			
+			this.grapheDuPlateau= new GrapheMatrice<Case>(TypeDuGraphe);
+	}
+	
+	
+	
 	
 	public abstract void affichagePlateau(int niveau, Map<Joueur, Character> pion);
 
 	public abstract void generationDuPlateau();
-
-	public abstract int retrouverSommet(Paire paire);
 	
-	public abstract List<Case> getListSommet();
+	
+
+	public int trouverCase(Paire coordonnee) {
+		
+		for( Case sommet : this.grapheDuPlateau.getSommets()) 
+			if(sommet.getCoordonnees().equals(coordonnee))
+				
+				return this.grapheDuPlateau.getSommets().indexOf(sommet);
+		
+		return -1;
+	}
+
+	
+	
+	/**
+	 * la liste de sommet que ce plateau possède
+	 * @return 
+	 */
+	public List<Case> getListeCase() {
+		
+		return this.grapheDuPlateau.getSommets();
+	}
+	
+	
 	
 	
 

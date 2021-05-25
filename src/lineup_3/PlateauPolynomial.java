@@ -56,7 +56,6 @@ public class PlateauPolynomial extends Plateau{
 	private  int        nbcote  ;
 	public  static final int   NBCOUCHE = 3;
 	
-	public final GrapheListe<Case> grph;
 	
 	
 	/**
@@ -67,7 +66,7 @@ public class PlateauPolynomial extends Plateau{
 	
 	public PlateauPolynomial(int nombreCote) {
 		
-		this( nombreCote , new GrapheListe<Case> ("Plateau", GrapheType.UGRAPH) );
+		this( nombreCote, new GrapheMatrice<Case> ( GrapheType.UGRAPH) );
 	
 	}
 
@@ -75,18 +74,16 @@ public class PlateauPolynomial extends Plateau{
 	 * Construction d'un Plateau de nombre de côté défini et à partir d'un graphe déjà construit. </br>
 	 * Il sera toujours possible de construire des sommets par la suite. Mais des sommets peuvent déjà être présent.
 	 * @param nombreCote
-	 * @param grph
+	 * @param grapheDuPlateau
 	 * @param joueursDuJeu
 	 */
 	
-	public PlateauPolynomial(int nombreCote, GrapheListe<Case> grph) {
-		if(grph.estPondere()) {
-			this.grph = grph;
-		}
-		else {
-			this.grph= new GrapheListe<Case> ("Plateau", GrapheType.UGRAPH);
-		}
+	public PlateauPolynomial(int nombreCote, GrapheMatrice<Case> grapheDuPlateau) {
+		super(grapheDuPlateau,GrapheType.UGRAPH);
+		
 		this.nbcote = nombreCote;
+		
+		this.generationDuPlateau();
 	}
 	
 	
@@ -116,7 +113,9 @@ public class PlateauPolynomial extends Plateau{
 			
 			paire = separationDesCoordoonees[i].split(";");
 			
-			coordonnees.add( this.getListSommet().get( retrouverSommet(Integer.valueOf(paire[0]), Integer.valueOf(paire[1])) ) );
+			coordonnees.add( this.grapheDuPlateau.getSommets().get( trouverCase(
+						new Paire( Integer.valueOf(paire[0]), Integer.valueOf(paire[1]) )
+																				 ) ) );
 		}
 		
 		return coordonnees;
@@ -205,11 +204,11 @@ public class PlateauPolynomial extends Plateau{
 
 			for (int j = 0; j < this.getNbPionMax(); j++) 
 				
-				this.grph.ajouterSommet(new Case(i,j) );
+				this.grapheDuPlateau.ajouterSommet(new Case(i,j) );
 				
 		
 		// génération des arêtes
-		generationListArret(this.grph.getArretes());
+		generationListArret();
 	}
 	
 	/**
@@ -218,15 +217,15 @@ public class PlateauPolynomial extends Plateau{
 	 * Si elle remarque qu'un sommet est voisin d'un autre, alors son arêtes est créées.
 	 * @param listeDesSommets
 	 */
-	private void generationListArret(Map<Case, List<Case>> listeDesSommets) {
+	private void generationListArret() {
 		
-		for ( Case sommet : grph.getSommets() ) {
+		for ( Case sommet : grapheDuPlateau.getSommets() ) {
 
-			for ( Case voisin : grph.getSommets() ) {
+			for ( Case voisin : grapheDuPlateau.getSommets() ) {
 
 				if(estVoisin(sommet, voisin)) 
 			
-					grph.ajouterArrete(sommet, voisin);
+					grapheDuPlateau.ajouterArrete(sommet, voisin);
 			}
 		}
 	}
@@ -240,7 +239,7 @@ public class PlateauPolynomial extends Plateau{
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
 		
-		return estVoisin(coordonnee_un.getCoordonnees(), coordonnee_deux.getCoordonnees());
+		return this.grapheDuPlateau.voisinsDe(coordonnee_un).contains(coordonnee_deux);
 	}
 	
 	/**
@@ -256,42 +255,17 @@ public class PlateauPolynomial extends Plateau{
 	
 	public boolean estVoisin (Paire point_un, Paire point_deux) {
 
-		return estVoisin(point_un.getX(),point_un.getY(),     point_deux.getX(), point_deux.getY());
+		return estVoisin(this.getListeCase().get( super.trouverCase(point_un) ),
+				this.getListeCase().get( this.trouverCase(point_deux) )		);
 	}
-	
 
-	/**
-	 * Vérifie la proximité des deux points à partir de deux types de coordonnées mathématiques
-	 * @param x1 premier sommet
-	 * @param y1 premier sommet
-	 * @param x2 deuxième sommet
-	 * @param y2 deuxième sommet
-	 * @return true s'il est possible de passer d'un sommet à un autre directement, false ou sinon
-	 */
-	private boolean estVoisin(int x1, int y1, int x2, int y2) {
-		
-		
-		if(x1==x2 && ( (y1==(y2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (y1==(y2+1)%this.getNbPionMax() ))){
-			// si elles se retrouvent sur la même couche et qu'elles ont une différence de  coordonnée +1 ou -1 en y
-			return true;
-		}
-		else if(y1==y2 && y1%2!=0 && ( (x1==(x2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (x1==(x2+1)%this.getNbPionMax() ))) {
-			// si elles sont sur des couches différentes et qu'elles ont une différence de  coordonnée +1 ou -1 en x (ce cas est envisageable si y est impair)
-			return true;
-		}
-		
-		return false;
+	
+	
+	public boolean remplacerCase(Case c1, Case c2) {
+		return this.grapheDuPlateau.remplacerSommet(c2,c2);
 	}
 	
-	public int retrouverSommet(Paire coordonnee) {
-		for( Case sommet : this.getListSommet()) {
-			
-			if(sommet.getCoordonnees().equals(coordonnee))
-				
-				return this.getListSommet().indexOf(sommet);
-		}
-		return -1;
-	}
+	
 	/**
 	 * permet à partir de coordonnée de retrouver un sommet. </br>
 	 * On cherche à partir de la liste des sommets, les coordonnées correspondant à celui indiqué en paramètre.
@@ -299,19 +273,7 @@ public class PlateauPolynomial extends Plateau{
 	 * @param y
 	 * @return
 	 */
-	
-	protected int retrouverSommet (int x, int y) {
-		
-		return retrouverSommet( new Paire(x, y) );
-	}
-	
-	@Override
-	public String toString() {
-		return this.grph.toString();
-	}
-	
 
-	// --------------------------------- GETTER ET SETTERS // ---------------------------------\\
 	
 	/**
 	 * Return le nombre de côté que ce plateau possède
@@ -322,44 +284,6 @@ public class PlateauPolynomial extends Plateau{
 		
 		return this.nbcote;
 	}
-	
-	/**
-	 * Modifie, le nombre de côté d'un plateau, si le plateau est déjà généré son nombre de côté ne pourra être changé.
-	 * @param nb
-	 * @return
-	 */
-	public boolean setNBCOTE(int nb) {
-		
-		if(this.grph.getSommets()==null) {
-			
-			this.nbcote=nb;
-			return true;
-		}
-		return false;
-	}
-	
-	
-	/**
-	 * la liste de sommet que ce plateau possède
-	 * @return 
-	 */
-	public List<Case> getListSommet() {
-		
-		return this.grph.getSommets();
-	}
-	
-	/**
-	 * la liste des arêtes que ce plateau possède
-	 * @return
-	 */
-	protected Map< Case, List<Case> > getListArret() {
-		
-		return this.grph.getArretes();
-	}
-
-
-
-
 	
 	
 }

@@ -82,14 +82,14 @@ public class Joueur {
 	 * @return retourne un nombre de Pion.
 	 */
 	public int countPions() {
-		return main.getMain().length;
+		return this.main.getIdx();
 	}
 	
 	//TODO javadoc.
 	public void poserPion(Case c) {
-		c.ajouterPion(main.getProchainPion());
+		c.ajouterPion(main.getPion());
 		main.getProchainPion().setC(c);
-		//main.getPion().deplacementsPossibles();
+		main.getPion().deplacementsPossibles();
 		
 	}
 

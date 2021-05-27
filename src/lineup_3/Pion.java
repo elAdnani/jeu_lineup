@@ -1,5 +1,6 @@
 package lineup_3;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * Liste des déplacements possibles pour un Pion donné
 	 */
-	private List<Deplacement> possibilites;
+	private List<Deplacement> possibilites = new ArrayList<>();
 	
 	/**
 	 * Correspond à la nature du pion
@@ -134,9 +135,9 @@ public abstract class Pion implements Comparable<Pion>{
 		this.possibilites.add(Deplacement.DROITE);
 
 	//Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.
-		if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()) {
+		if (this.c.getCoordonnees().getX() == this.param.getNBCOUCHE()-1) {
 			this.possibilites.add(Deplacement.BAS);
-		} else if (this.c.getCoordonnees().getX() == 0) {
+		} else if (this.c.getCoordonnees().getX() == 0 && this.c.getCoordonnees().getY()%2 !=0) {
 			this.possibilites.add(Deplacement.HAUT);
 		} else if (this.c.getCoordonnees().getY()%2 != 0) {
 			this.possibilites.add(Deplacement.BAS);
@@ -232,6 +233,7 @@ public abstract class Pion implements Comparable<Pion>{
 		builder.append(joueur.getJoueur());
 		builder.append("\nIl peut aller vers : ");
 		builder.append(possibilites);
+		builder.append("\n");
 		return builder.toString();
 	}
 }

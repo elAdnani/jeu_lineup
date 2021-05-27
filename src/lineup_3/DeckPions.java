@@ -37,7 +37,7 @@ public class DeckPions {
 	}
 	
 	public int getIdx() {
-		return this.idx;
+		return this.idx+1;
 	}
 	
 	public Pion getPion() {

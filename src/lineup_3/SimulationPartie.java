@@ -34,7 +34,7 @@ public class SimulationPartie {
 		System.out.println(joueur1);
 		System.out.println(joueur2);
 		System.out.println(joueur1.getPion());
-		//System.out.println(joueur1.getPion().getC());
+		System.out.println(joueur1.getPion().getC());
 		
 	}
 }

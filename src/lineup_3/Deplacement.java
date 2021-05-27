@@ -31,7 +31,7 @@ public enum Deplacement {
 	private int X;
 	private int Y;
 
-	Deplacement(String cheminement, int X, int Y) {
+	private Deplacement(String cheminement, int X, int Y) {
 		this.cheminement=cheminement;
 		this.X=X;
 		this.Y=Y;

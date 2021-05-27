@@ -74,7 +74,7 @@ public class Joueur {
 		// Methods
 	
 	public Pion getPion() {
-		return this.main.getProchainPion();
+		return this.main.getPion();
 	}
 	
 	/**
@@ -83,6 +83,14 @@ public class Joueur {
 	 */
 	public int countPions() {
 		return main.getMain().length;
+	}
+	
+	//TODO javadoc.
+	public void poserPion(Case c) {
+		c.ajouterPion(main.getProchainPion());
+		main.getProchainPion().setC(c);
+		main.getPion().deplacementsPossibles();
+		
 	}
 
 	@Override

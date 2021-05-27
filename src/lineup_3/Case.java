@@ -69,14 +69,19 @@ public class Case {
 
 	/**
 	 * Ce constructeur instancie une case avec ses coordonnées passées en paramètre.
-	 * @param couche représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
-	 * @param point représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
+	 * @param couche Représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
+	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
 	 */
 	public Case(int couche, int point) {
 		this.coordonnees = new Paire(couche, point);
 	}
 	
-	//TODO javadoc.
+	/**
+	 * {@link #Case(int, int, Parametres)} instancie une case avec ses coordonnées et des paramètres de partie. Surtout utilisé pour  {@link SimulationPartie}
+	 * @param couche Représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
+	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
+	 * @param p Représente les {@link Parametres} de la partie lors d'une simulation.
+	 */
 	public Case(int couche, int point, Parametres p) {
 		this.coordonnees = new Paire(couche, point);
 		this.param = p;
@@ -87,11 +92,11 @@ public class Case {
 			// Methods
 	
 	/**
-	 * addPion permet de poser un Pion sur la Case courante.
+	 * {@link #ajouterPion(Pion)} permet de poser un Pion sur la Case courante.
 	 * @param p Représente le Pion  que l'on souhaite poser.
 	 * @return 	Retourne vrai si le Pion s'est bien poser, faux sinon.
 	 */
-	public boolean addPion(Pion p) {
+	public boolean ajouterPion(Pion p) {
 		if (this.estLibre) {
 			this.pion = p;
 			p.setC(this);
@@ -102,7 +107,7 @@ public class Case {
 	}
 	
 	/**
-	 * removePion permet d'enlever le Pion de la Case courante.
+	 * {@link #removePion(Pion)} permet d'enlever le Pion de la Case courante.
 	 * @param p Représente le Pion que l'on souhaite enlever.
 	 * @return	Retourne vrai si le Pion s'est bien enlevé, faux sinon.
 	 */
@@ -116,18 +121,9 @@ public class Case {
 		return false;
 	}
 	
-	/**
-	 * caseA Cherche une case aux coordonnées passées en paramètres.
-	 * @param p Représente une Paire de coordonnées.
-	 * @return Retourne la case aux coordonnées voulu et null si elle n'existe pas.
-	 */
-	public Case caseA(Paire p) {
-		for (Case c : cases) {
-			if (c.getCoordonnees() == p) {
-				return c;
-			}
-		}
-		return null;
+	//TODO javadoc.
+	public Set<Case> getVoisins(PlateauPolynomial p) {
+		return p.voisinDe(this);
 	}
 	
 	/**
@@ -311,17 +307,12 @@ public class Case {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Case [coordonnees=");
+		builder.append("Case");
 		builder.append(coordonnees);
-		builder.append(", estLibre=");
+		builder.append(" : estLibre=");
 		builder.append(estLibre);
 		builder.append(", estPiege=");
 		builder.append(estPiege);
-		if (estLibre) {
-			builder.append(", pion=");
-			builder.append(pion);
-		}
-		builder.append("]");
 		return builder.toString();
 	}
 	

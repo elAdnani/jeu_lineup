@@ -40,6 +40,10 @@ public class DeckPions {
 		return this.idx;
 	}
 	
+	public Pion getPion() {
+		return main[idx];
+	}
+	
 		// Constructor
 	
 	/**
@@ -61,6 +65,7 @@ public class DeckPions {
 	 * @return Retourne un Objet de type Pion.
 	 */
 	public Pion getProchainPion() {
+		if (main[idx].getC()!=null) idx--;
 		return main[idx];
 	}
 	

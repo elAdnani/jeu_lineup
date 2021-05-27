@@ -140,7 +140,7 @@ public class Paire {
 		 * @return Une chaîne de caractères contenant la représentation d'une paire.
 		 */
 		@Override
-		public String toString() { return "(" + x + "; " + y + ")"; }
+		public String toString() { return "(" + x + ";" + y + ")"; }
 		
 		
 		

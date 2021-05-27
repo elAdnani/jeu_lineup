@@ -68,7 +68,7 @@ public abstract class Pion implements Comparable<Pion>{
 	
 	public void setC(Case c) {
 		this.c = c;
-		this.c.addPion(this);
+//		if (this.c == c) this.c.addPion(this);
 	}
 	
 		// CompareTo
@@ -122,7 +122,7 @@ public abstract class Pion implements Comparable<Pion>{
 	}
 	
 	/**
-	* deplacementsPossibles détermine, dans l'absolu, les possibles mouvements du Pion courant.
+	* {@link #deplacementsPossibles()} détermine, dans l'absolu, les possibles mouvements du {@link Pion} courant.
 	*/
 	public void deplacementsPossibles() {
 		if(this.possibilites != null) {
@@ -143,7 +143,6 @@ public abstract class Pion implements Comparable<Pion>{
 			this.possibilites.add(Deplacement.HAUT);	
 		}
 	}
-	
 	/*TODO Vérifier (si on a le temps) les cases sans Pion autour la case courante
 	* dans le but de surligner les possibilités en vert sur le plateau.
 	*/
@@ -223,7 +222,7 @@ public abstract class Pion implements Comparable<Pion>{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("#Pion :\nIl est sur la case : ");
+		builder.append("#Pion :\nIl est sur ");
 		if (param.getCHIFUMI()) {
 			builder.append(", nature=");
 			builder.append(nature);

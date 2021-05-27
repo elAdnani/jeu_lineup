@@ -89,7 +89,7 @@ public class Joueur {
 	public void poserPion(Case c) {
 		c.ajouterPion(main.getProchainPion());
 		main.getProchainPion().setC(c);
-		main.getPion().deplacementsPossibles();
+		//main.getPion().deplacementsPossibles();
 		
 	}
 

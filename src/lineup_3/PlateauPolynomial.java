@@ -113,7 +113,7 @@ public class PlateauPolynomial extends Plateau{
 			
 			paire = separationDesCoordoonees[i].split(";");
 			
-			coordonnees.add( this.grapheDuPlateau.getSommets().get( trouverCase(
+			coordonnees.add( this.grapheDuPlateau.getSommets().get( trouverIndiceCase(
 						new Paire( Integer.valueOf(paire[0]), Integer.valueOf(paire[1]) )
 																				 ) ) );
 		}
@@ -259,8 +259,8 @@ public class PlateauPolynomial extends Plateau{
 	
 	public boolean estVoisin (Paire point_un, Paire point_deux) {
 
-		return estVoisin(this.getListeCase().get( super.trouverCase(point_un) ),
-				this.getListeCase().get( this.trouverCase(point_deux) )		);
+		return estVoisin(this.getListeCase().get( super.trouverIndiceCase(point_un) ),
+				this.getListeCase().get( this.trouverIndiceCase(point_deux) )		);
 	}
 
 	

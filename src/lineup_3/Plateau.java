@@ -65,12 +65,21 @@ public abstract class Plateau {
 	
 	
 
-	public Case trouverCase(Paire coordonnee) {
+	public int trouverIndiceCase(Paire coordonnee) {
 		
 		for( Case sommet : this.grapheDuPlateau.getSommets()) 
 			if(sommet.getCoordonnees().equals(coordonnee))
-				return sommet;
+				
+				return this.grapheDuPlateau.getSommets().indexOf(sommet);
 		
+		return -1;
+	}
+	
+	public Case trouverCase(Paire coordonnee) {
+		for (Case sommet : this.grapheDuPlateau.getSommets())
+			if (sommet.getCoordonnees().equals(coordonnee)) {
+				return sommet;
+			}
 		return null;
 	}
 

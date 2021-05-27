@@ -30,7 +30,7 @@ public class Case {
 	private boolean estPiege = false;
 	
 	/**
-	 * Représente le Pion qui occupe la case courante.
+	 * Représente le {@link Pion} qui occupe la case courante.
 	 */
 	private Pion pion;
 
@@ -94,6 +94,7 @@ public class Case {
 	public boolean addPion(Pion p) {
 		if (this.estLibre) {
 			this.pion = p;
+			p.setC(this);
 			this.estLibre = false;
 			return true;
 		}
@@ -108,6 +109,7 @@ public class Case {
 	public boolean removePion(Pion p) {
 		if (!this.estLibre) {
 			this.pion = null;
+			p.setC(null);
 			this.estLibre = true;
 			return true;
 		}
@@ -172,6 +174,7 @@ public class Case {
 		return null;
 	}
 	
+	
 	/**
 	 * caseSuperieure cherche la case adjacente de la couche au-dessus par rapport à celle
 	 * courante selon ses coordonnées.
@@ -207,7 +210,7 @@ public class Case {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * alignements regarde si autour du Pion de la Case courante, d'autres Pion appartiennent au même Joueur.
 	 * Auquel cas, il y a d'éventuels alignements.

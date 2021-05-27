@@ -62,6 +62,15 @@ public abstract class Pion implements Comparable<Pion>{
 		return this.nature;
 	}
 	
+	public Case getC() {
+		return this.c;
+	}
+	
+	public void setC(Case c) {
+		this.c = c;
+		this.c.addPion(this);
+	}
+	
 		// CompareTo
 
 	public int compareTo(Pion p) {
@@ -214,17 +223,16 @@ public abstract class Pion implements Comparable<Pion>{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Pion [c=");
-		builder.append(c);
-		builder.append(", joueur=");
-		builder.append(joueur);
-		builder.append(", possibilites=");
-		builder.append(possibilites);
+		builder.append("#Pion :\nIl est sur la case : ");
 		if (param.getCHIFUMI()) {
 			builder.append(", nature=");
 			builder.append(nature);
 		}
-		builder.append("]");
+		builder.append(c);
+		builder.append("\nIl appartient à : ");
+		builder.append(joueur.getJoueur());
+		builder.append("\nIl peut aller vers : ");
+		builder.append(possibilites);
 		return builder.toString();
 	}
 }

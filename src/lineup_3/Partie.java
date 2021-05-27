@@ -14,12 +14,6 @@
  */
 package lineup_3;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-
 /**
  * Cette classe sert à lancer le jeu.
  *
@@ -29,23 +23,6 @@ import java.util.Set;
  * @version 21 avr. 2021 19:26:15
  */
 public class Partie {
-	
-	public static void main(String[] args) {
-		Parametres parametrePartie = new Parametres(3, 3, false, false, 6);
-		
-		//TODO Adnan : doit écrire une méthode pour initialiser une liste de Case.
-		
-		//TODO Adnan : instancie un plateau.
-		Plateau plateauPartie = new PlateauPolynomial(parametrePartie.getNBCOTE());
-		//TODO Adnan : Rajoute les initialisations directement dans les constructeurs.
-		plateauPartie.generationDuPlateau();//TODO changer le list en set ou l'inverse : voir l'erreur à l'éxécution.
-		
-		Joueur joueur1 = new Joueur("Joueur1", parametrePartie);
-		Joueur joueur2 = new Joueur("Joueur2", parametrePartie);
-		
-		System.out.println(plateauPartie);
-		System.out.println();
-		System.out.println(joueur1);
-		
-	}
+
+
 }

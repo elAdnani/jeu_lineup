@@ -242,6 +242,10 @@ public class PlateauPolynomial extends Plateau{
 		return this.grapheDuPlateau.voisinsDe(coordonnee_un).contains(coordonnee_deux);
 	}
 	
+	public Set<Case> voisinDe(Case c) {
+		return this.grapheDuPlateau.voisinsDe(c);
+	}
+	
 	/**
 	 * Vérifie la proximité des deux paires de coordonnée. </br>
 	 * Et dit selon les consignes du plateau, si elles sont voisines. </br>
@@ -284,6 +288,28 @@ public class PlateauPolynomial extends Plateau{
 		
 		return this.nbcote;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PlateauPolynomial [nbcote=");
+		builder.append(nbcote);
+		builder.append(", grapheDuPlateau=");
+		builder.append(grapheDuPlateau);
+		builder.append(", getNbPionMax()=");
+		builder.append(getNbPionMax());
+		builder.append(", getNBCOTE()=");
+		builder.append(getNBCOTE());
+		builder.append(", getListeCase()=");
+		builder.append(getListeCase());
+		builder.append(", getClass()=");
+		builder.append(getClass());
+		builder.append(", hashCode()=");
+		builder.append(hashCode());
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }

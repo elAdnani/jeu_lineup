@@ -130,11 +130,11 @@ public class Joueur {
 		StringBuilder builder = new StringBuilder();
 		builder.append("# ");
 		builder.append(pseudo);
-		builder.append("\nPions restant :");
+		builder.append("\nPions restant : ");
 		builder.append(this.countPions());
-		builder.append("\nNombre de Coups :");
+		builder.append("\nNombre de Coups : ");
 		builder.append(nbCoups);
-		builder.append("\nTemps de réflexion :");
+		builder.append("\nTemps de réflexion : ");
 		builder.append(temps);
 		builder.append("\n");
 		return builder.toString();

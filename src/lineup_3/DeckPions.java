@@ -48,10 +48,10 @@ public class DeckPions {
 	 * @param joueur Joueur à qui la main appartient.
 	 */
 	public DeckPions(Joueur joueur, Parametres p) {
-		this.main = new Pion[idx];
-		this.initialiserMain(joueur);
 		this.param = p;
-		this.idx = param.getNBPION();
+		this.idx = param.getNBPION()-1;
+		this.main = new Pion[param.getNBPION()];
+		this.initialiserMain(joueur);
 	}
 	
 		// Methods

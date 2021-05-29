@@ -167,11 +167,11 @@ public abstract class Pion implements Comparable<Pion>{
 						== this.c.getCoordonnees().getX()
 						+Deplacement.valueOf(direction.toUpperCase()).getX()
 					&& c.getCoordonnees().getY()
-						== this.c.getCoordonnees().getY()
-						+Deplacement.valueOf(direction.toUpperCase()).getY()
+						== (this.c.getCoordonnees().getY()
+						+Deplacement.valueOf(direction.toUpperCase()).getY()+6)%6
 					&& c.EstLibre()) {
 					this.echangerPion(c);
-					//System.out.println("dedans");
+					break;
 				}
 			}
 		}

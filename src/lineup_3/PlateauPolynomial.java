@@ -14,16 +14,11 @@
  */
 package lineup_3;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.Buffer;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 /*
  * 
@@ -292,23 +287,13 @@ public class PlateauPolynomial extends Plateau{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("PlateauPolynomial [nbcote=");
+		builder.append("#Plateau :\n\tNombre de côtés :  ");
 		builder.append(nbcote);
-		builder.append(", grapheDuPlateau=");
+		builder.append("\n\n\tIl est basé sur un :\n");
 		builder.append(grapheDuPlateau);
-		builder.append(", getNbPionMax()=");
+		builder.append("\n\nLes joueurs on chacun : ");
 		builder.append(getNbPionMax());
-		builder.append(", getNBCOTE()=");
-		builder.append(getNBCOTE());
-		builder.append(", getListeCase()=");
-		builder.append(getListeCase());
-		builder.append(", getClass()=");
-		builder.append(getClass());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append(", toString()=");
-		builder.append(super.toString());
-		builder.append("]");
+		builder.append(" pions");
 		return builder.toString();
 	}
 	

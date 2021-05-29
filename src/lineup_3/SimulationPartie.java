@@ -155,5 +155,6 @@ public class SimulationPartie {
 //		skinPion.put(joueur1, '#');
 //		skinPion.put(joueur2, '$');
 //		plateauPartie.affichagePlateau(3, skinPion);
+		
 	}
 }

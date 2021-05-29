@@ -1,6 +1,7 @@
 package lineup_3;
 
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Cette classe créer un Joueur ayant des Pions et pouvant faire certaines actions sur un Plateau.
@@ -85,13 +86,32 @@ public class Joueur {
 		return this.main.getIdx();
 	}
 	
-	//TODO javadoc.
+	/**
+	 * poserPion prend le prochain Pion, le retire de la main du {@link Joueur} et
+	 * l'ajoute à la {@link Case} souhaitée. Parallèlement, le {@link Pion} prend
+	 * connaissance de sa {@link Case}.
+	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser le {@link Pion}.
+	 */
 	public void poserPion(Case c) {
 		c.ajouterPion(main.getPion());
+		main.getPion().setC(c);
 		main.getProchainPion().setC(c);
-		main.getPion().deplacementsPossibles();
+		main.getPion().deplacementsPossibles();	
+	}
+	
+	/**
+	 * deplacerPion ré-affecte à {@link Pion} une nouvelle {@link Case} en mettant tout à jour.
+	 * @param p Représente le pion que le {@link Joueur} souhaite déplacer.
+	 * @param direction Représente la direction vers laquelle le {@link Joueur} souhaite aller.
+	 */
+	public void deplacerPion(Pion p, String direction, List<Case> cases) {
+		if (p.getJoueur() == this) {
+			p.deplacerPion(cases, direction);
+		}
 		
 	}
+	
+	//TODO écrire poserChifumiPion.
 
 	@Override
 	public int hashCode() {

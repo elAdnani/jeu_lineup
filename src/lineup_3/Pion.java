@@ -2,7 +2,6 @@ package lineup_3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 
@@ -19,10 +18,6 @@ import java.util.Set;
 public abstract class Pion implements Comparable<Pion>{
 		// Class Attributes
 	
-	/**
-	 * Correspond aux cases du Plateau.
-	 */
-	private Set<Case> cases;
 	/**
 	 * Correspond aux paramètre de la partie.
 	 */
@@ -69,7 +64,6 @@ public abstract class Pion implements Comparable<Pion>{
 	
 	public void setC(Case c) {
 		this.c = c;
-//		if (this.c == c) this.c.addPion(this);
 	}
 	
 		// CompareTo
@@ -123,7 +117,7 @@ public abstract class Pion implements Comparable<Pion>{
 	}
 	
 	/**
-	* {@link #deplacementsPossibles()} détermine, dans l'absolu, les possibles mouvements du {@link Pion} courant.
+	* deplacementsPossibles détermine, dans l'absolu, les possibles mouvements du {@link Pion} courant.
 	*/
 	public void deplacementsPossibles() {
 		if(this.possibilites != null) {
@@ -144,28 +138,55 @@ public abstract class Pion implements Comparable<Pion>{
 			this.possibilites.add(Deplacement.HAUT);	
 		}
 	}
+	
 	/*TODO Vérifier (si on a le temps) les cases sans Pion autour la case courante
 	* dans le but de surligner les possibilités en vert sur le plateau.
+	* L'idée ici, serait : - soit d'établir une liste de voisinsDe(T sommet) dans GrapheMatrice.
+	* 						- soit de vérifier dans toute la liste de Case si une case correspond :
+	* 									.Soit à (1,0)
+	* 									.Soit à (0,1)
+	* 									.Soit à (-1,0)
+	* 									.Soit à (0,-1)
+	* 						et en faire une liste.
 	*/
+//	public List<Deplacement> casesLibres(Liste<Case> cases) {
+//		deplacementsPossibles();
+//	}
 
 	/**
-	* deplacerPion permet de déplacer le Pion courant vers la case de la direction passée en paramètre si celle-ci est libre..
+	* deplacerPion permet de déplacer le {@link Pion} courant vers la {@link Case} de la direction 
+	* passée en paramètre si celle-ci {@link Case#es.
 	* @param direction Représente la direction vers laquelle on souhaite déplacer le Pion courant.
-	* @return Retourne vrai si le déplacement s'est correctement effectué, faux sinon.
 	*/
-	public boolean deplacerPion(String direction) {
+	public void deplacerPion(List<Case> cases, String direction) {
 		this.deplacementsPossibles();
-
-		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {//TODO Vérifier que la case suivante est bien Libre!
-			this.setPosition(
-				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getX()),
-				(this.c.getCoordonnees().getX() + Deplacement.valueOf(direction.toUpperCase()).getY())%param.getNBPOINT()
-			);
-			//TODO update l'attribut Pion de l'ancienne case et celui de la nouvelle.
-			return true;
-		} else {
-			return false;
+		
+		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {
+			for (Case c : cases) {
+				if (c.getCoordonnees().getX()
+						== this.c.getCoordonnees().getX()
+						+Deplacement.valueOf(direction.toUpperCase()).getX()
+					&& c.getCoordonnees().getY()
+						== this.c.getCoordonnees().getY()
+						+Deplacement.valueOf(direction.toUpperCase()).getY()
+					&& c.EstLibre()) {
+					this.echangerPion(c);
+					//System.out.println("dedans");
+				}
+			}
 		}
+	}
+	
+	/**
+	 * echangerPion change les données des deux {@link Case} concernées durant le déplacement. 
+	 * Elle met à jour également la {@link Case} du {@link Pion} courant.
+	 * @param c Représente la {@link Case} sur laquelle le Pion se déplace.
+	 */
+	public void echangerPion(Case c) {
+		Case tmp = this.c;
+		c.ajouterPion(tmp.getPion());
+		this.c.retirerPion();
+		this.setC(c);
 	}
 	
 	@Override
@@ -173,7 +194,6 @@ public abstract class Pion implements Comparable<Pion>{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((c == null) ? 0 : c.hashCode());
-		result = prime * result + ((cases == null) ? 0 : cases.hashCode());
 		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
 		result = prime * result + ((nature == null) ? 0 : nature.hashCode());
 		result = prime * result + ((param == null) ? 0 : param.hashCode());
@@ -194,11 +214,6 @@ public abstract class Pion implements Comparable<Pion>{
 			if (other.c != null)
 				return false;
 		} else if (!c.equals(other.c))
-			return false;
-		if (cases == null) {
-			if (other.cases != null)
-				return false;
-		} else if (!cases.equals(other.cases))
 			return false;
 		if (joueur == null) {
 			if (other.joueur != null)
@@ -231,7 +246,8 @@ public abstract class Pion implements Comparable<Pion>{
 		builder.append(c);
 		builder.append("\nIl appartient à : ");
 		builder.append(joueur.getJoueur());
-		builder.append("\nIl peut aller vers : ");
+		builder.append("\nDirections possibles : ");
+		this.deplacementsPossibles();
 		builder.append(possibilites);
 		builder.append("\n");
 		return builder.toString();

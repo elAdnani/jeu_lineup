@@ -27,18 +27,18 @@ public enum Deplacement {
 
 	DROITE("droite",0,1), GAUCHE("gauche",0,-1), BAS("bas",-1,0), HAUT("haut",1,0);
 
-	private String cheminement;
+	private String direction;
 	private int X;
 	private int Y;
 
 	private Deplacement(String cheminement, int X, int Y) {
-		this.cheminement=cheminement;
+		this.direction=cheminement;
 		this.X=X;
 		this.Y=Y;
 	}
 
 	public String getCheminement() {
-		return this.cheminement;
+		return this.direction;
 	}
 
 	public int getX() {
@@ -47,19 +47,5 @@ public enum Deplacement {
 	public int getY() {
 		return this.Y;
 	}
-
-	
-	/*
-	 * On pourrait faire de cette manière :
-	 *	 	public String action() {
-	 *			switch(this) {
-	 *				case SAMEDI : return "cinema";
-	 *				case DIMANCHE : return "dormir";
-	 *	 			default : return "travailler";
-	 *	 		}
- 	 *		}
-	 * 
-	 * 
-	 */
 	
 }

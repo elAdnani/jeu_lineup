@@ -65,7 +65,7 @@ public class DeckPions {
 	 * @return Retourne un Objet de type Pion.
 	 */
 	public Pion getProchainPion() {
-		if (main[idx].getC()!=null) idx--;
+		if (main[idx].getC()!=null && idx != 0) idx--;
 		return main[idx];
 	}
 	

@@ -1,5 +1,6 @@
 package lineup_3;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ public class Case {
 	/**
 	 * Correspond aux coordonnées du Pion.
 	 */
-	private Paire coordonnees;
+	private final Paire COORDONNEES;
 	
 	/**
 	 * Représente la disponibilité de la case. Par défaut estLibre est à true.
@@ -47,7 +48,7 @@ public class Case {
 			// Getters & Setters
 	
 	public Paire getCoordonnees() {
-		return this.coordonnees;
+		return this.COORDONNEES;
 	}
 	
 	public boolean EstLibre() {
@@ -73,7 +74,7 @@ public class Case {
 	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
 	 */
 	public Case(int couche, int point) {
-		this.coordonnees = new Paire(couche, point);
+		this.COORDONNEES = new Paire(couche, point);
 	}
 	
 	/**
@@ -83,11 +84,10 @@ public class Case {
 	 * @param p Représente les {@link Parametres} de la partie lors d'une simulation.
 	 */
 	public Case(int couche, int point, Parametres p) {
-		this.coordonnees = new Paire(couche, point);
+		this.COORDONNEES = new Paire(couche, point);
 		this.param = p;
 	}
 	
-	public Case() {}
 	
 			// Methods
 	
@@ -99,7 +99,7 @@ public class Case {
 	public boolean ajouterPion(Pion p) {
 		if (this.estLibre) {
 			this.pion = p;
-			p.setC(this);
+//			p.setC(this);
 			this.estLibre = false;
 			return true;
 		}
@@ -107,18 +107,15 @@ public class Case {
 	}
 	
 	/**
-	 * {@link #removePion(Pion)} permet d'enlever le Pion de la Case courante.
-	 * @param p Représente le Pion que l'on souhaite enlever.
+	 * {@link #retirerPion(Pion)} permet d'enlever le Pion de la {@link Case} courante.
 	 * @return	Retourne vrai si le Pion s'est bien enlevé, faux sinon.
 	 */
-	public boolean removePion(Pion p) {
+	public boolean retirerPion() {
 		if (!this.estLibre) {
 			this.pion = null;
-			p.setC(null);
-			this.estLibre = true;
-			return true;
+			return this.estLibre = true;
 		}
-		return false;
+		return estLibre;
 	}
 	
 	//TODO javadoc.
@@ -146,13 +143,12 @@ public class Case {
 	 * Si elle n'existe pas, elle retourne une Case null.
 	 */
 	public Case casePrecedente() {
-		Case tmp = new Case();
 		for (Case c : cases) {
 			if (c.getCoordonnees().getY() == this.getCoordonnees().getY()-1%(2*param.getNBCOTE())) {
-				tmp = c;
+				return c;
 			}
 		}
-		return tmp;
+		return null;
 	}
 	
 	/**
@@ -193,14 +189,14 @@ public class Case {
 	 */
 	public boolean estVoisin(Case c) {
 		
-		if (this.coordonnees.getX() == c.getCoordonnees().getX()) {
-			if ((this.coordonnees.getY() == Math.abs(c.getCoordonnees().getY()-1%(2*param.getNBCOTE())))
-					|| (this.coordonnees.getY() == c.getCoordonnees().getY()+1%(2*param.getNBCOTE()))) {
+		if (this.COORDONNEES.getX() == c.getCoordonnees().getX()) {
+			if ((this.COORDONNEES.getY() == Math.abs(c.getCoordonnees().getY()-1%(2*param.getNBCOTE())))
+					|| (this.COORDONNEES.getY() == c.getCoordonnees().getY()+1%(2*param.getNBCOTE()))) {
 				return true;
 			}
-		} else if (this.coordonnees.getY() == c.getCoordonnees().getY()) {
-			if ((this.coordonnees.getX() == c.getCoordonnees().getX()-1)
-					|| (this.coordonnees.getX() == c.getCoordonnees().getX()+1)) {
+		} else if (this.COORDONNEES.getY() == c.getCoordonnees().getY()) {
+			if ((this.COORDONNEES.getX() == c.getCoordonnees().getX()-1)
+					|| (this.COORDONNEES.getX() == c.getCoordonnees().getX()+1)) {
 				return true;
 			}
 		}
@@ -260,7 +256,7 @@ public class Case {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cases == null) ? 0 : cases.hashCode());
-		result = prime * result + ((coordonnees == null) ? 0 : coordonnees.hashCode());
+		result = prime * result + ((COORDONNEES == null) ? 0 : COORDONNEES.hashCode());
 		result = prime * result + (estLibre ? 1231 : 1237);
 		result = prime * result + (estPiege ? 1231 : 1237);
 		result = prime * result + ((param == null) ? 0 : param.hashCode());
@@ -282,10 +278,10 @@ public class Case {
 				return false;
 		} else if (!cases.equals(other.cases))
 			return false;
-		if (coordonnees == null) {
-			if (other.coordonnees != null)
+		if (COORDONNEES == null) {
+			if (other.COORDONNEES != null)
 				return false;
-		} else if (!coordonnees.equals(other.coordonnees))
+		} else if (!COORDONNEES.equals(other.COORDONNEES))
 			return false;
 		if (estLibre != other.estLibre)
 			return false;
@@ -308,7 +304,7 @@ public class Case {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Case");
-		builder.append(coordonnees);
+		builder.append(COORDONNEES);
 		builder.append(" : estLibre=");
 		builder.append(estLibre);
 		builder.append(", estPiege=");

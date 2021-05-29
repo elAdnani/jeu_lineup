@@ -150,10 +150,10 @@ public class SimulationPartie {
 		System.out.println("\n==== 'On vérifie que la liste des Cases est bien mise à jour après les déplacements' ====\n");
 		System.out.println(plateauPartie);
 		
-		System.out.println("\n==== 'On tente d'afficher un Plateau en mode textuel' ====\n");
-		Map<Joueur, Character> skinPion = new HashMap<>();
-		skinPion.put(joueur1, '#');
-		skinPion.put(joueur2, '$');
-		plateauPartie.affichagePlateau(3, skinPion);
+//		System.out.println("\n==== 'On tente d'afficher un Plateau en mode textuel' ====\n");
+//		Map<Joueur, Character> skinPion = new HashMap<>();
+//		skinPion.put(joueur1, '#');
+//		skinPion.put(joueur2, '$');
+//		plateauPartie.affichagePlateau(3, skinPion);
 	}
 }

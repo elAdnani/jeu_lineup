@@ -15,8 +15,8 @@ public class ChifumiPion extends Pion{
 	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
 	 * @param p Représente les paramètres de la partie.
 	 */
-	public ChifumiPion(Joueur j, Parametres p) {
-		super(j, p);
+	public ChifumiPion(Joueur j) {
+		super(j);
 	}
 	
 		// Methods

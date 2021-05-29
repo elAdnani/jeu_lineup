@@ -1,7 +1,7 @@
 package lineup_3;
 
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Cette classe créer un Joueur ayant des Pions et pouvant faire certaines actions sur un Plateau.
@@ -19,7 +19,7 @@ public class Joueur {
 	/**
 	 * Stock le nombre de coups joué par le joueur.
 	 */
-	private int nbCoups;
+	private int nbCoup;
 	
 	/**
 	 * le nom du que le joueur choisi.
@@ -36,14 +36,10 @@ public class Joueur {
 	 */
 	private DeckPions main;
 	
-	/**
-	 * Correspond aux paramètres de la partie.
-	 */
-	private Parametres param;
 	
 		// Getters
 	
-	public String getJoueur() {
+	public String getPseudo() {
 		return this.pseudo;
 	}
 
@@ -55,8 +51,12 @@ public class Joueur {
 		return main;
 	}
 	
-	public int getNbCoups() {
-		return nbCoups;
+	public int getNbCoup() {
+		return nbCoup;
+	}
+	
+	public void ajouterCoup() {
+		this.nbCoup++;
 	}
 
 		// Constructor
@@ -66,10 +66,9 @@ public class Joueur {
 	 * @param p Correspond au pseudo utilisé pour désigner le joueur.
 	 * @param nbPions Correspond au nombre de pion disponible dans la main en début de partie.
 	 */
-	public Joueur(String pseudo, Parametres param) {
+	public Joueur(String pseudo, int nbPion) {
 		this.pseudo = pseudo;
-		this.param = param;
-		main = new DeckPions(this, param);
+		main = new DeckPions(this, nbPion);
 	}
 	
 		// Methods
@@ -92,11 +91,22 @@ public class Joueur {
 	 * connaissance de sa {@link Case}.
 	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser le {@link Pion}.
 	 */
-	public void poserPion(Case c) {
+	public boolean poserPion(Case c, PlateauPolynomial p, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
 		c.ajouterPion(main.getPion());
 		main.getPion().setC(c);
 		main.getProchainPion().setC(c);
-		main.getPion().deplacementsPossibles();	
+		main.getPion().deplacementsPossibles(nbCouche);
+//		System.out.println(main.getPion().getPossibilites());
+		p.affichagePlateau(3, skinPion);
+		if (c.getPion().alignements(p.getListeCase(), nbCote)){
+			System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
+			/*for (Case cas : p.getListeCase()) {
+				cas.setEstLibre(false);
+			}*/
+			//TODO faire un blocage à la fin
+			return c.getPion().alignements(p.getListeCase(), nbCote);
+		}
+		return false;
 	}
 	
 	/**
@@ -104,11 +114,19 @@ public class Joueur {
 	 * @param p Représente le pion que le {@link Joueur} souhaite déplacer.
 	 * @param direction Représente la direction vers laquelle le {@link Joueur} souhaite aller.
 	 */
-	public void deplacerPion(Pion p, String direction, List<Case> cases) {
+	public void deplacerPion(Pion p, String direction, PlateauPolynomial pl, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
 		if (p.getJoueur() == this) {
-			p.deplacerPion(cases, direction);
+			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
+			pl.affichagePlateau(3, skinPion);
+			p.getJoueur().ajouterCoup();
+			if (p.alignements(pl.getListeCase(), nbCote)) {
+				System.out.println(p.getC().getPion().getJoueur().getPseudo() + " a gagné !");
+				/*for (Case cas : pl.getListeCase()) {
+					cas.setEstLibre(false);
+				}*/
+				//TODO pareil que le todo précédent.
+			}
 		}
-		
 	}
 	
 	//TODO écrire poserChifumiPion.
@@ -118,7 +136,7 @@ public class Joueur {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((main == null) ? 0 : main.hashCode());
-		result = prime * result + nbCoups;
+		result = prime * result + nbCoup;
 		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
 		result = prime * result + ((temps == null) ? 0 : temps.hashCode());
 		return result;
@@ -138,7 +156,7 @@ public class Joueur {
 				return false;
 		} else if (!main.equals(other.main))
 			return false;
-		if (nbCoups != other.nbCoups)
+		if (nbCoup != other.nbCoup)
 			return false;
 		if (pseudo == null) {
 			if (other.pseudo != null)
@@ -161,7 +179,7 @@ public class Joueur {
 		builder.append("\nPions restant : ");
 		builder.append(this.countPions());
 		builder.append("\nNombre de Coups : ");
-		builder.append(nbCoups);
+		builder.append(nbCoup);
 		builder.append("\nTemps de réflexion : ");
 		builder.append(temps);
 		builder.append("\n");

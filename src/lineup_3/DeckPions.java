@@ -23,12 +23,8 @@ public class DeckPions {
 	/**
 	 * Indique le prochain pion sur la liste.
 	 */
-	private int idx;	
+	private int idx;
 	
-	/**
-	 * Correspond aux paramètres de la partie.
-	 */
-	private Parametres param;
 	
 		// Getters
 	
@@ -51,10 +47,9 @@ public class DeckPions {
 	 * @param nbPions nombre de Pion souhaité pour la main.
 	 * @param joueur Joueur à qui la main appartient.
 	 */
-	public DeckPions(Joueur joueur, Parametres p) {
-		this.param = p;
-		this.idx = param.getNBPION()-1;
-		this.main = new Pion[param.getNBPION()];
+	public DeckPions(Joueur joueur, int nbPion) {
+		this.idx = nbPion-1;
+		this.main = new Pion[nbPion];
 		this.initialiserMain(joueur);
 	}
 	
@@ -77,7 +72,7 @@ public class DeckPions {
 	 */
 	private void initialiserMain(Joueur joueur) {
 		for (int i = 0; i < main.length; i++) {
-			main[i] = new ChifumiPion(joueur, param);
+			main[i] = new ChifumiPion(joueur);
 			main[i].setJoueur(joueur);
 		}
 	}

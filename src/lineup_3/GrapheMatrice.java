@@ -335,10 +335,8 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			int indiceS = ensembleSommets.indexOf(sommet);
 			
 			for (int i = 0; i < matrice.getTaille().getX(); i++) 
-				if (matrice.read(indiceS, i) != 0 && indiceS != i) {
+				if (matrice.read(indiceS, i) != 0 && indiceS != i)
 					voisins.add(ensembleSommets.get(i));
-					System.out.println("dedans");
-				}
 			
 			if (type.isDirected())
 				for (int i = 0; i < matrice.getTaille().getX(); i++) 

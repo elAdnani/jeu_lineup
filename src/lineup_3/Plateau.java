@@ -22,8 +22,8 @@ import java.util.Map;
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
  * jeu. Il est la base du fonctionnement du jeu.  </br>
  * Un Plateau consiste à :  </br> 
- * 	- former le schéma de la partie, en donnant les sommets qui en sommant une partie, forment pour la plupart du temps des arêtes  </br> 
- *  - former les cases permettant les déplacements et le fonctionnement logique du jeu </br> 
+ * 	- former le schéma de la partie, en créant les cases qui forment pour la plupart du temps des chemins du plateau </br> 
+ *  - donner les outils nécessaires aux déplacement et aux changements du plateau</br>
  *  
  * 
  *	</br> 
@@ -35,17 +35,26 @@ import java.util.Map;
 
 public abstract class Plateau {
 	
+	/**
+	 * Est un élément obligatoire du plateau. Le plateau possède son propre graphe.</br>
+	 * Ainsi un plateau correspond à un graphe de case. Ses sommets sont ses cases. Et ses arêtes, les chemins permettant de se déplacer. 
+	 */
 	public final GrapheMatrice<Case> grapheDuPlateau;
 	
 	
 	
-	
+	/**
+	 * @param grapheDuPlateau est un graphe de case prédéfini
+	 */
 	public Plateau(GrapheMatrice<Case> grapheDuPlateau) {
 		
 		this.grapheDuPlateau=grapheDuPlateau;
 	}
 	
-	
+	/**
+	 * @param grapheDuPlateau est un graphe de case prédéfini
+	 * @param TypeDuGraphe est le type du graphe que le graphe en paramètre doit respecter
+	 */
 	public Plateau(GrapheMatrice<Case> grapheDuPlateau,  GrapheType TypeDuGraphe) {
 		
 		if(grapheDuPlateau!=null && grapheDuPlateau.getType()==TypeDuGraphe)
@@ -58,26 +67,30 @@ public abstract class Plateau {
 	
 	
 	
-	
+	/**
+	 * Affiche le plateau actuel sur le terminal. TODO vraiment utile à mettre en abstract ?
+	 * @param niveau 
+	 * @param pion
+	 */
 	public abstract void affichagePlateau(int niveau, Map<Joueur, Character> pion);
 
+	
+	/**
+	 * Génère la partie, les cases ainsi que les chemins du plateau.
+	 */
 	public abstract void generationDuPlateau();
 	
 	
-
-	public int trouverIndiceCase(Paire coordonnee) {
-		
-		for( Case sommet : this.grapheDuPlateau.getSommets()) 
-			if(sommet.getCoordonnees().equals(coordonnee))
-				
-				return this.grapheDuPlateau.getSommets().indexOf(sommet);
-		
-		return -1;
-	}
-	
+	/**
+	 * Retrouve à partir d'une paire de coordonnée la case du plateau qui correspond.
+	 * @param coordonnee est une {@link Paire} de coordonnée voulant être retrouvé dans le plateau
+	 * @return donne la {@link Case} correspondant aux coordonnées, si elle n'existe pas null est renvoyé
+	 */
 	public Case trouverCase(Paire coordonnee) {
+		
 		for (Case sommet : this.grapheDuPlateau.getSommets())
 			if (sommet.getCoordonnees().equals(coordonnee)) {
+				
 				return sommet;
 			}
 		return null;
@@ -86,8 +99,8 @@ public abstract class Plateau {
 	
 	
 	/**
-	 * la liste de sommet que ce plateau possède
-	 * @return 
+	 * la liste des cases que le plateau possède.
+	 * @return la liste des sommets du graphe de case du plateau
 	 */
 	public List<Case> getListeCase() {
 		

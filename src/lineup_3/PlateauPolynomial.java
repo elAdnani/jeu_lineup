@@ -15,14 +15,10 @@
 package lineup_3;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-/*
- * 
- */
 import java.util.Map;
 import java.util.Set;
 
@@ -48,20 +44,25 @@ public class PlateauPolynomial extends Plateau{
 	 * Liste des pions des joueurs et un graphe qui correspond au squelette du plateau</br>
 	 */
 	
-	private  int        nbcote  ;
-	public  static final int   NBCOUCHE = 3;
+	private  int        		nbcote;
+	public  static final int	NBCOUCHE = 3;
 	
 	
 	
 	/**
 	 * Construction d'un Plateau de nombre de côté défini </br>
-	 * On le définit en tant que graphe non orienté.
+	 * On le définit en tant que graphe non orienté. </br>
+	 * Puis de part le nombre de côté on génère le plateau, composé de case et de chemin. </br>
 	 * @param nombreCote
 	 */
 	
 	public PlateauPolynomial(int nombreCote) {
 		
-		this( nombreCote, new GrapheMatrice<Case> ( GrapheType.UGRAPH) );
+		super( new GrapheMatrice<Case>(GrapheType.UGRAPH) );
+		
+		this.nbcote=nombreCote;
+		
+		this.generationDuPlateau();
 	
 	}
 
@@ -74,11 +75,11 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	
 	public PlateauPolynomial(int nombreCote, GrapheMatrice<Case> grapheDuPlateau) {
+		
 		super(grapheDuPlateau,GrapheType.UGRAPH);
 		
 		this.nbcote = nombreCote;
 		
-		this.generationDuPlateau();
 	}
 	
 	
@@ -98,6 +99,7 @@ public class PlateauPolynomial extends Plateau{
 	 * @return est une liste de coordonnée, une liste de Paire  {@link Paire }
 	 */
 	private List<Case> recuperationDesCoordonnees(String ligne){
+
 		List<Case> coordonnees = new ArrayList<>();
 		String[] separationDesCoordoonees;
 		separationDesCoordoonees = ligne.split(" ");
@@ -107,10 +109,9 @@ public class PlateauPolynomial extends Plateau{
 		for(int i=0; i< separationDesCoordoonees.length ; i++) {
 			
 			paire = separationDesCoordoonees[i].split(";");
-			
-			coordonnees.add( this.grapheDuPlateau.getSommets().get( trouverIndiceCase(
+			coordonnees.add( trouverCase(
 						new Paire( Integer.valueOf(paire[0]), Integer.valueOf(paire[1]) )
-																				 ) ) );
+										)  );
 		}
 		
 		return coordonnees;
@@ -118,11 +119,14 @@ public class PlateauPolynomial extends Plateau{
 	}
 	
 	/**
-	 * Est destiné a être l'affichage du plateau permettant de jouer
-	 * @return un plateau en  composé de ses pions
-	 * TODO faire des explications
+	 * Est destiné a être l'affichage du plateau permettant de jouer. </br>
+	 * Elle consiste à récupérer les coordonnées de chaque case qui sera lui et du plateau qui sera renvoyé sur le terminal. 
+	 * @param est le nombre de côté du plateau qui sera récupérer. 
+	 * @param est l'assignation de chaque joueur de son caractère. 
+	 * Si un joueur possède un pion dans une case du plateau, il sera représenté par celui-ci.
 	 */
-	public void affichagePlateau(int niveau, Map<Joueur, Character> pion) {
+	
+	public void affichagePlateau(int nombreDeCote, Map<Joueur, Character> pion) {
 		
 		 String myPath = System.getProperty("user.dir")
 				+ File.separator + "res"
@@ -131,14 +135,16 @@ public class PlateauPolynomial extends Plateau{
 			File FichierDuNiveau = null ;
 			try{
 				
-				FichierDuNiveau = new File(myPath+niveau+".txt");
+				FichierDuNiveau = new File(myPath+nombreDeCote+".txt");
+				// on récupère un fichier qui possède le plateau correspondant
 				String ligne=" ";
 				
 				RandomAccessFile raf = new RandomAccessFile(FichierDuNiveau, "rw");
 				raf.seek(0);
+				// on se replace tout au début du fichier
 
 				ligne = raf.readLine();
-
+				// et on récupère la première ligne qui est la liste des cases ordonnées en fonction de sa venue dans la lecture du plateau
 				List<Case> coordonneeDesCases = recuperationDesCoordonnees(ligne);
 
 				int compteurDePaire = 0;
@@ -146,25 +152,25 @@ public class PlateauPolynomial extends Plateau{
 				while(ligne != null) {
 					
 					ligne = raf.readLine();
+					// on récupère chaque ligne et on envoie sur le terminal chaque caractère
+					// si le caractère est un 'O' alors on vérifie si cette case possède un pion
+						// si elle possède un pion alors on envoie sur le terminal le caractère que représente ce joueur.
+						// ou sinon on envoie tout simplement 'O' pour montrer que la case est vide.
 					if(ligne != null) {
 
 						for(int i=0; i< ligne.length() ;i++) {
 							
-							if(ligne.charAt(i)!='O') {
+							if(ligne.charAt(i)!='O')
 								
 								System.out.print(ligne.charAt(i) );
-							}
 							else {
 								
-								if( ! coordonneeDesCases.get(compteurDePaire).EstLibre()) {
+								if( ! coordonneeDesCases.get(compteurDePaire).EstLibre()) 
 
-									
 									System.out.print( pion.get( coordonneeDesCases.get( compteurDePaire ).getPion().getJoueur() ) );
-								}
-								else {
+								else 
 									
 									System.out.print("O");
-								}
 								compteurDePaire = compteurDePaire + 1;
 							}
 						}
@@ -184,11 +190,9 @@ public class PlateauPolynomial extends Plateau{
 	/**
 	 * Génère tous les sommets du plateau, à partir du nombre de pion maximum qu'il peut y avoir. </br>
 	 * Il commence par générer les sommets puis génère les arrêts grâce aux coordonnée des sommets.
-	 * 
 	 */
 
 	public void generationDuPlateau() {
-		// génération des sommets
 		
 		for (int i = 0; i < NBCOUCHE; i++)
 
@@ -197,18 +201,17 @@ public class PlateauPolynomial extends Plateau{
 				this.grapheDuPlateau.ajouterSommet(new Case(i,j) );
 				
 		
-		// génération des arêtes
-		generationListArret();
+		generationListeChemin();
 	}
 	
 	/**
 	 * Génère les arêtes à partir des sommets. </br>
 	 * Regarde pour chaque sommet, la proximité avec d'autres sommets. </br>
 	 * Si elle remarque qu'un sommet est voisin d'un autre, alors son arêtes est créées.
-	 * TODO changer le nom
 	 * @param listeDesSommets
 	 */
-	private void generationListArret() {
+	
+	private void generationListeChemin() {
 		
 		for ( Case sommet : grapheDuPlateau.getSommets() ) {
 
@@ -230,60 +233,57 @@ public class PlateauPolynomial extends Plateau{
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
 		
-		return estVoisin(coordonnee_un.getCoordonnees().getX(),coordonnee_un.getCoordonnees().getY(),coordonnee_deux.getCoordonnees().getX(),coordonnee_deux.getCoordonnees().getY());
+		return estVoisin(coordonnee_un.getCoordonnees().getX(),
+						coordonnee_un.getCoordonnees().getY(),
+						coordonnee_deux.getCoordonnees().getX(),
+						coordonnee_deux.getCoordonnees().getY());
 	}
 	
-	private boolean estVoisin(int x1, int y1, int x2, int y2) {
-		
-		if(x1==x2 && ( (y1==(y2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (y1==(y2+1)%this.getNbPionMax() ))){
-			// si elles se retrouvent sur la même couche et qu'elles ont une différence de  coordonnée +1 ou -1 en y
-			return true;
-		}
-		else if(y1==y2 && y1%2!=0 && ( (x1==(x2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (x1==(x2+1)%this.getNbPionMax() ))) {
-			// si elles sont sur des couches différentes et qu'elles ont une différence de  coordonnée +1 ou -1 en x (ce cas est envisageable si y est impair)
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * TODO javadoc
-	 * @param c
-	 * @return
-	 */
-	public Set<Case> voisinDe(Case c) {
-		return this.grapheDuPlateau.voisinsDe(c);
-	}
-	
+
 	/**
 	 * Vérifie la proximité des deux paires de coordonnée. </br>
 	 * Et dit selon les consignes du plateau, si elles sont voisines. </br>
 	 * C'est à dire : </br>
 	 *  - Si elles sont l'un à côté de l'autre dans  un même polygone </br>
 	 *  - Si elles sont au milieu du plateau à des couches voisine
-	 * @param point_un
-	 * @param point_deux
-	 * @return
+	 * @param premierX est le x de la première paire coordonnée
+	 * @param premierY est le y de la première paire coordonnée
+	 * @param secondX est le x de la deuxième paire coordonnée
+	 * @param secondY est le y de la deuxième paire coordonnée
+	 * @return 
 	 */
-	
-	public boolean estVoisin (Paire point_un, Paire point_deux) {
-
-		return estVoisin(this.getListeCase().get( super.trouverIndiceCase(point_un) ),
-				this.getListeCase().get( this.trouverIndiceCase(point_deux) )		);
+	private boolean estVoisin(int premierX, int premierY, int secondX, int secondY) {
+		
+		if(premierX==secondX && ( (premierY==(secondY-1 + this.getNbPionMax())%this.getNbPionMax() ) || (premierY==(secondY+1)%this.getNbPionMax() ))){
+			// si elles se retrouvent sur la même couche et qu'elles ont une différence de  coordonnée +1 ou -1 en y
+			return true;
+		}
+		else if(premierY==secondY && premierY%2!=0 && ( (premierX==(secondX-1 + this.getNbPionMax())%this.getNbPionMax() ) || (premierX==(secondX+1)%this.getNbPionMax() ))) {
+			// si elles sont sur des couches différentes et qu'elles ont une différence de  coordonnée +1 ou -1 en x (ce cas est envisageable si y est impair)
+			return true;
+		}
+		
+		return false;
 	}
 
 	
 	/**
-	 * TODO javadoc
-	 * @param c1
-	 * @param c2
-	 * @return
+	 * Récupère la liste des voisins d'un case d'une jeu
+	 * @param est une case à qui l'on recherche ses voisins
+	 * @return une liste de case voisin d'une case recherchée
 	 */
-	public boolean remplacerCase(Case c1, Case c2) {
-		return this.grapheDuPlateau.remplacerSommet(c2,c2);
+	public Set<Case> voisinDe(Case c) {
+		
+		return this.grapheDuPlateau.voisinsDe(c);
 	}
+
 	
+	/**
+	 *@return une chaîne de caractère présentant le plateau en présentant :</br>
+	 * - son nombre de côté
+	 * - les chemins et les cases du plateau
+	 * - le nombre de pion maximum 
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

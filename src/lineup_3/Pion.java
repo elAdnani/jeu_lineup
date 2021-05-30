@@ -177,24 +177,35 @@ public abstract class Pion implements Comparable<Pion>{
 	}
 	
 	//TODO javadoc.
-	public boolean alignements(List<Case> cases, int nbCote) {
-//		System.out.println(possibilites);
-//		System.out.println(this.c);
-		for (Case c1 : cases) {
-			if (this.c.voisins(cases, nbCote, possibilites).contains(c1)				
-					&& c1.getPion() != null 
-					&& this.getJoueur() == c1.getPion().getJoueur()) {
-				
-				for (Case c2 : cases) {
-					if (c1.voisins(cases, nbCote, possibilites).contains(c2)
-							&& c2.getPion() != null
-							&& c2 != this.c
-							&& c1.getPion().getJoueur() == c2.getPion().getJoueur()) {
-//						System.out.println(this.c);
-//						System.out.println(c1);
-//						System.out.println(c2);
+	public boolean alignements(List<Case> cases, int nbCote, int nbCouche) {
+		this.deplacementsPossibles(nbCouche);
+		
+		for (Deplacement deplacement : possibilites) {
+			for (Case case1 : cases) {
+				if (case1.getCoordonnees().getX()
+							== this.c.getCoordonnees().getX()
+							+deplacement.getX()
+						&& case1.getCoordonnees().getY()
+							== (this.c.getCoordonnees().getY()
+							+deplacement.getY()+2*nbCote)%(2*nbCote)
+						&& !case1.EstLibre()
+						&& this.c.getPion().getJoueur() ==  case1.getPion().getJoueur()) {
 						
-						return true;
+					for (Deplacement deplacement2 : case1.getPion().getPossibilites()) {
+						for (Case case2 : cases) {
+							if (case2.getCoordonnees().getX()
+										== case1.getCoordonnees().getX()
+										+deplacement2.getX()
+									&& case2.getCoordonnees().getY()
+										== (case1.getCoordonnees().getY()
+										+deplacement2.getY()+2*nbCote)%(2*nbCote)
+									&& case2 != case1 && case2 != this.c
+									&& !case2.EstLibre()
+									&& case1.getPion().getJoueur() == case2.getPion().getJoueur()) {
+									
+								return true;
+							}
+						}
 					}
 				}
 			}

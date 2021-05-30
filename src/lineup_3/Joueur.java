@@ -98,13 +98,10 @@ public class Joueur {
 		main.getPion().deplacementsPossibles(nbCouche);
 //		System.out.println(main.getPion().getPossibilites());
 		p.affichagePlateau(3, skinPion);
-		if (c.getPion().alignements(p.getListeCase(), nbCote)){
+		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
 			System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
-			/*for (Case cas : p.getListeCase()) {
-				cas.setEstLibre(false);
-			}*/
 			//TODO faire un blocage à la fin
-			return c.getPion().alignements(p.getListeCase(), nbCote);
+			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}
 		return false;
 	}
@@ -119,7 +116,7 @@ public class Joueur {
 			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
 			pl.affichagePlateau(3, skinPion);
 			p.getJoueur().ajouterCoup();
-			if (p.alignements(pl.getListeCase(), nbCote)) {
+			if (p.alignements(pl.getListeCase(), nbCote, nbCouche)) {
 				System.out.println(p.getC().getPion().getJoueur().getPseudo() + " a gagné !");
 				/*for (Case cas : pl.getListeCase()) {
 					cas.setEstLibre(false);

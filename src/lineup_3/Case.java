@@ -1,6 +1,5 @@
 package lineup_3;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -120,9 +119,9 @@ public class Case {
 	public Set<Case> getVoisins(PlateauPolynomial p) {
 		return p.voisinDe(this);
 	}
-		//TODO mettre à jour la javadoc des param.
 	/**
 	 * caseSuivante cherche la case adjacente dans le sens horaire à celle courante selon ses coordonnées.
+	 * TODO mettre à jour la javadoc des param.
 	 * @return Retourne la case adjacente dans le sens horaire à celle courante.
 	 * Si elle n'existe pas, elle retourne une Case null.
 	 */
@@ -180,48 +179,8 @@ public class Case {
 		return null;
 	}
 	
-	/**
-	 * estVoisin regarde si la{@link Case} passée en paramètre est voisine de celle courante, sur la même couche.
-	 * @param c Représente la {@link Case} potentiellement voisine de la celle courante.
-	 * @return Retourne vrai si les deux {@link Case} sont voisine, faux sinon.
-	 */
-	public boolean estVoisine(Case c, int nbCote, List<Deplacement> possibilites) {
-		for (Deplacement deplacement : possibilites) {
-			if (c.getCoordonnees().getX() == this.getCoordonnees().getX()+(deplacement.getX()+2*nbCote)%(2*nbCote)) {
-				return true;
-			}
-		}
-//		if (this.COORDONNEES.getX() == c.getCoordonnees().getX()) {
-//			if ((this.COORDONNEES.getY() == (c.getCoordonnees().getY()-1+2*nbCote)%(2*nbCote))
-//					|| (this.COORDONNEES.getY() == c.getCoordonnees().getY()+1%(2*nbCote))) {
-//				return true;
-//			}
-//		} else if (this.COORDONNEES.getY() == c.getCoordonnees().getY()) {
-//			if (this.COORDONNEES.getX() == c.getCoordonnees().getX()-1
-//					|| this.COORDONNEES.getX() == c.getCoordonnees().getX()+1) {
-//				return true;
-//			}
-//		}
-		return false;
-	}
+		// toString, hashCode && equals
 	
-	/**
-	 * voisins détermine les voisins de la {@link Case} courante.
-	 * @param cases Représente la liste des {@link Case} présente sur le plateau de la partie.
-	 * @param nbCote Représente le nombre de côté du {@link PlateauPolynomial} de la partie.
-	 * @param nbCouche Représente le nombre de couche du {@link PlateauPolynomial} de la partie.
-	 * @return Retourne la liste des voisins de la {@link Case} courante.
-	 */
-	public List<Case> voisins(List<Case> cases, int nbCote, List<Deplacement> possibilites) {
-		List<Case> voisins = new ArrayList<>();
-		for (Case c : cases) {
-			if (this.estVoisine(c, nbCote, possibilites)) {
-				voisins.add(c);
-			}
-		}
-		return voisins;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

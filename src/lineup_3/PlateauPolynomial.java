@@ -120,6 +120,7 @@ public class PlateauPolynomial extends Plateau{
 	/**
 	 * Est destiné a être l'affichage du plateau permettant de jouer
 	 * @return un plateau en  composé de ses pions
+	 * TODO faire des explications
 	 */
 	public void affichagePlateau(int niveau, Map<Joueur, Character> pion) {
 		
@@ -129,6 +130,7 @@ public class PlateauPolynomial extends Plateau{
 		 
 			File FichierDuNiveau = null ;
 			try{
+				
 				FichierDuNiveau = new File(myPath+niveau+".txt");
 				String ligne=" ";
 				
@@ -139,15 +141,14 @@ public class PlateauPolynomial extends Plateau{
 
 				List<Case> coordonneeDesCases = recuperationDesCoordonnees(ligne);
 
+				int compteurDePaire = 0;
 				
 				while(ligne != null) {
 					
 					ligne = raf.readLine();
 					if(ligne != null) {
-						int compteurDePaire = 0;
+
 						for(int i=0; i< ligne.length() ;i++) {
-							
-							
 							
 							if(ligne.charAt(i)!='O') {
 								
@@ -156,33 +157,27 @@ public class PlateauPolynomial extends Plateau{
 							else {
 								
 								if( ! coordonneeDesCases.get(compteurDePaire).EstLibre()) {
+
 									
 									System.out.print( pion.get( coordonneeDesCases.get( compteurDePaire ).getPion().getJoueur() ) );
 								}
 								else {
+									
 									System.out.print("O");
 								}
 								compteurDePaire = compteurDePaire + 1;
 							}
-							
 						}
 						System.out.println("");
 					}
-	
 				}
 				
 				raf.close();
 			}
-			catch(FileNotFoundException o) {
+			catch(IOException o) {
 				
 				o.printStackTrace();
-				
-			} catch (IOException e){
-				
-				e.printStackTrace();
-			}	
-
-
+			}
 	}
 	
 
@@ -210,6 +205,7 @@ public class PlateauPolynomial extends Plateau{
 	 * Génère les arêtes à partir des sommets. </br>
 	 * Regarde pour chaque sommet, la proximité avec d'autres sommets. </br>
 	 * Si elle remarque qu'un sommet est voisin d'un autre, alors son arêtes est créées.
+	 * TODO changer le nom
 	 * @param listeDesSommets
 	 */
 	private void generationListArret() {
@@ -234,9 +230,28 @@ public class PlateauPolynomial extends Plateau{
 	
 	private boolean estVoisin(Case coordonnee_un, Case coordonnee_deux) {
 		
-		return this.grapheDuPlateau.voisinsDe(coordonnee_un).contains(coordonnee_deux);
+		return estVoisin(coordonnee_un.getCoordonnees().getX(),coordonnee_un.getCoordonnees().getY(),coordonnee_deux.getCoordonnees().getX(),coordonnee_deux.getCoordonnees().getY());
 	}
 	
+	private boolean estVoisin(int x1, int y1, int x2, int y2) {
+		
+		if(x1==x2 && ( (y1==(y2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (y1==(y2+1)%this.getNbPionMax() ))){
+			// si elles se retrouvent sur la même couche et qu'elles ont une différence de  coordonnée +1 ou -1 en y
+			return true;
+		}
+		else if(y1==y2 && y1%2!=0 && ( (x1==(x2-1 + this.getNbPionMax())%this.getNbPionMax() ) || (x1==(x2+1)%this.getNbPionMax() ))) {
+			// si elles sont sur des couches différentes et qu'elles ont une différence de  coordonnée +1 ou -1 en x (ce cas est envisageable si y est impair)
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * TODO javadoc
+	 * @param c
+	 * @return
+	 */
 	public Set<Case> voisinDe(Case c) {
 		return this.grapheDuPlateau.voisinsDe(c);
 	}
@@ -259,31 +274,16 @@ public class PlateauPolynomial extends Plateau{
 	}
 
 	
-	
+	/**
+	 * TODO javadoc
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
 	public boolean remplacerCase(Case c1, Case c2) {
 		return this.grapheDuPlateau.remplacerSommet(c2,c2);
 	}
 	
-	
-	/**
-	 * permet à partir de coordonnée de retrouver un sommet. </br>
-	 * On cherche à partir de la liste des sommets, les coordonnées correspondant à celui indiqué en paramètre.
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-
-	
-	/**
-	 * Return le nombre de côté que ce plateau possède
-	 * @return le NBCOTE
-	 */
-	
-	public int getNBCOTE() {
-		
-		return this.nbcote;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

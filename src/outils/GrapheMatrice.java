@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <p>Utilisation d'un graphe pouvant être pondéré et/ou dirigé grâce selon une matrice d'adjacence</p>
+ * <p>Utilisation d'un graphe pouvant être pondéré et/ou dirigé selon une matrice d'adjacence</p>
  * <p>
  * 	Un graphe est un ensemble de sommets.<br>
  * 	Ceux-ci peuvent être connectés entre eux par des arrêtes.<br>
@@ -39,6 +39,7 @@ import java.util.Set;
  * </p>
  * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
+ * @version 31 mai 2021 18:02:31
  * 
  * @param <T> Un type quelconque à placer aux sommets du graphe.
  */
@@ -163,25 +164,25 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 */
 		@Override
 		public String toString() {
-			StringBuilder aretes = new StringBuilder();
+			StringBuilder arretes = new StringBuilder();
 			
 			if (estPondere())
 				for (T s1 : ensembleSommets) {
-					aretes.append("\n - " + s1 + " : [");
+					arretes.append("\n - " + s1 + " : [");
 					for (T s2 : enfantsDe(s1))
-						aretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
+						arretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
 					if (!enfantsDe(s1).isEmpty())
-						aretes.delete(aretes.length() - 2, aretes.length());
-					aretes.append("]");
+						arretes.delete(arretes.length() - 2, arretes.length());
+					arretes.append("]");
 				}
 			else
 				for (T s : ensembleSommets)
-					aretes.append("\n - " + s + " : " + enfantsDe(s));
+					arretes.append("\n - " + s + " : " + enfantsDe(s));
 			
 			return "# GrapheMatrice\n"
 				 + "type  : " + type + "\n"
 				 + "nodes : " + ensembleSommets.toString() + "\n"
-				 + "edges : " + aretes;
+				 + "edges : " + arretes;
 		}
 		
 		
@@ -196,12 +197,12 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			else {
 				ensembleSommets.add(sommet);
 				
-				if (matrice.getTaille().getX() < ensembleSommets.size()) {
+				if (matrice.getNbLignes() < ensembleSommets.size()) {
 					Matrice oldMatrice = new Matrice(matrice.getMatrice());
 					matrice = new Matrice(ensembleSommets.size());
 					
-					for (int i = 0; i < oldMatrice.getTaille().getX(); i++)
-						for (int j = 0; j < oldMatrice.getTaille().getY(); j++)
+					for (int i = 0; i < oldMatrice.getNbLignes(); i++)
+						for (int j = 0; j < oldMatrice.getNbColonnes(); j++)
 							matrice.write(i, j, oldMatrice.read(i, j));
 				}
 				
@@ -231,10 +232,10 @@ public class GrapheMatrice<T> extends Graphe<T> {
 				if (ensembleSommets.size() > 0) {
 					int ligne = 0;
 					
-					for (int i = 0; i < oldMatrice.getTaille().getX(); i++) {
+					for (int i = 0; i < oldMatrice.getNbLignes(); i++) {
 						int colonne = 0;
 						
-						for (int j = 0; j < oldMatrice.getTaille().getY(); j++) {
+						for (int j = 0; j < oldMatrice.getNbColonnes(); j++) {
 							matrice.write(ligne, colonne, oldMatrice.read(i, j));
 							
 							if (j != index)
@@ -276,7 +277,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 * @return - true si l'ajout a pu se faire<br>
 		 *         - false si rien n'a été modifié.
 		 */
-		public boolean ajouterArete(T depart, T arrivee, int valeur) {
+		public boolean ajouterArrete(T depart, T arrivee, int valeur) {
 			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArete(depart, arrivee)) // 
 				return false;
 			else {
@@ -334,12 +335,12 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			Set<T> voisins = new HashSet<>();
 			int indiceS = ensembleSommets.indexOf(sommet);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++) 
+			for (int i = 0; i < matrice.getNbLignes(); i++) 
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
 					voisins.add(ensembleSommets.get(i));
 			
 			if (type.isDirected())
-				for (int i = 0; i < matrice.getTaille().getX(); i++) 
+				for (int i = 0; i < matrice.getNbLignes(); i++) 
 					if (matrice.read(i, indiceS) != 0 && indiceS != i)
 						voisins.add(ensembleSommets.get(i));
 			
@@ -348,7 +349,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		/**
 		 * <p>Donne un set de tous les parents d'un sommet.</p>
-		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X -> Y (enfant)</p>
+		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X → Y (enfant)</p>
 		 * 
 		 * @param enfant Le sommet enfant
 		 * 
@@ -362,7 +363,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			Set<T> parents = new HashSet<>();
 			int indiceS = ensembleSommets.indexOf(enfant);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++)
+			for (int i = 0; i < matrice.getNbLignes(); i++)
 				if (matrice.read(i, indiceS) != 0 && indiceS != i)
 					parents.add(ensembleSommets.get(i));
 			
@@ -371,7 +372,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		/**
 		 * <p>Donne un set de tous les enfants d'un sommet.</p>
-		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
+		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X ← Y (parent)</p>
 		 * 
 		 * @param parent Le sommet parent
 		 * @return - Un Set des enfants du sommet<br>
@@ -384,7 +385,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			Set<T> enfants = new HashSet<>();
 			int indiceS = ensembleSommets.indexOf(parent);
 			
-			for (int i = 0; i < matrice.getTaille().getX(); i++)
+			for (int i = 0; i < matrice.getNbLignes(); i++)
 				if (matrice.read(indiceS, i) != 0 && indiceS != i)
 					enfants.add(ensembleSommets.get(i));
 			

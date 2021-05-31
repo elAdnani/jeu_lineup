@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 /**
  * <p>Une paire de deux entiers</p>
@@ -10,7 +10,7 @@ package lineup_3;
  * 	Des opérations entre deux paires sont également réalisables.
  * </p>
  * 
- * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</ a>
+ * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
  */
 public class Paire {
 	/* ATTRIBUTS ______________________________ */

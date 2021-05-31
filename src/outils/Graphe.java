@@ -15,6 +15,7 @@ package outils;
  * </p>
  * 
  * @author <a href="mailto:alexis.bonal.etu@univ-lille.fr">BONAL Alexis</a>
+ * @version 31 mai 2021 18:02:31
  * 
  * @param <T> Un type quelconque à placer aux sommets du graphe.
  */

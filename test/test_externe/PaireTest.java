@@ -1,6 +1,4 @@
-package test_lineup_3;
-
-import lineup_3.Paire;
+package test_externe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import outils.Paire;
 
 public class PaireTest {
 	Paire paireNulle;

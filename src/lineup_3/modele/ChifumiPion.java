@@ -1,4 +1,6 @@
-package lineup_3;
+package lineup_3.modele;
+
+import package2.Pion;
 
 /**
  * Cette classe fait.........

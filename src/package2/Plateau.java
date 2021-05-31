@@ -12,11 +12,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package lineup_3;
+package package2;
 
 
 import java.util.List;
-import java.util.Map;
+
+import lineup_3.modele.Case;
+import outils.GrapheMatrice;
+import outils.GrapheType;
+import outils.Paire;
 
 /**
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
@@ -39,7 +43,7 @@ public abstract class Plateau {
 	 * Est un élément obligatoire du plateau. Le plateau possède son propre graphe.</br>
 	 * Ainsi un plateau correspond à un graphe de case. Ses sommets sont ses cases. Et ses arêtes, les chemins permettant de se déplacer. 
 	 */
-	public final GrapheMatrice<Case> grapheDuPlateau;
+	protected final GrapheMatrice<Case> grapheDuPlateau;
 	
 	
 	
@@ -64,21 +68,6 @@ public abstract class Plateau {
 			
 			this.grapheDuPlateau= new GrapheMatrice<Case>(TypeDuGraphe);
 	}
-	
-	
-	
-	/**
-	 * Affiche le plateau actuel sur le terminal. TODO vraiment utile à mettre en abstract ?
-	 * @param niveau 
-	 * @param pion
-	 */
-	public abstract void affichagePlateau(int niveau, Map<Joueur, Character> pion);
-
-	
-	/**
-	 * Génère la partie, les cases ainsi que les chemins du plateau.
-	 */
-	public abstract void generationDuPlateau();
 	
 	
 	/**

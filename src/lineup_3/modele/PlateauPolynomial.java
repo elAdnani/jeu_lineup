@@ -12,15 +12,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package lineup_3;
+package lineup_3.modele;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import outils.GrapheMatrice;
+import outils.GrapheType;
+import package2.Plateau;
 
 
 
@@ -92,113 +89,20 @@ public class PlateauPolynomial extends Plateau{
 		
 		return 2* this.nbcote;
 	}
+
 	
-	/**
-	 * Récupère les coordonnées d'une chaîne de caractère.
-	 * @param est une chaîne de caractère, sous la forme : x1;y1|x2;y2|x3;y3 formant trois coordonnées
-	 * @return est une liste de coordonnée, une liste de Paire  {@link Paire }
-	 */
-	private List<Case> recuperationDesCoordonnees(String ligne){
-
-		List<Case> coordonnees = new ArrayList<>();
-		String[] separationDesCoordoonees;
-		separationDesCoordoonees = ligne.split(" ");
-
-		String[] paire= new String[2];
-		
-		for(int i=0; i< separationDesCoordoonees.length ; i++) {
-			
-			paire = separationDesCoordoonees[i].split(";");
-			coordonnees.add( trouverCase(
-						new Paire( Integer.valueOf(paire[0]), Integer.valueOf(paire[1]) )
-										)  );
-		}
-		
-		return coordonnees;
-		
-	}
-	
-	/**
-	 * Est destiné a être l'affichage du plateau permettant de jouer. </br>
-	 * Elle consiste à récupérer les coordonnées de chaque case qui sera lui et du plateau qui sera renvoyé sur le terminal. 
-	 * @param est le nombre de côté du plateau qui sera récupérer. 
-	 * @param est l'assignation de chaque joueur de son caractère. 
-	 * Si un joueur possède un pion dans une case du plateau, il sera représenté par celui-ci.
-	 */
-	
-	public void affichagePlateau(int nombreDeCote, Map<Joueur, Character> pion) {
-		
-		 String myPath = System.getProperty("user.dir")
-				+ File.separator + "res"
-				+ File.separator + "Plateau";
-		 
-			File FichierDuNiveau = null ;
-			try{
-				
-				FichierDuNiveau = new File(myPath+nombreDeCote+".txt");
-				// on récupère un fichier qui possède le plateau correspondant
-				String ligne=" ";
-				
-				RandomAccessFile raf = new RandomAccessFile(FichierDuNiveau, "rw");
-				raf.seek(0);
-				// on se replace tout au début du fichier
-
-				ligne = raf.readLine();
-				// et on récupère la première ligne qui est la liste des cases ordonnées en fonction de sa venue dans la lecture du plateau
-				List<Case> coordonneeDesCases = recuperationDesCoordonnees(ligne);
-
-				int compteurDePaire = 0;
-				
-				while(ligne != null) {
-					
-					ligne = raf.readLine();
-					// on récupère chaque ligne et on envoie sur le terminal chaque caractère
-					// si le caractère est un 'O' alors on vérifie si cette case possède un pion
-						// si elle possède un pion alors on envoie sur le terminal le caractère que représente ce joueur.
-						// ou sinon on envoie tout simplement 'O' pour montrer que la case est vide.
-					if(ligne != null) {
-
-						for(int i=0; i< ligne.length() ;i++) {
-							
-							if(ligne.charAt(i)!='O')
-								
-								System.out.print(ligne.charAt(i) );
-							else {
-								
-								if( ! coordonneeDesCases.get(compteurDePaire).EstLibre()) 
-
-									System.out.print( pion.get( coordonneeDesCases.get( compteurDePaire ).getPion().getJoueur() ) );
-								else 
-									
-									System.out.print("O");
-								compteurDePaire = compteurDePaire + 1;
-							}
-						}
-						System.out.println("");
-					}
-				}
-				
-				raf.close();
-			}
-			catch(IOException o) {
-				
-				o.printStackTrace();
-			}
-	}
-	
-
 	/**
 	 * Génère tous les sommets du plateau, à partir du nombre de pion maximum qu'il peut y avoir. </br>
 	 * Il commence par générer les sommets puis génère les arrêts grâce aux coordonnée des sommets.
 	 */
 
-	public void generationDuPlateau() {
+	private void generationDuPlateau() {
 		
 		for (int i = 0; i < NBCOUCHE; i++)
 
 			for (int j = 0; j < this.getNbPionMax(); j++) 
 				
-				this.grapheDuPlateau.ajouterSommet(new Case(i,j) );
+				super.grapheDuPlateau.ajouterSommet(new Case(i,j) );
 				
 		
 		generationListeChemin();
@@ -219,7 +123,7 @@ public class PlateauPolynomial extends Plateau{
 
 				if(estVoisin(sommet, voisin)) 
 			
-					grapheDuPlateau.ajouterArrete(sommet, voisin);
+					super.grapheDuPlateau.ajouterArete(sommet, voisin);
 			}
 		}
 	}
@@ -274,7 +178,7 @@ public class PlateauPolynomial extends Plateau{
 	 */
 	public Set<Case> voisinDe(Case c) {
 		
-		return this.grapheDuPlateau.voisinsDe(c);
+		return super.grapheDuPlateau.voisinsDe(c);
 	}
 
 	
@@ -290,7 +194,7 @@ public class PlateauPolynomial extends Plateau{
 		builder.append("#Plateau :\n\tNombre de côtés :  ");
 		builder.append(nbcote);
 		builder.append("\n\n\tIl est basé sur un :\n");
-		builder.append(grapheDuPlateau);
+		builder.append(super.grapheDuPlateau);
 		builder.append("\n\nLes joueurs on chacun : ");
 		builder.append(getNbPionMax());
 		builder.append(" pions");

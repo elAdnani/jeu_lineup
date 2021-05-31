@@ -1,6 +1,8 @@
-package lineup_3;
+package lineup_3.modele;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,9 +30,8 @@ import java.util.Map;
 public class SimulationPartie {
 	public static void main(String[] args) {
 		
-		Parametres parametrePartie = new Parametres(3, 3, false, false, 6);
+		Parametres parametrePartie = new Parametres(3, 4, false, false, 6);
 		PlateauPolynomial plateauPartie = new PlateauPolynomial(parametrePartie.getNBCOTE());
-		plateauPartie.generationDuPlateau();
 		
 		Joueur joueur1 = new Joueur("Joueur1", parametrePartie.getNBPION());
 		Joueur joueur2 = new Joueur("Joueur2", parametrePartie.getNBPION());
@@ -43,8 +44,10 @@ public class SimulationPartie {
 		System.out.println(joueur1);
 		System.out.println(joueur2);
 		
-		plateauPartie.affichagePlateau(3, skinPion);
+		AffichagePlateau at = new AffichagePlateau(plateauPartie);
 		
+		at.affichagePlateau(4, skinPion);
+
 		Case case00 = new Case(0,0);// En attendant d'avoir une entrée au clavier.
 		Case case01 = new Case(0,1);// En attendant d'avoir une entrée au clavier.
 		Case case02 = new Case(0,2);// En attendant d'avoir une entrée au clavier.
@@ -170,11 +173,19 @@ public class SimulationPartie {
 //		joueur1.poserPion(case12, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
 		
 		/*Sur un déplacement intra-couche*/
-//		System.out.println("\n==== '" + joueur1.getPseudo() + " pose trois Pions et les déplace pour créer un alignement' ====\n");
-//		joueur1.poserPion(case11, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
-//		joueur1.poserPion(case10, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
-//		joueur1.poserPion(case13, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
-//		joueur1.deplacerPion(case13.getPion(), "gauche", plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+		System.out.println("\n==== '" + joueur1.getPseudo() + " pose trois Pions et les déplace pour créer un alignement' ====\n");
+		joueur1.poserPion(case11, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(4, skinPion);
+		joueur1.poserPion(case10, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(4, skinPion);
+		joueur1.poserPion(case12, plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(4, skinPion);
+		
+		List<Joueur> utilisateurs = new ArrayList<>();
+		utilisateurs.add(joueur2);
+		utilisateurs.add(joueur1);
+		
+		for( Joueur utilisateur : utilisateurs ) {
+			System.out.println(utilisateur.getPseudo());
+		}
+		//joueur1.deplacerPion(case13.getPion(), "gauche", plateauPartie, skinPion, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(4, skinPion);
 		
 		/*Sur une pose de Pion inter-couche*/
 //		System.out.println("\n==== '" + joueur1.getPseudo() + " pose trois Pions pour créer un alignement' ====\n");

@@ -1,6 +1,8 @@
-package lineup_3;
+package lineup_3.modele;
 
 import java.util.Arrays;
+
+import package2.Pion;
 
 /**
  * Cette classe créer une pile de pion et compte le nombre de coups joué par un Joueur.

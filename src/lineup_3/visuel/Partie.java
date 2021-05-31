@@ -1,4 +1,4 @@
-package lineup_3.Graphique;
+package lineup_3.visuel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,9 +29,10 @@ public class Partie {
 	
 	
 	
-	public void MessageQuitter(ActionEvent event) {
+	public void MessageQuitter() {
 		
 		this.menuMessage.setVisible(false);
+		
 	}
 	
 	public void RajoutDeMessage(ActionEvent event) {
@@ -41,13 +42,16 @@ public class Partie {
 	
 	public void Message1(ActionEvent event) {
 		// RajoutDeMessage 'Bon courage !'
+		MessageQuitter();
 		
 	}
 	public void Message2(ActionEvent event) {
 		// RajoutDeMessage 'Bien joué !'
+		MessageQuitter();
 	}
 	public void Message3(ActionEvent event) {
 		// RajoutDeMessage 'Tu peux mieux faire !'
+		MessageQuitter();
 	}
 	
 }

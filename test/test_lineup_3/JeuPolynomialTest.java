@@ -11,13 +11,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import lineup_3.ChifumiPion;
-import lineup_3.DeckPions;
-import lineup_3.Joueur;
-import lineup_3.Paire;
-import lineup_3.Pion;
-import lineup_3.Plateau;
-import lineup_3.PlateauPolynomial;
+import lineup_3.modele.AffichagePlateau;
+import lineup_3.modele.Case;
+import lineup_3.modele.ChifumiPion;
+import lineup_3.modele.DeckPions;
+import lineup_3.modele.Joueur;
+import lineup_3.modele.PlateauPolynomial;
+import outils.Paire;
+import package2.Pion;
+import package2.Plateau;
 
 
 /**
@@ -31,14 +33,14 @@ import lineup_3.PlateauPolynomial;
  *
  * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
  * IUT-A Informatique, Universite de Lille.
- * @date 22 mai 2021
- * @version XX
+ * @date 22 mai 2021-31 mai 2021
+ * @version v2
  */
 public class JeuPolynomialTest {
 	
 	final int NMBREDECOTE=3;
 	Plateau PlateauATroisCotes= new PlateauPolynomial(NMBREDECOTE); // matérialisation 
-
+	AffichagePlateau affichage = new AffichagePlateau(PlateauATroisCotes);
 	
 	
 	
@@ -75,9 +77,6 @@ public class JeuPolynomialTest {
 	public void testGenerationDuPlateau() {
 		System.out.println("--testGenerationDuPlateau--");
 		
-		
-		
-		PlateauATroisCotes.generationDuPlateau();
 
 		/*
 		 * Existante des pions. Si notre plateau est de trois côté
@@ -88,19 +87,19 @@ public class JeuPolynomialTest {
 		 * Ainsi les extrémités sont (0;0) et (2;5).
 		 */
 		
-		int False=-1;
+		Case False=null;
 		
-		assertTrue(PlateauATroisCotes.retrouverSommet(new Paire(-1,0))==False);
-		assertTrue(PlateauATroisCotes.retrouverSommet(new Paire(-1,6))==False);
+		assertTrue(PlateauATroisCotes.trouverCase(new Paire(-1,0))==False);
+		assertTrue(PlateauATroisCotes.trouverCase(new Paire(-1,6))==False);
 		
 		for(int i=0; i<2;i++) { // nombre de colonne
 			for(int j=0; j<5;j++) { // nombre de ligne
-				assertTrue(PlateauATroisCotes.retrouverSommet(new Paire(i,j))!=False);
+				assertTrue(PlateauATroisCotes.trouverCase(new Paire(i,j))!=False);
 			}
 		}
 		
-		assertTrue(PlateauATroisCotes.retrouverSommet(new Paire(2,6))==False);
-		assertTrue(PlateauATroisCotes.retrouverSommet(new Paire(3,0))==False);
+		assertTrue(PlateauATroisCotes.trouverCase(new Paire(2,6))==False);
+		assertTrue(PlateauATroisCotes.trouverCase(new Paire(3,0))==False);
 		
 			
 	}
@@ -110,7 +109,6 @@ public class JeuPolynomialTest {
 	@Test
 	public void affichagePlateau() {
 		
-		PlateauATroisCotes.generationDuPlateau();
 		
 		System.out.println(PlateauATroisCotes.toString());
 		
@@ -121,23 +119,24 @@ public class JeuPolynomialTest {
 		// - on a son pseudo, le nombre de pion égal à un
 		// - Sa représentation dans le plateau
 		// - Sa main, c'est à dire la liste des pions qu'il possède
+		
 		Joueur un = new Joueur("Gerard", nbPion);
 		assignation.put(un, '#');
-		DeckPions mainJoueurUn = new DeckPions(nbPion, un);
+	//	DeckPions mainJoueurUn = new DeckPions(nbPion, un);
 		
 		Joueur deux = new Joueur("Jean", nbPion);
 		assignation.put(deux, '@');
-		DeckPions mainJoueurDeux = new DeckPions(nbPion, deux);
+	//	DeckPions mainJoueurDeux = new DeckPions(nbPion, deux);
 		
 		Joueur trois = new Joueur("Rima", nbPion);
 		assignation.put(trois, '$');
-		DeckPions mainJoueurTrois = new DeckPions(nbPion, trois);
+	//	DeckPions mainJoueurTrois = new DeckPions(nbPion, trois);
 		
 		// représentation de base du plateau :
-		PlateauATroisCotes.affichagePlateau(NMBREDECOTE, assignation);
+		affichage.affichagePlateau(NMBREDECOTE, assignation);
 
-		mainJoueurUn.addPions(new ChifumiPion(un, 2, 0));
-		//if(PlateauATroisCotes.getListSommet().get(PlateauATroisCotes.retrouverSommet(new Paire(2, 0))).addPion(new ChifumiPion(un, 2, 0))) {
+	//	mainJoueurUn.addPions(new ChifumiPion(un, 2, 0));
+		//if(PlateauATroisCotes.getListSommet().get(PlateauATroisCotes.retrouverIndiceCase(new Paire(2, 0))).addPion(new ChifumiPion(un, 2, 0))) {
 		//	PlateauATroisCotes.affichagePlateau(NMBREDECOTE, assignation);
 		//}
 		
@@ -146,10 +145,10 @@ public class JeuPolynomialTest {
 
 
 	@Test
-	public void testVictoire1() {
-		// alignement intérieur
-		PlateauATroisCotes.generationDuPlateau();
-		/*
+	public void testVictoire() {
+		
+		
+		/* TODO séparer par bloc, l'alignement intra-couche et inter-couche
 		 * Il faut tester toutes les possibilités
 		 * pour q'un joueur réussisse et gagne :
 		 * - aligné sur une même couche donc :

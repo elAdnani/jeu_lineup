@@ -1,7 +1,12 @@
-package lineup_3;
+package package2;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lineup_3.modele.Case;
+import lineup_3.modele.Chifumi;
+import lineup_3.modele.Deplacement;
+import lineup_3.modele.Joueur;
 
 /**
  * 

@@ -1,7 +1,9 @@
-package lineup_3;
+package lineup_3.modele;
 
 import java.time.LocalTime;
 import java.util.Map;
+
+import package2.Pion;
 
 /**
  * Cette classe créer un Joueur ayant des Pions et pouvant faire certaines actions sur un Plateau.
@@ -97,7 +99,7 @@ public class Joueur {
 		main.getProchainPion().setC(c);
 		main.getPion().deplacementsPossibles(nbCouche);
 //		System.out.println(main.getPion().getPossibilites());
-		p.affichagePlateau(3, skinPion);
+
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
 			System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
 			//TODO faire un blocage à la fin
@@ -114,7 +116,7 @@ public class Joueur {
 	public void deplacerPion(Pion p, String direction, PlateauPolynomial pl, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
 		if (p.getJoueur() == this) {
 			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
-			pl.affichagePlateau(3, skinPion);
+			
 			p.getJoueur().ajouterCoup();
 			if (p.alignements(pl.getListeCase(), nbCote, nbCouche)) {
 				System.out.println(p.getC().getPion().getJoueur().getPseudo() + " a gagné !");

@@ -14,15 +14,69 @@
  */
 package lineup_3.modele;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+
+import package2.Plateau;
+
 /**
- * Cette classe sert à lancer le jeu.
+ * Cette classe sert à récupérer.</br>
+ * Permet l'enregistrement, 
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
+ * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
  * IUT-A Informatique, Université de Lille.
  * @date 21 avr. 2021
- * @version 21 avr. 2021 19:26:15
  */
-public class Partie {
+public class Partie implements Serializable{
+	
+	
+	private static final long serialVersionUID = 283664428347848905L;
 
+	private Plateau plateauDeLaPartie;
+	
+	private transient final LocalDate dateDeCreation; // ne sera pas dans la partie mais plutôt dans le nom du fichier
+	
+	List<Joueur> utilisateur;
+	
+	/**
+	 * Constructeur
+	 * @param plateauDeLaPartie
+	 * @param utilisateur
+	 */
+	public Partie(Plateau plateauDeLaPartie, List<Joueur> utilisateur) {
+		
+		this.plateauDeLaPartie=plateauDeLaPartie;
+		
+		dateDeCreation=LocalDate.now();
+		
+		this.utilisateur=utilisateur;
+		
+		
+	}
+	
+	public LocalDate getDateDeCreation() {
+		
+		LocalDate debut= this.dateDeCreation;
+		return debut;
+	}
+	
+	
+	public int getNombreJoueur() {
+		return this.utilisateur.size();
+	}
+	
+	/**
+	 * Permet de modifier le plateau de la partie.</br>
+	 * 
+	 * @param plateauDeLaPartie
+	 */
+	protected void setPlateauDeLaPartie(Plateau plateauDeLaPartie) {
+		
+		this.plateauDeLaPartie = plateauDeLaPartie;
+	}
+	
+	
 
 }

@@ -1,4 +1,4 @@
-package lineup_3;
+package lineup_3.modele;
 
 /**
  * Cette classe permet de rassembler tous les paramètres d'une partie pour une meilleure efficacité lors d'initialisations de Plateau,

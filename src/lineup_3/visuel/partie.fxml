@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="415.0" minWidth="580.0" prefHeight="415.0" prefWidth="617.0" styleClass="b-orange" stylesheets="@orange.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lineup_3.Graphique.Partie">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="415.0" minWidth="580.0" prefHeight="415.0" prefWidth="617.0" styleClass="b-orange" stylesheets="@orange.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lineup_3.visuel.Partie">
    <children>
       <VBox layoutX="4.0" prefHeight="97.0" prefWidth="500.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="10.0">
          <children>

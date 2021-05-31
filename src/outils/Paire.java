@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 /**
  * <p>Une paire de deux entiers</p>

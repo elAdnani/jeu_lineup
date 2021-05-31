@@ -1,9 +1,8 @@
-package lineup_3;
+package lineup_3.modele;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.net.URL;
-
+import java.net.URL;	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +13,7 @@ public class RepresentationGraphique extends Application{
 
 	 public void start(Stage stage) throws IOException {
          FXMLLoader loader = new FXMLLoader();
-         URL fxmlFileUrl = getClass().getResource("./Graphique/partie.fxml");
+         URL fxmlFileUrl = getClass().getResource("../visuel/partie.fxml");
          if (fxmlFileUrl == null) {
                  System.out.println("Impossible de charger le fichier fxml");
                  System.exit(-1);

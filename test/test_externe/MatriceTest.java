@@ -1,6 +1,4 @@
-package test_lineup_3;
-
-import lineup_3.Matrice;
+package test_externe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +15,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import outils.Matrice;
 
 public class MatriceTest {
 	@BeforeAll
@@ -113,7 +113,7 @@ public class MatriceTest {
 	
 	
 	@Test
-	public void testEstSymétrique() {
+	public void testEstSymetrique() {
 		
 	}
 	

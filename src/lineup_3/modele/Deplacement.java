@@ -12,7 +12,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package lineup_3;
+package lineup_3.modele;
 
 /**
  * Cette enum permet de définir les mouvements existants dans le jeu

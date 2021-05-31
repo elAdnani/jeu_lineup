@@ -1,4 +1,4 @@
-package lineup_3;
+package lineup_3.modele;
 
 /**
  * Cette classe est une énumération des différentes nature de ChifumiPions possibles :	- Pierre

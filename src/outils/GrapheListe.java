@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 import java.util.Map;
 import java.util.Set;
@@ -54,7 +54,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		private List<T> ensembleSommets;
 		
 		/** Cette map regroupe toutes les arrêtes du graphe. Une arrête part de l'indice et se dirige vers chacun des sommets qui lui sont renseignés dans la liste. */
-		private Map<T, Set<T>> arretes;
+		private Map<T, Set<T>> aretes;
 		
 		
 		
@@ -68,9 +68,9 @@ public class GrapheListe<T> extends Graphe<T> {
 		 * @param nom Le nom à donner au graphe.
 		 * @param type Le type du graphe.
 		 * @param ensembleSommets La liste de sommets du graphe.
-		 * @param arretes Les arrêtes reliant les sommets.
+		 * @param aretes Les arrêtes reliant les sommets.
 		 */
-		public GrapheListe(String nom, GrapheType type, List<T> ensembleSommets, Map<T, Set<T>> arretes) {
+		public GrapheListe(String nom, GrapheType type, List<T> ensembleSommets, Map<T, Set<T>> aretes) {
 			// Nom
 			if (nom == null)
 				this.nom = "Graphe n°" + ++cpt;
@@ -90,10 +90,10 @@ public class GrapheListe<T> extends Graphe<T> {
 				this.ensembleSommets = ensembleSommets;
 			
 			// Arrêtes
-			if (arretes == null)
-				this.arretes = new HashMap<T, Set<T>>();
+			if (aretes == null)
+				this.aretes = new HashMap<T, Set<T>>();
 			else
-				this.arretes = arretes;
+				this.aretes = aretes;
 		}
 		
 		/**
@@ -188,15 +188,15 @@ public class GrapheListe<T> extends Graphe<T> {
 		 */
 		@Override
 		public String toString() {
-			String affichageArretes = "";
+			String affichagearetes = "";
 			
-			for (T s : arretes.keySet())
-				affichageArretes += "\n - " + s + " : " + arretes.get(s).toString();
+			for (T s : aretes.keySet())
+				affichagearetes += "\n - " + s + " : " + aretes.get(s).toString();
 			
 			return "# " + nom + "\n"
 				 + "type  : " + type + "\n"
 				 + "nodes : " + ensembleSommets.toString() + "\n"
-				 + "edges : " + affichageArretes;
+				 + "edges : " + affichagearetes;
 		}
 		
 		
@@ -209,7 +209,7 @@ public class GrapheListe<T> extends Graphe<T> {
 				return false;
 			else {
 				ensembleSommets.add(sommet);
-				arretes.put(sommet, new HashSet<T>());
+				aretes.put(sommet, new HashSet<T>());
 				
 				return true;
 			}
@@ -219,13 +219,13 @@ public class GrapheListe<T> extends Graphe<T> {
 			if (nouveau != null && existeSommet(actuel) && !existeSommet(nouveau)) {
 				
 				// recrée la liste du sommet
-				Set<T> save = arretes.remove(actuel);
-				arretes.put(nouveau, save);
+				Set<T> save = aretes.remove(actuel);
+				aretes.put(nouveau, save);
 				
 				// Modifie l'ancien élément dans chacune des listes de sommets
-				for (T s : arretes.keySet())
-					if (arretes.get(s).remove(actuel))
-						arretes.get(s).add(nouveau);
+				for (T s : aretes.keySet())
+					if (aretes.get(s).remove(actuel))
+						aretes.get(s).add(nouveau);
 				
 				// renomme le sommet dans la liste des sommets
 				ensembleSommets.remove(actuel);
@@ -243,10 +243,10 @@ public class GrapheListe<T> extends Graphe<T> {
 				
 				// Pour chaque sommet, on enlève les arrêtes qui se dirigent vers le sommet à supprimer
 				for (T sommetCourant : ensembleSommets)
-					arretes.get(sommetCourant).remove(sommet);
+					aretes.get(sommetCourant).remove(sommet);
 				
 				// on enlève toutes les arrêtes du sommet à supprimer
-				arretes.remove(sommet);
+				aretes.remove(sommet);
 				
 				return true;
 			} else
@@ -255,33 +255,33 @@ public class GrapheListe<T> extends Graphe<T> {
 		
 		public boolean existeSommet(T sommet) { return ensembleSommets.contains(sommet); }
 		
-		public boolean ajouterArrete(T depart, T arrivee) {		
-			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))
+		public boolean ajouterArete(T depart, T arrivee) {		
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArete(depart, arrivee))
 				return false;
 			else {
-				arretes.get(depart).add(arrivee);
+				aretes.get(depart).add(arrivee);
 				
 				if (!type.isDirected())
-					arretes.get(arrivee).add(depart);
+					aretes.get(arrivee).add(depart);
 				
 				return true;
 			}	
 		}	
 		
-		public boolean enleverArrete(T depart, T arrivee) {
-			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArrete(depart, arrivee))
+		public boolean enleverArete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArete(depart, arrivee))
 				return false;
 			else {
-				boolean reussite = arretes.get(depart).remove(arrivee);
+				boolean reussite = aretes.get(depart).remove(arrivee);
 				
 				if (!type.isDirected())
-					reussite = arretes.get(arrivee).remove(depart);
+					reussite = aretes.get(arrivee).remove(depart);
 				
 				return reussite;
 			}
 		}
 		
-		public boolean existeArrete(T depart, T arrivee) { return arretes.get(depart).contains(arrivee); }
+		public boolean existeArete(T depart, T arrivee) { return aretes.get(depart).contains(arrivee); }
 		
 		/**
 		 * Donne un set de tous les voisins d'un sommet.
@@ -317,7 +317,7 @@ public class GrapheListe<T> extends Graphe<T> {
 			Set<T> parents = new HashSet<>();
 			
 			for (T sommetCourant : ensembleSommets)
-				if (arretes.containsKey(sommetCourant))
+				if (aretes.containsKey(sommetCourant))
 					parents.add(sommetCourant);
 			
 			return parents;
@@ -338,7 +338,7 @@ public class GrapheListe<T> extends Graphe<T> {
 			
 			Set<T> enfants = new HashSet<>();
 			
-			for (T t : arretes.get(parent))
+			for (T t : aretes.get(parent))
 				enfants.add(t);
 			
 			return enfants;

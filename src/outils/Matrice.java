@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 /**
  * La classe matrice permet de créer et utiliser une matrice comme le permettent les mathématiques.<br>

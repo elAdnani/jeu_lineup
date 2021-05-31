@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 /**
  * <p>Classe abstraite de graphe.</p>
@@ -92,7 +92,7 @@ public abstract class Graphe<T> {
 	 * @return - true si l'ajout a pu se faire<br>
 	 *         - false si rien n'a été modifié.
 	 */
-	public abstract boolean ajouterArrete(T depart, T arrivee);
+	public abstract boolean ajouterArete(T depart, T arrivee);
 
 	/**
 	 * Enlève une arrête entre deux sommets donnés.
@@ -103,7 +103,7 @@ public abstract class Graphe<T> {
 	 * @return - true si la suppression a pu se faire<br>
 	 *         - false si rien n'a été modifié.
 	 */
-	public abstract boolean enleverArrete(T depart, T arrivee);
+	public abstract boolean enleverArete(T depart, T arrivee);
 
 	/**
 	 * Vérifie s'il existe une arrête entre deux sommets.
@@ -114,7 +114,7 @@ public abstract class Graphe<T> {
 	 * @return - true si l'arrête existe<br>
 	 *         - false si elle n'existe pas.
 	 */
-	public abstract boolean existeArrete(T depart, T arrivee);
+	public abstract boolean existeArete(T depart, T arrivee);
 	
 	
 	

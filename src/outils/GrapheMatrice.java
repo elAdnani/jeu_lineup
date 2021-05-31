@@ -1,4 +1,4 @@
-package lineup_3;
+package outils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -163,25 +163,25 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 */
 		@Override
 		public String toString() {
-			StringBuilder arretes = new StringBuilder();
+			StringBuilder aretes = new StringBuilder();
 			
 			if (estPondere())
 				for (T s1 : ensembleSommets) {
-					arretes.append("\n - " + s1 + " : [");
+					aretes.append("\n - " + s1 + " : [");
 					for (T s2 : enfantsDe(s1))
-						arretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
+						aretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
 					if (!enfantsDe(s1).isEmpty())
-						arretes.delete(arretes.length() - 2, arretes.length());
-					arretes.append("]");
+						aretes.delete(aretes.length() - 2, aretes.length());
+					aretes.append("]");
 				}
 			else
 				for (T s : ensembleSommets)
-					arretes.append("\n - " + s + " : " + enfantsDe(s));
+					aretes.append("\n - " + s + " : " + enfantsDe(s));
 			
 			return "# GrapheMatrice\n"
 				 + "type  : " + type + "\n"
 				 + "nodes : " + ensembleSommets.toString() + "\n"
-				 + "edges : " + arretes;
+				 + "edges : " + aretes;
 		}
 		
 		
@@ -251,8 +251,8 @@ public class GrapheMatrice<T> extends Graphe<T> {
 
 		public boolean existeSommet(T sommet) { return ensembleSommets.contains(sommet); }
 		
-		public boolean ajouterArrete(T depart, T arrivee) {
-			if (depart == null || arrivee == null || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee))
+		public boolean ajouterArete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || !existeSommet(depart) || !existeSommet(arrivee) || existeArete(depart, arrivee))
 				return false;
 			else {
 				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 1);
@@ -276,8 +276,8 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		 * @return - true si l'ajout a pu se faire<br>
 		 *         - false si rien n'a été modifié.
 		 */
-		public boolean ajouterArrete(T depart, T arrivee, int valeur) {
-			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArrete(depart, arrivee)) // 
+		public boolean ajouterArete(T depart, T arrivee, int valeur) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || existeArete(depart, arrivee)) // 
 				return false;
 			else {
 				if (valeur == 0)
@@ -299,8 +299,8 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			}
 		}
 		
-		public boolean enleverArrete(T depart, T arrivee) {
-			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArrete(depart, arrivee))
+		public boolean enleverArete(T depart, T arrivee) {
+			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArete(depart, arrivee))
 				return false;
 			else {
 				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 0);
@@ -312,7 +312,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			}
 		}
 		
-		public boolean existeArrete(T depart, T arrivee) {
+		public boolean existeArete(T depart, T arrivee) {
 			int indiceDepart  = ensembleSommets.indexOf(depart);
 			int indiceArrivee = ensembleSommets.indexOf(arrivee);
 			

@@ -62,7 +62,7 @@ public class Matrice {
 		}
 		
 		/**
-		 * Création d'une matrice nulle carrée de taille n > 0.
+		 * Création d'une matrice nulle carrée de taille n supérieur à 0.
 		 * 
 		 * @param n Le nombre de lignes et de colonnes de la future matrice.
 		 */
@@ -71,9 +71,9 @@ public class Matrice {
 		}
 		
 		/**
-		 * Création d'une matrice nulle carrée de taille n > 0.
+		 * Création d'une matrice nulle carrée de taille n supérieur à 0.
 		 * 
-		 * @param n Le nombre de lignes et de colonnes de la future matrice.
+		 * @param m Le nombre de lignes et de colonnes de la future matrice.
 		 */
 		public Matrice(Matrice m) {
 			this(m.matrice);

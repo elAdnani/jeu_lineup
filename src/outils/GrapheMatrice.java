@@ -170,7 +170,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 				for (T s1 : ensembleSommets) {
 					arretes.append("\n - " + s1 + " : [");
 					for (T s2 : enfantsDe(s1))
-						arretes.append(s2 + " ("+ matrice.read(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
+						arretes.append(s2 + " ("+ matrice.lire(ensembleSommets.indexOf(s1), ensembleSommets.indexOf(s2)) + "), ");
 					if (!enfantsDe(s1).isEmpty())
 						arretes.delete(arretes.length() - 2, arretes.length());
 					arretes.append("]");
@@ -203,7 +203,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 					
 					for (int i = 0; i < oldMatrice.getNbLignes(); i++)
 						for (int j = 0; j < oldMatrice.getNbColonnes(); j++)
-							matrice.write(i, j, oldMatrice.read(i, j));
+							matrice.ecrire(i, j, oldMatrice.lire(i, j));
 				}
 				
 				return true;
@@ -236,7 +236,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 						int colonne = 0;
 						
 						for (int j = 0; j < oldMatrice.getNbColonnes(); j++) {
-							matrice.write(ligne, colonne, oldMatrice.read(i, j));
+							matrice.ecrire(ligne, colonne, oldMatrice.lire(i, j));
 							
 							if (j != index)
 								colonne++;
@@ -256,10 +256,10 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			if (depart == null || arrivee == null || !existeSommet(depart) || !existeSommet(arrivee) || existeArete(depart, arrivee))
 				return false;
 			else {
-				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 1);
+				matrice.ecrire(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 1);
 				
 				if (!type.isDirected())
-					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 1);
+					matrice.ecrire(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 1);
 				
 				return true;
 			}
@@ -291,10 +291,10 @@ public class GrapheMatrice<T> extends Graphe<T> {
 						type = GrapheType.UWGRAPH;
 				}
 				
-				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), valeur);
+				matrice.ecrire(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), valeur);
 				
 				if (!type.isDirected())
-					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), valeur);
+					matrice.ecrire(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), valeur);
 				
 				return true;
 			}
@@ -304,10 +304,10 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			if (depart == null || arrivee == null || depart.equals(arrivee) || !existeSommet(depart) || !existeSommet(arrivee) || !existeArete(depart, arrivee))
 				return false;
 			else {
-				matrice.write(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 0);
+				matrice.ecrire(ensembleSommets.indexOf(depart), ensembleSommets.indexOf(arrivee), 0);
 				
 				if (!type.isDirected())
-					matrice.write(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 0);
+					matrice.ecrire(ensembleSommets.indexOf(arrivee), ensembleSommets.indexOf(depart), 0);
 				
 				return true;
 			}
@@ -317,7 +317,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			int indiceDepart  = ensembleSommets.indexOf(depart);
 			int indiceArrivee = ensembleSommets.indexOf(arrivee);
 			
-			return indiceDepart != -1 && indiceArrivee != -1 && matrice.read(indiceDepart, indiceArrivee) != 0;
+			return indiceDepart != -1 && indiceArrivee != -1 && matrice.lire(indiceDepart, indiceArrivee) != 0;
 		}
 		
 		/**
@@ -336,12 +336,12 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			int indiceS = ensembleSommets.indexOf(sommet);
 			
 			for (int i = 0; i < matrice.getNbLignes(); i++) 
-				if (matrice.read(indiceS, i) != 0 && indiceS != i)
+				if (matrice.lire(indiceS, i) != 0 && indiceS != i)
 					voisins.add(ensembleSommets.get(i));
 			
 			if (type.isDirected())
 				for (int i = 0; i < matrice.getNbLignes(); i++) 
-					if (matrice.read(i, indiceS) != 0 && indiceS != i)
+					if (matrice.lire(i, indiceS) != 0 && indiceS != i)
 						voisins.add(ensembleSommets.get(i));
 			
 			return voisins;
@@ -364,7 +364,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			int indiceS = ensembleSommets.indexOf(enfant);
 			
 			for (int i = 0; i < matrice.getNbLignes(); i++)
-				if (matrice.read(i, indiceS) != 0 && indiceS != i)
+				if (matrice.lire(i, indiceS) != 0 && indiceS != i)
 					parents.add(ensembleSommets.get(i));
 			
 			return parents;
@@ -386,7 +386,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 			int indiceS = ensembleSommets.indexOf(parent);
 			
 			for (int i = 0; i < matrice.getNbLignes(); i++)
-				if (matrice.read(indiceS, i) != 0 && indiceS != i)
+				if (matrice.lire(indiceS, i) != 0 && indiceS != i)
 					enfants.add(ensembleSommets.get(i));
 			
 			return enfants;

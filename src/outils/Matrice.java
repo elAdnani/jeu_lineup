@@ -137,7 +137,7 @@ public class Matrice {
 				// on explore chaque ligne
 				for (int ligne = 0; ligne < this.getNbLignes(); ligne++) {
 					// on regarde la taille d'affichage du contenu de la cellule
-					int tailleContenu = String.valueOf(this.read(ligne, colonne)).length();
+					int tailleContenu = String.valueOf(this.lire(ligne, colonne)).length();
 					
 					// si c'est la première cellule ou la plus grande,
 					if (tailleContenu > dimensionColonnes[colonne])
@@ -149,12 +149,12 @@ public class Matrice {
 			for (int ligne = 0; ligne < this.getNbLignes(); ligne++) {
 				for (int colonne = 0; colonne < this.getNbColonnes(); colonne++) {
 					// on place devant chaque affichage le nombre d'espaces nécessaires pour aligner verticalement sur la droite.
-					int tailleContenu = String.valueOf(this.read(ligne, colonne)).length();
+					int tailleContenu = String.valueOf(this.lire(ligne, colonne)).length();
 					
 					for (int nbEspace = 0; nbEspace < dimensionColonnes[colonne] - tailleContenu; nbEspace++)
 						resultat += " ";
 					
-					resultat += this.read(ligne, colonne) + "  ";
+					resultat += this.lire(ligne, colonne) + "  ";
 				}
 				resultat += "\n\n";
 			}
@@ -177,7 +177,7 @@ public class Matrice {
 		 * @return - true si la case appartient au tableau<br>
 		 *         - false sinon
 		 */
-		public boolean canRead(int ligne, int colonne) {
+		public boolean peutLire(int ligne, int colonne) {
 			return ligne   >= 0 || ligne   < this.getNbLignes() 
 				|| colonne >= 0 || colonne < this.getNbColonnes();
 		}
@@ -190,7 +190,7 @@ public class Matrice {
 		 * 
 		 * @return Ce que contient la case
 		 */
-		public double read(int ligne, int colonne) {
+		public double lire(int ligne, int colonne) {
 			return this.matrice[ligne][colonne];
 		}
 		
@@ -204,8 +204,8 @@ public class Matrice {
 		 * @return - true si la valeur a été modifiée<br>
 		 *         - false s'il y a une erreur dans les coordonnées
 		 */
-		public boolean write(int ligne, int colonne, double valeur) {
-			if (this.canRead(ligne, colonne)) {
+		public boolean ecrire(int ligne, int colonne, double valeur) {
+			if (this.peutLire(ligne, colonne)) {
 				this.matrice[ligne][colonne] = valeur;
 				return true;
 			} else 
@@ -228,7 +228,7 @@ public class Matrice {
 				// alors, pour chaque case, ajouter à notre matrice la valeur de la deuxième.
 				for (int ligne = 0; ligne < this.getNbLignes(); ligne++)
 					for (int colonne = 0; colonne < this.getNbColonnes(); colonne++)
-						resultat.write(ligne, colonne, this.read(ligne, colonne) + plus.read(ligne, colonne));
+						resultat.ecrire(ligne, colonne, this.lire(ligne, colonne) + plus.lire(ligne, colonne));
 			
 			return resultat;
 		}
@@ -257,7 +257,7 @@ public class Matrice {
 			// on multiplie chaque case par l'entier passé en paramètre
 			for (int ligne = 0; ligne < this.getNbLignes(); ligne++)
 				for (int colonne = 0; colonne < this.getNbColonnes(); colonne++)
-					resultat.write(ligne, colonne, this.read(ligne, colonne) * facteur);
+					resultat.ecrire(ligne, colonne, this.lire(ligne, colonne) * facteur);
 			
 			return resultat;
 		}
@@ -282,7 +282,7 @@ public class Matrice {
 						
 						// on effectue la somme des multiplications de chaque termes "liés" que l'on stock dans le résultat
 						for (int n = 0; n < this.getNbColonnes(); n++)
-							resultat.write(ligneResultat, colonneResultat, resultat.read(ligneResultat, colonneResultat) + this.read(ligneResultat, n) * facteur.read(n, colonneResultat));
+							resultat.ecrire(ligneResultat, colonneResultat, resultat.lire(ligneResultat, colonneResultat) + this.lire(ligneResultat, n) * facteur.lire(n, colonneResultat));
 			
 				return resultat;
 		}
@@ -300,7 +300,7 @@ public class Matrice {
 			while (verifie && ++ligne < this.getNbLignes()) {
 				int colonne = 0;
 				while (verifie && ++colonne < this.getNbColonnes())
-					verifie = verifie && this.read(ligne, colonne) == 0;
+					verifie = verifie && this.lire(ligne, colonne) == 0;
 			}
 			
 			return verifie;
@@ -330,7 +330,7 @@ public class Matrice {
 				while (verifie && ++x < this.getNbLignes() - 1) {
 					int y = 1 + x;
 					while (verifie && ++y < this.getNbColonnes())
-						verifie = this.read(x, y) == this.read(y, x);
+						verifie = this.lire(x, y) == this.lire(y, x);
 				}
 					
 				return verifie;

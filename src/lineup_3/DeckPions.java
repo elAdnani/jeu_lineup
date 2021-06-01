@@ -1,6 +1,8 @@
 package lineup_3;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Cette classe créer une pile de pion et compte le nombre de coups joué par un Joueur.
@@ -18,26 +20,13 @@ public class DeckPions {
 	/**
 	 * Représente la main du joueur.
 	 */
-	private Pion[] main;
-	
-	/**
-	 * Indique le prochain pion sur la liste.
-	 */
-	private int idx;
+	private Map<Nature, Integer> main = new HashMap<>();
 	
 	
 		// Getters
 	
-	public Pion[] getMain() {
+	public Map<Nature, Integer> getMain() {
 		return main;
-	}
-	
-	public int getIdx() {
-		return this.idx+1;
-	}
-	
-	public Pion getPion() {
-		return main[idx];
 	}
 	
 		// Constructor
@@ -47,50 +36,46 @@ public class DeckPions {
 	 * @param nbPions nombre de Pion souhaité pour la main.
 	 * @param joueur Joueur à qui la main appartient.
 	 */
-	public DeckPions(Joueur joueur, int nbPion) {
-		this.idx = nbPion-1;
-		this.main = new Pion[nbPion];
-		this.initialiserMain(joueur);
-	}
+	public DeckPions(Joueur joueur, int nbPion, boolean chifumi) {
+		this.initialiserMain(joueur, nbPion, chifumi);
+	}	
 	
 		// Methods
+	
+	/**
+	 * Permet de remplir la main avec des {@link Pion} sans position.
+	 * @param joueur Correspond au propriétaire de la main en cours d'initialisation.
+	 */
+	//TODO enum type de jeu inchallah.
+	private void initialiserMain(Joueur joueur, int nbPion, boolean Chifumi) {
+		if (!Chifumi) {
+				this.main.put(Nature.CLASSIQUE, nbPion);
+		} else {
+				this.main.put(Nature.PIERRE, nbPion/3);
+				this.main.put(Nature.PAPIER, nbPion/3);
+				this.main.put(Nature.CISEAUX, nbPion/3);
+		}
+	}
+
+	public Pion getPion(Joueur joueur, Nature nature) {
+		return new PionChifumi(joueur, nature);
+	}
 	
 	/**
 	 * getPion Permet d'obtenir le prochain Pion de la main en mode de partie Normal.
 	 * @return Retourne un Objet de type Pion.
 	 */
-	public Pion getProchainPion() {
-		if (main[idx].getC()!=null && idx != 0) idx--;
-		return main[idx];
+	public Pion getProchainPion(Joueur joueur, Nature nature) {
+		if (this.main.containsKey(nature)
+				&& this.main.get(nature) != 0) this.main.put(nature, this.main.get(nature)-1);
+		return new PionChifumi(joueur, nature);
 	}
-	
-	//TODO écrire la méthode getPion(), pour pourvoir choisir celui qu'on veut en mode Chifumi.
-	
-	/**
-	 * Permet de remplir la main avec des Pions sans position.
-	 * @param joueur Correspond au propriétaire de la main en cours d'initialisation.
-	 */
-	private void initialiserMain(Joueur joueur) {
-		for (int i = 0; i < main.length; i++) {
-			main[i] = new ChifumiPion(joueur);
-			main[i].setJoueur(joueur);
-		}
-	}
-	
-    public void addPions(Pion pion) {
-        if(this.idx<=main.length) {
-            this.main[idx]=pion;
-        }
-        idx= idx +1;
-    }
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Main :\n");
-		builder.append(Arrays.toString(main).replace(",", "\n"));
-		builder.append("\nidx : ");
-		builder.append(idx);
+		builder.append(this.main.toString());
 		return builder.toString();
 	}
 

@@ -22,22 +22,22 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * Correspond aux coordonnées du Pion.
 	 */
-	private Case c;
+	protected Case c;
 	
 	/**
 	 * joueur correspond au Joueur à qui appartient le Pion.
 	 */
-	private Joueur joueur;
+	protected Joueur joueur;
 	
 	/**
 	 * Liste des déplacements possibles pour un Pion donné
 	 */
-	private List<Deplacement> possibilites = new ArrayList<>();
+	protected List<Deplacement> possibilites = new ArrayList<>();
 	
 	/**
-	 * Correspond à la nature du pion
+	 * Correspond à la {@link Nature} du pion.
 	 */
-	private Chifumi nature;
+	private Nature nature;
 	
 	
 		// Getters & Setters
@@ -50,10 +50,6 @@ public abstract class Pion implements Comparable<Pion>{
 		this.joueur = joueur;
 	}
 	
-	public Chifumi getNature() {
-		return this.nature;
-	}
-	
 	public Case getC() {
 		return this.c;
 	}
@@ -64,6 +60,10 @@ public abstract class Pion implements Comparable<Pion>{
 	
 	public List<Deplacement> getPossibilites() {
 		return this.possibilites;
+	}
+	
+	public Nature getNature() {
+		return this.nature;
 	}
 	
 		// CompareTo
@@ -88,32 +88,6 @@ public abstract class Pion implements Comparable<Pion>{
 	}
 	
 		// Methods
-	
-	/**
-	 * Cette méthode determine si le Pion courant peut manger celui passé en paramètre.
-	 * @param other Pion comparé au Pion courant.
-	 * @return retourne vrai si le Pion courant peut manger celui en paramètre, faux sinon.
-	 */
-	public boolean mange(Pion other) {
-		
-		if ((this.nature == Chifumi.CISEAUX && other.nature == Chifumi.PAPIER) ||
-				(this.nature == Chifumi.PAPIER && other.nature == Chifumi.PIERRE) ||
-				(this.nature == Chifumi.PIERRE && other.nature == Chifumi.CISEAUX)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Affecte une position à un Pion.
-	 * @param couche l'attribut x de Case prend la valeur couche passée en paramètre.
-	 * @param point l'attribut y de Case prend la valeur point passée en paramètre.
-	 */
-	public void setPosition(int couche, int point) {
-		this.c.getCoordonnees().setX(couche);
-		this.c.getCoordonnees().setY(point);
-	}
 	
 	/**
 	* deplacementsPossibles détermine, dans l'absolu, les possibles mouvements du {@link Pion} courant.
@@ -152,29 +126,13 @@ public abstract class Pion implements Comparable<Pion>{
 //		deplacementsPossibles();
 //	}
 
+	
 	/**
 	* deplacerPion permet de déplacer le {@link Pion} courant vers la {@link Case} de la direction 
 	* passée en paramètre si celle-ci {@link Case#es.
 	* @param direction Représente la direction vers laquelle on souhaite déplacer le Pion courant.
 	*/
-	public void deplacerPion(List<Case> cases, String direction, int nbCote, int nbCouche) {
-		this.deplacementsPossibles(nbCouche);
-		
-		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {
-			for (Case c : cases) {
-				if (c.getCoordonnees().getX()
-						== this.c.getCoordonnees().getX()
-						+Deplacement.valueOf(direction.toUpperCase()).getX()
-					&& c.getCoordonnees().getY()
-						== (this.c.getCoordonnees().getY()
-						+Deplacement.valueOf(direction.toUpperCase()).getY()+2*nbCote)%(2*nbCote)
-					&& c.EstLibre()) {
-					this.echangerPion(c);
-					break;
-				}
-			}
-		}
-	}
+	public abstract void deplacerPion(List<Case> cases, String direction, int nbCote, int nbCouche);
 	
 	//TODO javadoc.
 	public boolean alignements(List<Case> cases, int nbCote, int nbCouche) {
@@ -225,18 +183,17 @@ public abstract class Pion implements Comparable<Pion>{
 		this.c.retirerPion();
 		this.setC(c);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((c == null) ? 0 : c.hashCode());
 		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
-		result = prime * result + ((nature == null) ? 0 : nature.hashCode());
 		result = prime * result + ((possibilites == null) ? 0 : possibilites.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -256,28 +213,12 @@ public abstract class Pion implements Comparable<Pion>{
 				return false;
 		} else if (!joueur.equals(other.joueur))
 			return false;
-		if (nature != other.nature)
-			return false;
 		if (possibilites == null) {
 			if (other.possibilites != null)
 				return false;
 		} else if (!possibilites.equals(other.possibilites))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("#Pion :\nIl est sur ");
-		builder.append(c);
-		builder.append("\nc'est un : ");
-		builder.append(nature);
-		builder.append("\nIl appartient à : ");
-		builder.append(joueur.getPseudo());
-		builder.append("\nDirections possibles : ");
-		builder.append(possibilites);
-		builder.append("\n");
-		return builder.toString();
-	}
+	}	
+	
 }

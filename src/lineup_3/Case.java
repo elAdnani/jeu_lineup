@@ -75,7 +75,7 @@ public class Case {
 	}
 	
 	/**
-	 * {@link #Case(int, int, Parametres)} instancie une case avec ses coordonnées et des paramètres de partie. Surtout utilisé pour  {@link SimulationPartie}
+	 * {@link #Case(int, int, Parametres)} instancie une case avec ses coordonnées et des paramètres de partie. Surtout utilisé pour  {@link SimulationPartieClassique}
 	 * @param couche Représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
 	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
 	 * @param p Représente les {@link Parametres} de la partie lors d'une simulation.
@@ -96,7 +96,6 @@ public class Case {
 	public boolean ajouterPion(Pion p) {
 		if (this.estLibre) {
 			this.pion = p;
-//			p.setC(this);
 			this.estLibre = false;
 			return true;
 		}
@@ -236,6 +235,15 @@ public class Case {
 		return builder.toString();
 	}
 	
+		// Main
 	
+//	public static void main(String[] args) {
+//		Nature nature = Nature.CISEAUX;
+//		Joueur joueur = new Joueur("joueur", 6, false);
+//		Case cas = new Case(0,0);
+//		Pion p = new PionChifumi(joueur, nature);
+//		cas.ajouterPion(p);
+//		System.out.println(cas.getPion());
+//	}
 	
 }

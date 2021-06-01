@@ -34,7 +34,7 @@ public class Parametres {
 	private final int NBPION;
 	
 	/**
-	 * Correspond au choix du mode Chifumi.
+	 * Correspond au choix du mode Nature.
 	 */
 	private final boolean CHIFUMI;
 	

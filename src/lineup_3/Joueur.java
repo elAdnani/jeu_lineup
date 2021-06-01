@@ -66,15 +66,15 @@ public class Joueur {
 	 * @param p Correspond au pseudo utilisé pour désigner le joueur.
 	 * @param nbPions Correspond au nombre de pion disponible dans la main en début de partie.
 	 */
-	public Joueur(String pseudo, int nbPion) {
+	public Joueur(String pseudo, int nbPion, boolean chifumi) {
 		this.pseudo = pseudo;
-		main = new DeckPions(this, nbPion);
+		main = new DeckPions(this, nbPion, chifumi);
 	}
 	
 		// Methods
 	
-	public Pion getPion() {
-		return this.main.getPion();
+	public Pion getPion(Nature nature) {
+		return this.main.getPion(this, nature);
 	}
 	
 	/**
@@ -82,7 +82,9 @@ public class Joueur {
 	 * @return retourne un nombre de Pion.
 	 */
 	public int countPions() {
-		return this.main.getIdx();
+		return main.getMain().get(Nature.PIERRE)
+				+ main.getMain().get(Nature.PAPIER)
+				+ main.getMain().get(Nature.CISEAUX);
 	}
 	
 	/**
@@ -91,11 +93,11 @@ public class Joueur {
 	 * connaissance de sa {@link Case}.
 	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser le {@link Pion}.
 	 */
-	public boolean poserPion(Case c, PlateauPolynomial p, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
-		c.ajouterPion(main.getPion());
-		main.getPion().setC(c);
-		main.getProchainPion().setC(c);
-		main.getPion().deplacementsPossibles(nbCouche);
+	public boolean poserPion(Case c, PlateauPolynomial p, Map<Joueur, Character> skinPion, int nbCote, int nbCouche, Nature nature) {
+		c.ajouterPion(main.getPion(this, nature));
+		main.getPion(this, nature).setC(c);
+		main.getProchainPion(this, nature).setC(c);
+		main.getPion(this, nature).deplacementsPossibles(nbCouche);
 //		System.out.println(main.getPion().getPossibilites());
 		p.affichagePlateau(3, skinPion);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){

@@ -36,7 +36,7 @@ public class Joueur {
 	/**
 	 * La main du joueur avec laquelle il jouera toute la partie.
 	 */
-	private DeckPions main;
+	private DeckPion main;
 	
 	
 		// Getters
@@ -49,7 +49,7 @@ public class Joueur {
 		return temps;
 	}
 
-	public DeckPions getMain() {
+	public DeckPion getMain() {
 		return main;
 	}
 	
@@ -67,16 +67,22 @@ public class Joueur {
 	 * Instancie un Joueur pour la partie en lui affectant un pseudo et une main.
 	 * @param p Correspond au pseudo utilisé pour désigner le joueur.
 	 * @param nbPions Correspond au nombre de pion disponible dans la main en début de partie.
+	 * @param chifumi Correspond au {@link Mode} de jeu de la partie.
 	 */
-	public Joueur(String pseudo, int nbPion) {
+	public Joueur(String pseudo, int nbPion, Mode mode) {
 		this.pseudo = pseudo;
-		main = new DeckPions(this, nbPion);
+		main = new DeckPion(this, nbPion, mode);
 	}
 	
 		// Methods
 	
-	public Pion getPion() {
-		return this.main.getPion();
+	/**
+	 * getPion cherche dans la {@link Joueur#main} du {@link Joueur}, un {@link Pion} selon sa {@link Nature}.
+	 * @param nature Représente la {@link Nature} du {@link Pion}
+	 * @return Retourne un {@link Pion} si possible, sinon retourne null.
+	 */
+	public Pion getPion(Nature nature) {
+		return this.main.getPion(this, nature);
 	}
 	
 	/**
@@ -84,7 +90,7 @@ public class Joueur {
 	 * @return retourne un nombre de Pion.
 	 */
 	public int countPions() {
-		return this.main.getIdx();
+		return main.getMain().size();
 	}
 	
 	/**
@@ -93,13 +99,11 @@ public class Joueur {
 	 * connaissance de sa {@link Case}.
 	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser le {@link Pion}.
 	 */
-	public boolean poserPion(Case c, PlateauPolynomial p, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
-		c.ajouterPion(main.getPion());
-		main.getPion().setC(c);
-		main.getProchainPion().setC(c);
-		main.getPion().deplacementsPossibles(nbCouche);
-//		System.out.println(main.getPion().getPossibilites());
-
+	public boolean poserPion(Case c, PlateauPolynomial p, int  nbCouche, int nbCote, Nature nature) {
+		c.ajouterPion(main.getPion(this, nature));
+		main.getPion(this, nature).setC(c);
+		main.getPion(this, nature).deplacementsPossibles(nbCouche);
+		main.getProchainPion(this, nature).setC(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
 			System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
 			//TODO faire un blocage à la fin
@@ -113,10 +117,9 @@ public class Joueur {
 	 * @param p Représente le pion que le {@link Joueur} souhaite déplacer.
 	 * @param direction Représente la direction vers laquelle le {@link Joueur} souhaite aller.
 	 */
-	public void deplacerPion(Pion p, String direction, PlateauPolynomial pl, Map<Joueur, Character> skinPion, int nbCote, int nbCouche) {
+	public void deplacerPion(Pion p, String direction, PlateauPolynomial pl, int nbCote, int nbCouche) {
 		if (p.getJoueur() == this) {
 			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
-			
 			p.getJoueur().ajouterCoup();
 			if (p.alignements(pl.getListeCase(), nbCote, nbCouche)) {
 				System.out.println(p.getC().getPion().getJoueur().getPseudo() + " a gagné !");

@@ -1,4 +1,4 @@
-package test_linup_3;
+package test_lineup_3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,11 +24,11 @@ class JoueurTest {
 	Joueur joueuse = new Joueur("PseudoDeLaJoueuse", 9, Mode.CHIFUMI);
 	PlateauPolynomial plateau = new PlateauPolynomial(3);
 	
-	@BeforeAll
-	public static void beforeAllTests() {
-		
-		System.out.println("Début des tests pour la classe Graphe\n");
-	}
+//	@BeforeAll
+//	public static void beforeAllTests() {
+//		
+//		System.out.println("Début des tests pour la classe Graphe\n");
+//	}
 
 	@AfterAll
 	public static void afterAllTests() {
@@ -49,8 +49,8 @@ class JoueurTest {
 	}
 	
 	@Test
-	public static poserPionTest() {
-		
+	public void test() {
+		assertTrue(true);
 	}
 	
 	

@@ -1,15 +1,14 @@
 package lineup_3.modele;
 
-import java.time.LocalTime;
-import java.util.Map;
-
 import package2.Pion;
+import package2.Plateau;
 
 /**
- * Cette classe créer un Joueur ayant des Pions et pouvant faire certaines actions sur un Plateau.
+ * Cette classe créer un {@link Joueur} ayant des {@link Pion} et pouvant faire certaines actions sur un {@link Plateau}, notamment poser des {@link Pion}
+ * et les déplacer.
  *
- * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
- * IUT-A Informatique, Universite de Lille.
+ * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
+ * IUT-A Informatique, Université de Lille.
  * @date 21 avr. 2021
  * @version 21 avr. 2021 19:26:15
  */
@@ -19,55 +18,58 @@ public class Joueur {
 		// Class Attributes
 	
 	/**
-	 * Stock le nombre de coups joué par le joueur.
+	 * Stock le nombre de coups joué par le {@link Joueur}.
 	 */
 	private int nbCoup;
 	
 	/**
-	 * le nom du que le joueur choisi.
+	 * le nom du que le {@link Joueur} choisi.
 	 */
 	private String pseudo;
 	
 	/**
-	 * Le temps total de réflexion qu'a pris le joueur lors d'une partie.
-	 */
-	private LocalTime temps;
-	
-	/**
-	 * La main du joueur avec laquelle il jouera toute la partie.
+	 * La main du {@link Joueur} avec laquelle il jouera toute la partie.
 	 */
 	private DeckPion main;
 	
 	
 		// Getters
 	
+	/**
+	 * @return Retourne une Chaine de caractère représentant le {@link Joueur#pseudo} du {@link Joueur}.
+	 */
 	public String getPseudo() {
 		return this.pseudo;
 	}
 
-	public LocalTime getTemps() {
-		return temps;
-	}
-
+	/**
+	 * @return Retourne un objet de type {@link DeckPion} représentant la {@link Joueur#main} du {@link Joueur}.
+	 */
 	public DeckPion getMain() {
 		return main;
 	}
 	
+	/**
+	 * @return Retourne un entier représentant le {@link Joueur#nbCoup},le nombre de coup joué par le {@link Joueur}.
+	 */
 	public int getNbCoup() {
 		return nbCoup;
 	}
 	
-	public void ajouterCoup() {
+	/**
+	 * ajouterCoup se charge d'implémenter {@link Joueur#nbCoup} lorsque le {@link Joueur} joue.
+	 */
+	private void ajouterCoup() {
 		this.nbCoup++;
 	}
 
 		// Constructor
 
 	/**
-	 * Instancie un Joueur pour la partie en lui affectant un pseudo et une main.
-	 * @param p Correspond au pseudo utilisé pour désigner le joueur.
-	 * @param nbPions Correspond au nombre de pion disponible dans la main en début de partie.
-	 * @param chifumi Correspond au {@link Mode} de jeu de la partie.
+	 * Instancie un {@link Joueur} pour la partie en lui affectant un {@link Joueur#pseudo} et une {@link Joueur#main}.
+	 * @param p Correspond au {@link Joueur#pseudo} utilisé pour désigner le {@link Joueur}.
+	 * @param nbPions Correspond au nombre de pion disponible dans la {@link Joueur#main} en début de partie.
+	 * @param mode Correspond au {@link Mode} de jeu de la partie.
 	 */
 	public Joueur(String pseudo, int nbPion, Mode mode) {
 		this.pseudo = pseudo;
@@ -78,7 +80,7 @@ public class Joueur {
 	
 	/**
 	 * getPion cherche dans la {@link Joueur#main} du {@link Joueur}, un {@link Pion} selon sa {@link Nature}.
-	 * @param nature Représente la {@link Nature} du {@link Pion}
+	 * @param nature Représente la {@link Nature} du {@link Pion}.
 	 * @return Retourne un {@link Pion} si possible, sinon retourne null.
 	 */
 	public Pion getPion(Nature nature) {
@@ -86,10 +88,10 @@ public class Joueur {
 	}
 	
 	/**
-	 * countPions permet de compter le nombre de Pion restant dans la main du Joueur.
-	 * @return retourne un nombre de Pion.
+	 * countPions permet de compter le nombre de {@link Pion} restant dans la {@link Joueur#main} du {@link Joueur}.
+	 * @return Retourne un entier représentant une quantité de {@link Pion}.
 	 */
-	public int countPions() {
+	public int compterPions() {
 		return main.getMain().size();
 	}
 	
@@ -97,7 +99,12 @@ public class Joueur {
 	 * poserPion prend le prochain Pion, le retire de la main du {@link Joueur} et
 	 * l'ajoute à la {@link Case} souhaitée. Parallèlement, le {@link Pion} prend
 	 * connaissance de sa {@link Case}.
-	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser le {@link Pion}.
+	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser un {@link Pion}.
+	 * @param p Représente le {@link Plateau} sur lequel le {@link Joueur} joue.
+	 * @param nbCouche Représente le nombre de couche que possède le {@link Plateau}.
+	 * @param nbCote Représente le nombre de côté que possède le {@link Plateau}.
+	 * @param nature Représente la {@link Nature} du {@link Pion} que le {@link Joueur} souhaite poser.
+	 * @return Retrourne vrai si, suite à la pose du {@link Pion}, un {@link Pion#alignements} est detecté et faux sinon.
 	 */
 	public boolean poserPion(Case c, PlateauPolynomial p, int  nbCouche, int nbCote, Nature nature) {
 		c.ajouterPion(main.getPion(this, nature));
@@ -105,7 +112,7 @@ public class Joueur {
 		main.getPion(this, nature).deplacementsPossibles(nbCouche);
 		main.getProchainPion(this, nature).setC(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
-			System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
+			//System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
 			//TODO faire un blocage à la fin
 			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}
@@ -116,23 +123,24 @@ public class Joueur {
 	 * deplacerPion ré-affecte à {@link Pion} une nouvelle {@link Case} en mettant tout à jour.
 	 * @param p Représente le pion que le {@link Joueur} souhaite déplacer.
 	 * @param direction Représente la direction vers laquelle le {@link Joueur} souhaite aller.
+	 * @param p Représente le {@link Plateau} sur lequel le {@link Joueur} joue.
+	 * @param nbCouche Représente le nombre de couche que possède le {@link Plateau}.
+	 * @param nbCote Représente le nombre de côté que possède le {@link Plateau}.
+	 * @return Retrourne vrai si, suite au déplacement d'un {@link Pion}, un {@link Pion#alignements} est detecté et faux sinon.
+
 	 */
-	public void deplacerPion(Pion p, String direction, PlateauPolynomial pl, int nbCote, int nbCouche) {
+	public boolean deplacerPion(Pion p, String direction, PlateauPolynomial pl, int nbCote, int nbCouche) {
 		if (p.getJoueur() == this) {
 			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
 			p.getJoueur().ajouterCoup();
 			if (p.alignements(pl.getListeCase(), nbCote, nbCouche)) {
-				System.out.println(p.getC().getPion().getJoueur().getPseudo() + " a gagné !");
-				/*for (Case cas : pl.getListeCase()) {
-					cas.setEstLibre(false);
-				}*/
+				return p.alignements(pl.getListeCase(), nbCote, nbCouche);
 				//TODO pareil que le todo précédent.
 			}
 		}
+		return false;
 	}
 	
-	//TODO écrire poserChifumiPion.
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -140,7 +148,6 @@ public class Joueur {
 		result = prime * result + ((main == null) ? 0 : main.hashCode());
 		result = prime * result + nbCoup;
 		result = prime * result + ((pseudo == null) ? 0 : pseudo.hashCode());
-		result = prime * result + ((temps == null) ? 0 : temps.hashCode());
 		return result;
 	}
 
@@ -165,11 +172,6 @@ public class Joueur {
 				return false;
 		} else if (!pseudo.equals(other.pseudo))
 			return false;
-		if (temps == null) {
-			if (other.temps != null)
-				return false;
-		} else if (!temps.equals(other.temps))
-			return false;
 		return true;
 	}
 
@@ -179,16 +181,11 @@ public class Joueur {
 		builder.append("# ");
 		builder.append(pseudo);
 		builder.append("\nPions restant : ");
-		builder.append(this.countPions());
+		builder.append(this.compterPions());
 		builder.append("\nNombre de Coups : ");
 		builder.append(nbCoup);
-		builder.append("\nTemps de réflexion : ");
-		builder.append(temps);
 		builder.append("\n");
 		return builder.toString();
 	}
-
-
-
 	
 }

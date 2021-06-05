@@ -1,5 +1,7 @@
 package lineup_3.modele;
 
+import java.awt.Color;
+
 import package2.Pion;
 import package2.Plateau;
 
@@ -23,9 +25,13 @@ public class Joueur {
 	private int nbCoup;
 	
 	/**
-	 * le nom du que le {@link Joueur} choisi.
+	 * Correspond au nom que le {@link Joueur} choisi.
 	 */
 	private String pseudo;
+	
+	/**
+	 * Correspond à la couleur que les {@link Pion} du {@link Joueur} aurons(notamment en graphique).
+	 */
 	
 	/**
 	 * La main du {@link Joueur} avec laquelle il jouera toute la partie.

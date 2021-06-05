@@ -1,7 +1,6 @@
 package lineup_3.modele;
 
-import java.awt.Color;
-
+import outils.Couleur;
 import package2.Pion;
 import package2.Plateau;
 
@@ -30,8 +29,10 @@ public class Joueur {
 	private String pseudo;
 	
 	/**
-	 * Correspond à la couleur que les {@link Pion} du {@link Joueur} aurons(notamment en graphique).
+	 * Correspond à la couleur que les {@link Pion} du {@link Joueur} auront(notamment en graphique).
 	 */
+	
+	private Couleur couleur;
 	
 	/**
 	 * La main du {@link Joueur} avec laquelle il jouera toute la partie.
@@ -42,10 +43,17 @@ public class Joueur {
 		// Getters
 	
 	/**
-	 * @return Retourne une Chaine de caractère représentant le {@link Joueur#pseudo} du {@link Joueur}.
+	 * @return Retourne une Chaîne de caractère représentant le {@link Joueur#pseudo} du {@link Joueur}.
 	 */
 	public String getPseudo() {
 		return this.pseudo;
+	}
+	
+	/**
+	 * @return Retourne la couleur des {@link Pion} du {@link Joueur}.
+	 */
+	public Couleur getCouleur() {
+		return couleur;
 	}
 
 	/**

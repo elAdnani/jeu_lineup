@@ -30,7 +30,7 @@ public abstract class Pion implements Comparable<Pion>{
 	protected Case c;
 	
 	/**
-	 * joueur correspond au Joueur à qui appartient le Pion.
+	 * Correspond au {@link Joueur} à qui appartient le Pion courant.
 	 */
 	protected Joueur joueur;
 	
@@ -51,7 +51,7 @@ public abstract class Pion implements Comparable<Pion>{
 		return joueur;
 	}
 	
-	public void setJoueur(Joueur joueur) {
+	public void setCouleur(Joueur joueur) {
 		this.joueur = joueur;
 	}
 	
@@ -88,8 +88,8 @@ public abstract class Pion implements Comparable<Pion>{
 	 * @param j représente le pseudo du Joueur à qui appartient ce Pion.
 	 * @param p Représente les paramètres de la partie en cours.
 	 */
-	public Pion(Joueur j, Nature nature) {
-		this.joueur = j;
+	public Pion(Joueur joueur, Nature nature) {
+		this.joueur = joueur;
 		this.nature = nature;
 	}
 	
@@ -262,7 +262,7 @@ public abstract class Pion implements Comparable<Pion>{
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pion [c=");
 		builder.append(c);
-		builder.append(", joueur=");
+		builder.append(", couleur=");
 		builder.append(joueur);
 		builder.append(", possibilites=");
 		builder.append(possibilites);

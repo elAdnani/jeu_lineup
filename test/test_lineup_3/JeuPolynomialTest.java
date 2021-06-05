@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import lineup_3.modele.AffichagePlateau;
 import lineup_3.modele.Case;
-import lineup_3.modele.ChifumiPion;
+import lineup_3.modele.PionChifumi;
 import lineup_3.modele.DeckPions;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.PlateauPolynomial;

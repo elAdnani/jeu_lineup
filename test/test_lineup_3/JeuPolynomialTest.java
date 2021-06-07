@@ -24,7 +24,7 @@ import package2.Plateau;
 
 /**
  * 
- * Cette classe sert à tester le fonctionnement du jeu à partir d'un plateau polynomial. </br>
+ * Cette classe sert à tester le fonctionnement du Jeu à partir d'un plateau polynomial. </br>
  * C'est à dire : </br> 
  * - Générer les pions du plateau correctement en fonction du nombre de côté. </br>
  * - Vérifier les joueurs et ses attributs </br>

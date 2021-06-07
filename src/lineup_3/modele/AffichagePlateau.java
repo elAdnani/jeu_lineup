@@ -29,7 +29,7 @@ public class AffichagePlateau {
 
 	/**
 	 * Modifie en attribut le plateau qui lui, est le centre de la classe
-	 * @param plateau est un plateau du jeu
+	 * @param plateau est un plateau du Jeu
 	 */
 	public void setPlateau(Plateau plateau) {
 		this.plateau = plateau;

@@ -43,7 +43,7 @@ class JoueurTest {
 	@BeforeEach
 	public void initialization() {
 		
-		this.parametre = new Parametres(3, 4, false, Mode.CLASSIQUE, 9);
+		this.parametre = new Parametres(3, false, Mode.CLASSIQUE, 9);
 		this.plateau = new PlateauPolynomial(this.parametre.getNBCOTE());
 		
 		this.joueur1 = new Joueur("joueur1", parametre.getNBPION(), parametre.getMODE());

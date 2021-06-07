@@ -40,12 +40,14 @@ public class Partie implements Serializable{
 	
 	List<Joueur> utilisateur;
 	
+	private Mode mode;
+	
 	/**
 	 * Constructeur
 	 * @param plateauDeLaPartie
 	 * @param utilisateur
 	 */
-	public Partie(Plateau plateauDeLaPartie, List<Joueur> utilisateur) {
+	public Partie(Plateau plateauDeLaPartie, List<Joueur> utilisateur, Mode mode) {
 		
 		this.plateauDeLaPartie=plateauDeLaPartie;
 		
@@ -53,7 +55,7 @@ public class Partie implements Serializable{
 		
 		this.utilisateur=utilisateur;
 		
-		
+		this.mode = mode;
 	}
 	
 	public LocalDate getDateDeCreation() {
@@ -67,6 +69,19 @@ public class Partie implements Serializable{
 		return this.utilisateur.size();
 	}
 	
+	public List<Joueur> getList() {
+		return this.utilisateur;
+	}
+	
+	public Plateau getPlateau() {
+		return this.plateauDeLaPartie;
+	}
+	
+	public Mode getMode() {
+		return this.mode;
+	}
+
+	
 	/**
 	 * Permet de modifier le plateau de la partie.</br>
 	 * 
@@ -76,7 +91,14 @@ public class Partie implements Serializable{
 		
 		this.plateauDeLaPartie = plateauDeLaPartie;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Partie [plateauDeLaPartie=");
+		builder.append(plateauDeLaPartie);
+		return builder.toString();
+	}
+
 
 }

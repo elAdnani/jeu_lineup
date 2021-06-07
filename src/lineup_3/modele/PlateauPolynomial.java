@@ -14,6 +14,7 @@
  */
 package lineup_3.modele;
 
+import java.io.Serializable;
 import java.util.Set;
 import outils.GrapheMatrice;
 import outils.GrapheType;
@@ -33,7 +34,7 @@ import package2.Plateau;
  * @version v2
  */
 
-public class PlateauPolynomial extends Plateau{
+public class PlateauPolynomial extends Plateau implements Serializable{
 
 	/**
 	 * Attributs composé : du nombre de côté (forme du plateau)</br>
@@ -172,7 +173,7 @@ public class PlateauPolynomial extends Plateau{
 
 	
 	/**
-	 * Récupère la liste des voisins d'un case d'une jeu
+	 * Récupère la liste des voisins d'un case d'une Jeu
 	 * @param est une case à qui l'on recherche ses voisins
 	 * @return une liste de case voisin d'une case recherchée
 	 */
@@ -195,9 +196,6 @@ public class PlateauPolynomial extends Plateau{
 		builder.append(nbcote);
 		builder.append("\n\n\tIl est basé sur un :\n");
 		builder.append(super.grapheDuPlateau);
-		builder.append("\n\nLes joueurs on chacun : ");
-		builder.append(getNbPionMax());
-		builder.append(" pions");
 		return builder.toString();
 	}
 	

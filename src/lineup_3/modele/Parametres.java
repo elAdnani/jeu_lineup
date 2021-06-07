@@ -16,7 +16,7 @@ public class Parametres {
 	/**
 	 * Correspond au nombre de couche choisi pour la partie.
 	 */
-	private final int NBCOUCHE;
+	private final int NBCOUCHE = 3;
 	
 	/**
 	 * Correspond au nombre de côté choisi pour la partie.
@@ -40,8 +40,7 @@ public class Parametres {
 	
 		// Constructor
 	
-	public Parametres(int nbCouche, int nbCote, boolean piege, Mode mode, int nbPion) {
-		this.NBCOUCHE = nbCouche;
+	public Parametres(int nbCote, boolean piege, Mode mode, int nbPion) {
 		this.NBCOTE = nbCote;
 		this.PIEGES = piege;
 		this.MODE = mode;

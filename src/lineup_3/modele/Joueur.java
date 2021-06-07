@@ -1,5 +1,7 @@
 package lineup_3.modele;
 
+import java.io.Serializable;
+
 import outils.Couleur;
 import package2.Pion;
 import package2.Plateau;
@@ -15,8 +17,10 @@ import package2.Plateau;
  */
 
 
-public class Joueur {
+public class Joueur implements Serializable{
 		// Class Attributes
+
+	private static final long serialVersionUID = -4106475665236130022L;
 	
 	/**
 	 * Stock le nombre de coups joué par le {@link Joueur}.
@@ -40,7 +44,7 @@ public class Joueur {
 	private DeckPion main;
 	
 	
-		// Getters
+		// Getters && Setters
 	
 	/**
 	 * @return Retourne une Chaîne de caractère représentant le {@link Joueur#pseudo} du {@link Joueur}.
@@ -69,13 +73,6 @@ public class Joueur {
 	public int getNbCoup() {
 		return nbCoup;
 	}
-	
-	/**
-	 * ajouterCoup se charge d'implémenter {@link Joueur#nbCoup} lorsque le {@link Joueur} joue.
-	 */
-	private void ajouterCoup() {
-		this.nbCoup++;
-	}
 
 		// Constructor
 
@@ -83,7 +80,7 @@ public class Joueur {
 	 * Instancie un {@link Joueur} pour la partie en lui affectant un {@link Joueur#pseudo} et une {@link Joueur#main}.
 	 * @param p Correspond au {@link Joueur#pseudo} utilisé pour désigner le {@link Joueur}.
 	 * @param nbPions Correspond au nombre de pion disponible dans la {@link Joueur#main} en début de partie.
-	 * @param mode Correspond au {@link Mode} de jeu de la partie.
+	 * @param mode Correspond au {@link Mode} de Jeu de la partie.
 	 */
 	public Joueur(String pseudo, int nbPion, Mode mode) {
 		this.pseudo = pseudo;
@@ -92,6 +89,13 @@ public class Joueur {
 	
 		// Methods
 	
+	/**
+	 * ajouterCoup se charge d'implémenter {@link Joueur#nbCoup} lorsque le {@link Joueur} joue.
+	 */
+	private void ajouterCoup() {
+		this.nbCoup++;
+	}
+
 	/**
 	 * getPion cherche dans la {@link Joueur#main} du {@link Joueur}, un {@link Pion} selon sa {@link Nature}.
 	 * @param nature Représente la {@link Nature} du {@link Pion}.

@@ -15,7 +15,7 @@
 package lineup_3.modele;
 
 /**
- * Cette enum permet de définir les mouvements existants dans le jeu
+ * Cette enum permet de définir les mouvements existants dans le Jeu
  *
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
  *         IUT-A Informatique, Université de Lille.

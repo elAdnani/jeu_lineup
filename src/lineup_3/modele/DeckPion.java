@@ -43,7 +43,7 @@ public class DeckPion {
 	 * avec plusieurs {@link Nature} le cas échéant.
 	 * @param joueur Représente le {@link Joueur} à qui appartient la main.
 	 * @param nbPion Représente le nombre de {@link Pion} donné à chaque {@link Joueur}.
-	 * @param chifumi Représente le {@link Mode} de jeu auquel le {@link Joueur} s'apprête à jouer.
+	 * @param chifumi Représente le {@link Mode} de Jeu auquel le {@link Joueur} s'apprête à jouer.
 	 */
 	private void initialiserMain(Joueur joueur, int nbPion, Mode mode) {
 		if (mode.equals(Mode.CHIFUMI)) {

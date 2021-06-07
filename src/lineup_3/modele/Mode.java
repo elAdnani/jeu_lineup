@@ -1,5 +1,7 @@
 package lineup_3.modele;
 
+import java.io.Serializable;
+
 /**
  * Cette classe fait.........
  *
@@ -8,7 +10,7 @@ package lineup_3.modele;
  * @date 1 juin 2021
  * @version 1 juin 2021 16:21:47
  */
-public enum Mode {
+public enum Mode implements Serializable {
 		// Class Enum
 	CLASSIQUE("classique"), CHIFUMI("chifumi");
 	

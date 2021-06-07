@@ -30,7 +30,7 @@ import java.util.Map;
 public class SimulationPartie {
 	public static void main(String[] args) {
 		
-		Parametres parametrePartie = new Parametres(3, 4, false, Mode.CLASSIQUE, 6);
+		Parametres parametrePartie = new Parametres(4, false, Mode.CLASSIQUE, 6);
 		PlateauPolynomial plateauPartie = new PlateauPolynomial(parametrePartie.getNBCOTE());
 		
 		Joueur joueur1 = new Joueur("Joueur1", parametrePartie.getNBPION(), parametrePartie.getMODE());
@@ -82,18 +82,18 @@ public class SimulationPartie {
 //			System.out.println(utilisateur.getPseudo());
 //		}
 
-//			/*On pose des Pion pour voir si toutes les mises à jour se font*/
-//		joueur1.poserPion(case00, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
-//		System.out.println("\n==== 'Le joueur1 pose un premier Pion' ====\n");
-//		
-//		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
-//		System.out.println("\n==== 'Le joueur2 pose un premier Pion' ====\n");
-//		
-//		joueur1.poserPion(case02, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
-//		System.out.println("\n==== 'Le joueur1 pose un deuxième Pion' ====\n");
-//		
-//		joueur2.poserPion(case03, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
-//		System.out.println("\n==== 'Le joueur2 pose un deuxième Pion' ====\n");
+			/*On pose des Pion pour voir si toutes les mises à jour se font*/
+		joueur1.poserPion(case00, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		System.out.println("\n==== 'Le joueur1 pose un premier Pion' ====\n");
+		
+		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		System.out.println("\n==== 'Le joueur2 pose un premier Pion' ====\n");
+		
+		joueur1.poserPion(case02, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		System.out.println("\n==== 'Le joueur1 pose un deuxième Pion' ====\n");
+		
+		joueur2.poserPion(case03, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		System.out.println("\n==== 'Le joueur2 pose un deuxième Pion' ====\n");at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
 //
 //		
 //			/*On sait que les mises à jour sont faites lors de la pose de Pion.

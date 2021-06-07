@@ -24,7 +24,7 @@ import outils.Paire;
 
 /**
  * Cette classe sert à créer le/s plateau/x nécessaire pour le fonctionnement du
- * jeu. Il est la base du fonctionnement du jeu.  </br>
+ * Jeu. Il est la base du fonctionnement du Jeu.  </br>
  * Un Plateau consiste à :  </br> 
  * 	- former le schéma de la partie, en créant les cases qui forment pour la plupart du temps des chemins du plateau </br> 
  *  - donner les outils nécessaires aux déplacement et aux changements du plateau</br>

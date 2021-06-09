@@ -66,7 +66,9 @@ public class Demarrage {
 					break;
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			premierChoix();
 		}
 	}
 	
@@ -88,7 +90,9 @@ public class Demarrage {
 				quitter();
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			lireLesRegles();
 		}
 	}
 	
@@ -123,7 +127,9 @@ public class Demarrage {
 					break;
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			demarrerUnePartie();
 		}
 	}
 	
@@ -178,7 +184,9 @@ public class Demarrage {
 					break;
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			choixDuNomrbreDeCote();
 		}
 	}
 	
@@ -212,7 +220,9 @@ public class Demarrage {
 					break;
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			choixDuMode();
 		}
 	}
 	
@@ -248,7 +258,9 @@ public class Demarrage {
 				quitter();
 			}
 		} catch (InputMismatchException e) {
+			scanner.next();
 			System.out.println("Vous n'avez pas entrer un nombre");
+			recapitulatif();
 		}
 	}
 	
@@ -275,7 +287,9 @@ public class Demarrage {
 				quitter();
 			}
 		}
-		catch (InputMismatchException e) { System.out.println("Vous n'avez pas entrer un nombre");}
+		catch (InputMismatchException e) { 	scanner.next();
+		System.out.println("Vous n'avez pas entrer un nombre");
+		dernierChoix();}
 	}
 	
 	private void commencerJeu() {
@@ -319,7 +333,7 @@ public class Demarrage {
 			List<Joueur> list = new ArrayList<>();
 				list.add(new Joueur(pseudo1, nbPion, Mode.valueOf(mode)));
 				list.add(new Joueur(pseudo2, nbPion, Mode.valueOf(mode)));
-			Partie partie = new Partie(new PlateauPolynomial(nbCote), list, Mode.valueOf(mode));
+			Partie partie = new Partie(new PlateauPolynomial(nbCote), list, Mode.valueOf(mode), nbPion);
 			return partie;
 		}
 		catch (FileNotFoundException e) { e.printStackTrace();}

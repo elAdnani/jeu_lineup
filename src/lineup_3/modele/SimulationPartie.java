@@ -85,16 +85,16 @@ public class SimulationPartie {
 //		}
 
 			/*On pose des Pion pour voir si toutes les mises à jour se font*/
-		joueur1.poserPion(case00, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		joueur1.poserPion(case00, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
 		System.out.println("\n==== 'Le joueur1 pose un premier Pion' ====\n");
 		
-		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
 		System.out.println("\n==== 'Le joueur2 pose un premier Pion' ====\n");
 		
-		joueur1.poserPion(case02, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		joueur1.poserPion(case02, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
 		System.out.println("\n==== 'Le joueur1 pose un deuxième Pion' ====\n");
 		
-		joueur2.poserPion(case03, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE(), Nature.CLASSIQUE);
+		joueur2.poserPion(case03, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
 		System.out.println("\n==== 'Le joueur2 pose un deuxième Pion' ====\n");at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
 //
 //		
@@ -119,10 +119,10 @@ public class SimulationPartie {
 //		joueur1.poserPion(case11, plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
 //		//System.out.println(case11);
 //		
-//		System.out.println("\n==== '" + joueur1.getJoueur() + " déplace le Pion vers une case libre' ====\n");
-//		joueur1.deplacerPion(case11.getPion(), "haut", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
-//		System.out.println(case11);
-//		System.out.println(case21);//TODO corriger la classe voisinsDe(T sommet)
+		System.out.println("\n==== '" + joueur1.getJoueur() + " déplace le Pion vers une case libre' ====\n");
+		joueur1.deplacerPion(case11.getPion(), "haut", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+		System.out.println(case11);
+		System.out.println(case21);//TODO corriger la classe voisinsDe(T sommet)
 //		
 //		System.out.println("\n==== '" + joueur1.getJoueur() + " re-déplace le Pion vers l'ancienne case' ====\n");
 //		joueur1.deplacerPion(case21.getPion(), "bas", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());

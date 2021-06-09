@@ -42,9 +42,7 @@ public class PlateauPolynomial extends Plateau implements Serializable{
 	 * d'un nombre de couche pré-déterminé pour ce type de Plateau </br>
 	 * Liste des pions des joueurs et un graphe qui correspond au squelette du plateau</br>
 	 */
-	
-	private  int        		nbcote;
-	public  static final int	NBCOUCHE = 3;
+
 	
 	
 	
@@ -57,7 +55,7 @@ public class PlateauPolynomial extends Plateau implements Serializable{
 	
 	public PlateauPolynomial(int nombreCote) {
 		
-		super( new GrapheMatrice<Case>(GrapheType.UGRAPH) );
+		super( new GrapheMatrice<Case>(GrapheType.UGRAPH), 3);
 		
 		this.nbcote=nombreCote;
 		
@@ -75,7 +73,7 @@ public class PlateauPolynomial extends Plateau implements Serializable{
 	
 	public PlateauPolynomial(int nombreCote, GrapheMatrice<Case> grapheDuPlateau) {
 		
-		super(grapheDuPlateau,GrapheType.UGRAPH);
+		super(grapheDuPlateau,GrapheType.UGRAPH, 3);
 		
 		this.nbcote = nombreCote;
 		

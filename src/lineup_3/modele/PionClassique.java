@@ -23,6 +23,8 @@ public class PionClassique extends Pion{
 	
 		// toString, hashCode && equals
 
+
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();

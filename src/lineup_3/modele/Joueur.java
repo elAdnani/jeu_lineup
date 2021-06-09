@@ -125,7 +125,7 @@ public class Joueur implements Serializable{
 	 * @param nature Représente la {@link Nature} du {@link Pion} que le {@link Joueur} souhaite poser.
 	 * @return Retrourne vrai si, suite à la pose du {@link Pion}, un {@link Pion#alignements} est detecté et faux sinon.
 	 */
-	public boolean poserPion(Case c, PlateauPolynomial p, int  nbCouche, int nbCote, Nature nature) {
+	public boolean poserPionChifumi(Case c, Plateau p, int  nbCouche, int nbCote, Nature nature) {
 		c.ajouterPion(main.getPion(this, nature));
 		main.getPion(this, nature).setC(c);
 		main.getPion(this, nature).deplacementsPossibles(nbCouche);
@@ -139,6 +139,29 @@ public class Joueur implements Serializable{
 	}
 	
 	/**
+	 * poserPion prend le prochain Pion, le retire de la main du {@link Joueur} et
+	 * l'ajoute à la {@link Case} souhaitée. Parallèlement, le {@link Pion} prend
+	 * connaissance de sa {@link Case}.
+	 * @param c Représente la {@link Case} où le {@link Joueur} souhaite poser un {@link Pion}.
+	 * @param p Représente le {@link Plateau} sur lequel le {@link Joueur} joue.
+	 * @param nbCouche Représente le nombre de couche que possède le {@link Plateau}.
+	 * @param nbCote Représente le nombre de côté que possède le {@link Plateau}.
+	 * @return Retrourne vrai si, suite à la pose du {@link Pion}, un {@link Pion#alignements} est detecté et faux sinon.
+	 */
+	public boolean poserPion(Case c, Plateau p, int  nbCouche, int nbCote) {
+		c.ajouterPion(main.getPion(this, Nature.CLASSIQUE));
+		main.getPion(this, Nature.CLASSIQUE).setC(c);
+		main.getPion(this, Nature.CLASSIQUE).deplacementsPossibles(nbCouche);
+		main.getProchainPion(this, Nature.CLASSIQUE).setC(c);
+		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
+			//System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
+			//TODO faire un blocage à la fin
+			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
+		}//211111
+		return false;
+	}
+	
+	/**
 	 * deplacerPion ré-affecte à {@link Pion} une nouvelle {@link Case} en mettant tout à jour.
 	 * @param p Représente le pion que le {@link Joueur} souhaite déplacer.
 	 * @param direction Représente la direction vers laquelle le {@link Joueur} souhaite aller.
@@ -148,7 +171,7 @@ public class Joueur implements Serializable{
 	 * @return Retrourne vrai si, suite au déplacement d'un {@link Pion}, un {@link Pion#alignements} est detecté et faux sinon.
 
 	 */
-	public boolean deplacerPion(Pion p, String direction, PlateauPolynomial pl, int nbCote, int nbCouche) {
+	public boolean deplacerPion(Pion p, String direction, Plateau pl, int nbCote, int nbCouche) {
 		if (p.getJoueur() == this) {
 			p.deplacerPion(pl.getListeCase(), direction, nbCote, nbCouche);
 			p.getJoueur().ajouterCoup();

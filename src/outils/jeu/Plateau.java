@@ -38,6 +38,9 @@ import outils.Paire;
 
 public abstract class Plateau {
 	
+	protected int        		nbcote;
+	public final int	NBCOUCHE;
+	
 	/**
 	 * Est un élément obligatoire du plateau. Le plateau possède son propre graphe.</br>
 	 * Ainsi un plateau correspond à un graphe de case. Ses sommets sont ses cases. Et ses arêtes, les chemins permettant de se déplacer. 
@@ -49,17 +52,19 @@ public abstract class Plateau {
 	/**
 	 * @param grapheDuPlateau est un graphe de case prédéfini
 	 */
-	public Plateau(GrapheMatrice<Case> grapheDuPlateau) {
+	public Plateau(GrapheMatrice<Case> grapheDuPlateau, int nbCouche) {
 		
 		this.grapheDuPlateau=grapheDuPlateau;
+		this.NBCOUCHE = nbCouche;
 	}
 	
 	/**
 	 * @param grapheDuPlateau est un graphe de case prédéfini
 	 * @param TypeDuGraphe est le type du graphe que le graphe en paramètre doit respecter
 	 */
-	public Plateau(GrapheMatrice<Case> grapheDuPlateau,  GrapheType TypeDuGraphe) {
+	public Plateau(GrapheMatrice<Case> grapheDuPlateau,  GrapheType TypeDuGraphe, int nbCouche) {
 		
+		this.NBCOUCHE = nbCouche;
 		if(grapheDuPlateau!=null && grapheDuPlateau.getType()==TypeDuGraphe)
 			
 			this.grapheDuPlateau=grapheDuPlateau;
@@ -83,6 +88,10 @@ public abstract class Plateau {
 			}
 		return null;
 	}
+	
+	public int getnbCote() {
+		return this.nbcote;
+	}
 
 	
 	
@@ -94,9 +103,6 @@ public abstract class Plateau {
 		
 		return this.grapheDuPlateau.getSommets();
 	}
-	
-	
-	
 	
 
 }

@@ -193,8 +193,6 @@ public class Case {
 		result = prime * result + ((COORDONNEES == null) ? 0 : COORDONNEES.hashCode());
 		result = prime * result + (estLibre ? 1231 : 1237);
 		result = prime * result + (estPiege ? 1231 : 1237);
-		result = prime * result + ((param == null) ? 0 : param.hashCode());
-		result = prime * result + ((pion == null) ? 0 : pion.hashCode());
 		return result;
 	}
 

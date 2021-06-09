@@ -1,0 +1,5 @@
+	||solo||
+pseudo1 : sel
+pseudo2 : IA
+nombre de côté : 3
+mode : CLASSIQUE

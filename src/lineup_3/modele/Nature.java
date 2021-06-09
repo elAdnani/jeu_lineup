@@ -16,7 +16,7 @@ public enum Nature {
 	/**
 	 * Un objet de nature CLASSIQUE ne mange personne et ne se fait manger par personne.
 	 */
-	CLASSIQUE(0),
+	CLASSIQUE(-1),
 	
 	/**
 	 * Un objet de nature PIERRE peut manger un objet de nature CISEAUX, et se fait manger par un objet de nature PAPIER.

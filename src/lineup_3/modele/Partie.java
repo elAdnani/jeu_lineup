@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import package2.Plateau;
+import outils.jeu.Plateau;
 
 /**
  * Cette classe sert à récupérer.</br>

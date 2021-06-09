@@ -18,7 +18,8 @@ import java.io.Serializable;
 import java.util.Set;
 import outils.GrapheMatrice;
 import outils.GrapheType;
-import package2.Plateau;
+import outils.jeu.Case;
+import outils.jeu.Plateau;
 
 
 

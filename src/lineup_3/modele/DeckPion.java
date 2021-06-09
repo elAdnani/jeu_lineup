@@ -3,7 +3,7 @@ package lineup_3.modele;
 import java.util.ArrayList;
 import java.util.List;
 
-import package2.Pion;
+import outils.jeu.Pion;
 
 /**
  * Cette classe fait.........

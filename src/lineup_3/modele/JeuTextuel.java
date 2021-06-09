@@ -1,9 +1,7 @@
-package Game;
+package lineup_3.modele;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import lineup_3.modele.Partie;
 
 /**
  * Cette classe fait.........
@@ -13,7 +11,7 @@ import lineup_3.modele.Partie;
  * @date 7 juin 2021
  * @version 7 juin 2021 20:30:33
  */
-public class Jeu {
+public class JeuTextuel {
 		// Class Attributes
 	private static Scanner scanner = new Scanner(System.in);
 	private static boolean continuer = true;
@@ -59,7 +57,7 @@ public class Jeu {
 	
 	public static void start(Partie p) {
 		while (continuer) {
-			p.getList().get(tour).
+			//p.getList().get(tour). TODO
 		}
 	}
 }

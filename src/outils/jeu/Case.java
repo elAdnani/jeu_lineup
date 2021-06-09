@@ -1,10 +1,12 @@
-package lineup_3.modele;
+package outils.jeu;
 
 import java.util.List;
 import java.util.Set;
 
+import lineup_3.modele.Parametres;
+import lineup_3.modele.PlateauPolynomial;
+import lineup_3.modele.SimulationPartie;
 import outils.Paire;
-import package2.Pion;
 
 /**
  * Cette classe représente une Case de plateau puvant stocker différentes infos comme sa disponibilité, si elle possède

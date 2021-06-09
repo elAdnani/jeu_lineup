@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import outils.jeu.Case;
+
 /**
  * Cette classe simule une partie en effectuant tout les cas spécifiques imaginables :<br>
  *<ul>

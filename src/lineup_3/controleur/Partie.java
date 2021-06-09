@@ -1,4 +1,4 @@
-package lineup_3.visuel;
+package lineup_3.controleur;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -21,7 +21,7 @@ public class ManipulationPartie {
 	 * TODO      TODO TODO TODO TODO  TODO TODO TODO  TODO
 	 * 
 	 * CE QUE TU DOIS FAIRE
-	 * Creer des fichiers binaire de serialisation .ser
+	 * Créer des fichiers binaire de serialisation .ser
 	 * qui vont être nommée : 
 	 * NomPartie.Date.ModeDeJeu.nombreJoueur
 	 *  

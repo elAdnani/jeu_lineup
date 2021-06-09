@@ -2,7 +2,8 @@ package lineup_3.modele;
 
 import java.util.List;
 
-import package2.Pion;
+import outils.jeu.Case;
+import outils.jeu.Pion;
 
 /**
  * Cette classe fait.........

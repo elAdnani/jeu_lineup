@@ -1,4 +1,4 @@
-package Game;
+package lineup_3.visuel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,13 +10,14 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import lineup_3.modele.JeuTextuel;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.Mode;
 import lineup_3.modele.Partie;
 import lineup_3.modele.PlateauPolynomial;
 import outils.BinarySerialization;
 import outils.LectureEcritureDeFichier;
-import package2.Plateau;
+import outils.jeu.Plateau;
 
 /**
  * Cette classe fait.........
@@ -278,7 +279,7 @@ public class Demarrage {
 	}
 	
 	private void commencerJeu() {
-		Jeu.start(creationDeLaPartie());
+		JeuTextuel.start(creationDeLaPartie());
 	}
 
 	private Partie creationDeLaPartie() {

@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 import lineup_3.modele.Mode;
 import lineup_3.modele.Partie;
-import package2.Plateau;
+import outils.jeu.Plateau;
 
 /**
  * Cette classe fait.........

@@ -12,14 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import lineup_3.modele.AffichagePlateau;
-import lineup_3.modele.Case;
 import lineup_3.modele.PionChifumi;
 import lineup_3.modele.DeckPions;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.PlateauPolynomial;
 import outils.Paire;
-import package2.Pion;
-import package2.Plateau;
+import outils.jeu.Case;
+import outils.jeu.Pion;
+import outils.jeu.Plateau;
 
 
 /**

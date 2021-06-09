@@ -1,6 +1,6 @@
 package lineup_3.modele;
 
-import package2.Pion;
+import outils.jeu.Pion;
 
 /**
  * Cette classe fait.........

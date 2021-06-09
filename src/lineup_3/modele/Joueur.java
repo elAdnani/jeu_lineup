@@ -3,8 +3,9 @@ package lineup_3.modele;
 import java.io.Serializable;
 
 import outils.Couleur;
-import package2.Pion;
-import package2.Plateau;
+import outils.jeu.Case;
+import outils.jeu.Pion;
+import outils.jeu.Plateau;
 
 /**
  * Cette classe créer un {@link Joueur} ayant des {@link Pion} et pouvant faire certaines actions sur un {@link Plateau}, notamment poser des {@link Pion}

@@ -13,12 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import lineup_3.modele.AffichagePlateau;
-import lineup_3.modele.Case;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.Mode;
 import lineup_3.modele.Nature;
 import lineup_3.modele.Parametres;
 import lineup_3.modele.PlateauPolynomial;
+import outils.jeu.Case;
 
 /**
  * Cette classe teste toutes les méthodes de la classe {@link Joueur}.

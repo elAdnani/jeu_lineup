@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import outils.Paire;
-import package2.Plateau;
+import outils.jeu.Case;
+import outils.jeu.Plateau;
 
 /**
  * 

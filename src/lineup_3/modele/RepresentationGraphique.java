@@ -13,7 +13,7 @@ public class RepresentationGraphique extends Application{
 
 	 public void start(Stage stage) throws IOException {
          FXMLLoader loader = new FXMLLoader();
-         URL fxmlFileUrl = getClass().getResource("../visuel/partie.fxml");
+         URL fxmlFileUrl = getClass().getResource("../controleur/partie.fxml");
          if (fxmlFileUrl == null) {
                  System.out.println("Impossible de charger le fichier fxml");
                  System.exit(-1);

@@ -12,12 +12,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package package2;
+package outils.jeu;
 
 
 import java.util.List;
 
-import lineup_3.modele.Case;
 import outils.GrapheMatrice;
 import outils.GrapheType;
 import outils.Paire;

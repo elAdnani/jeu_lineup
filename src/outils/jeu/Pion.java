@@ -1,9 +1,8 @@
-package package2;
+package outils.jeu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lineup_3.modele.Case;
 import lineup_3.modele.Deplacement;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.Nature;

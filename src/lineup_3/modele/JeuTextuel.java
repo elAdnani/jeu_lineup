@@ -54,15 +54,18 @@ public class JeuTextuel {
 			switch (choix) {
 				case 1 : 
 					if (partie.getMode()==Mode.CLASSIQUE && estUneIA()) {
-						partie.utilisateur.get(tour).poserPion(lectureCase(), partie.getPlateau(),
+						continuer = !partie.utilisateur.get(tour).poserPion(lectureCase(), partie.getPlateau(),
 								partie.getPlateau().NBCOUCHE, partie.getPlateau().getnbCote());
+						if (!continuer) {
+							System.out.println(partie.utilisateur.get(0).getPseudo() + " a gagné");
+						}
 						at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
-						System.out.println(partie.getPlateau().getListeCase());
+						//System.out.println(partie.getPlateau().getListeCase());
 					} else if (partie.getMode()==Mode.CHIFUMI) {
 						partie.utilisateur.get(tour).poserPionChifumi(lectureCase(), partie.getPlateau(),
 								partie.getPlateau().NBCOUCHE, partie.getPlateau().getnbCote(), lectureNature());
 						at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
-						System.out.println(partie.getPlateau().getListeCase());
+						//System.out.println(partie.getPlateau().getListeCase());
 					}
 					if (partie.getMode()==Mode.CLASSIQUE && !estUneIA()) {
 						partie.utilisateur.get(tour).poserPion(caseRandom(), partie.getPlateau(),
@@ -79,7 +82,7 @@ public class JeuTextuel {
 						partie.utilisateur.get(tour).deplacerPion(lecturePion(), lectureDirection(), partie.getPlateau(),
 							partie.getPlateau().getnbCote(), partie.getPlateau().NBCOUCHE);
 						at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
-						System.out.println(partie.getPlateau().getListeCase());
+						//System.out.println(partie.getPlateau().getListeCase());
 					} else {
 						partie.utilisateur.get(tour).deplacerPion(pionRandom(), directionRandom(), partie.getPlateau(),
 								partie.getPlateau().getnbCote(), partie.getPlateau().NBCOUCHE);
@@ -190,10 +193,10 @@ public class JeuTextuel {
 		at = new AffichagePlateau(p.getPlateau());
 		skinPion.put(p.utilisateur.get(0), '#');
 		skinPion.put(p.utilisateur.get(1), '$');
+		JeuTextuel jeu = new JeuTextuel();
+		//System.out.println(p.getList());
 		
 		while (continuer) {
-			JeuTextuel jeu = new JeuTextuel();
-			System.out.println(p.getList());
 			partie = p;
 			jeu.quelleAction();
 		}

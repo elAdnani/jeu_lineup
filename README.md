@@ -1,9 +1,5 @@
-██╗                  ╚════██╗                                                                                        
-██║                      █████╔╝                                                                                        
-██║                     ╚═══██╗                                                                                       
-███████╗               ██████╔╝                                                                                        
-╚══════╝               ╚═════╝                                                                                          
-                                                              
+Pour lancer le jeu, lancez la commande suivante :
+java -jar lineup3.jar
 
 # LineUp_3
 

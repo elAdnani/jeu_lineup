@@ -1,5 +1,5 @@
-	|||1v1|||
-pseudo1 : 1
-pseudo2 : 2
+	||solo||
+pseudo1 : zefd
+pseudo2 : IA
 nombre de côté : 3
 mode : CLASSIQUE

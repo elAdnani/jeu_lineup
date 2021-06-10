@@ -1,7 +1,5 @@
 package lineup_3.controleur;
 
-import partieGraphique.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

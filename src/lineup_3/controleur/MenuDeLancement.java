@@ -20,7 +20,7 @@ public class MenuDeLancement extends Application{
 
 		 public void start(Stage stage) throws IOException {
 	         FXMLLoader loader = new FXMLLoader();
-	         URL fxmlFileUrl = getClass().getResource("entrer.fxml");
+	         URL fxmlFileUrl = getClass().getResource("./gestionDesEvenements/lancement.fxml");
 	         if (fxmlFileUrl == null) {
 	                 System.out.println("Impossible de charger le fichier fxml");
 	                 System.exit(-1);

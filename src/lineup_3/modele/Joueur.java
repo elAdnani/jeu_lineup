@@ -131,8 +131,6 @@ public class Joueur implements Serializable{
 		main.getPion(this, nature).deplacementsPossibles(nbCouche);
 		main.getProchainPion(this, nature).setC(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
-			//System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
-			//TODO faire un blocage à la fin
 			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}
 		return false;
@@ -154,8 +152,6 @@ public class Joueur implements Serializable{
 		main.getPion(this, Nature.CLASSIQUE).deplacementsPossibles(nbCouche);
 		main.getProchainPion(this, Nature.CLASSIQUE).setC(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
-			//System.out.println(c.getPion().getJoueur().getPseudo() + " a gagné !");
-			//TODO faire un blocage à la fin
 			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}//211111
 		return false;
@@ -177,7 +173,7 @@ public class Joueur implements Serializable{
 			p.getJoueur().ajouterCoup();
 			if (p.alignements(pl.getListeCase(), nbCote, nbCouche)) {
 				return p.alignements(pl.getListeCase(), nbCote, nbCouche);
-				//TODO pareil que le todo précédent.
+
 			}
 		}
 		return false;

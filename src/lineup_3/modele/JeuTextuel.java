@@ -11,7 +11,7 @@ import outils.jeu.Case;
 import outils.jeu.Pion;
 
 /**
- * Cette classe fait.........
+ * Cette classe est le lancement de la partie. 
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
  * IUT-A Informatique, Universite de Lille.
@@ -60,12 +60,12 @@ public class JeuTextuel {
 							System.out.println(partie.utilisateur.get(0).getPseudo() + " a gagné");
 						}
 						at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
-						//System.out.println(partie.getPlateau().getListeCase());
+						
 					} else if (partie.getMode()==Mode.CHIFUMI) {
 						partie.utilisateur.get(tour).poserPionChifumi(lectureCase(), partie.getPlateau(),
 								partie.getPlateau().NBCOUCHE, partie.getPlateau().getnbCote(), lectureNature());
 						at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
-						//System.out.println(partie.getPlateau().getListeCase());
+						
 					}
 					if (partie.getMode()==Mode.CLASSIQUE && !estUneIA()) {
 						partie.utilisateur.get(tour).poserPion(caseRandom(), partie.getPlateau(),
@@ -194,7 +194,7 @@ public class JeuTextuel {
 		skinPion.put(p.utilisateur.get(0), '#');
 		skinPion.put(p.utilisateur.get(1), '$');
 		JeuTextuel jeu = new JeuTextuel();
-		//System.out.println(p.getList());
+
 		
 		while (continuer) {
 			partie = p;

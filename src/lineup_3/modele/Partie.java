@@ -18,11 +18,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.graalvm.compiler.nodes.NodeView.Default;
+
 import outils.jeu.Plateau;
 
 /**
- * Cette classe sert à récupérer.</br>
- * Permet l'enregistrement, 
+ * Cette classe de sauvegarder une partie.</br>
+ * Elle crée en réalité un fichier contenant les informations nécéssaires au lancement d'une partie.
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmène CHOUKHI</a>
  * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
@@ -34,19 +36,17 @@ public class Partie implements Serializable{
 	
 	private static final long serialVersionUID = 283664428347848905L;
 
+	
 	private Plateau plateauDeLaPartie;
-	
 	private transient final LocalDate dateDeCreation; // ne sera pas dans la partie mais plutôt dans le nom du fichier
-	
 	List<Joueur> utilisateur;
-	
+	private Joueur joueurCourant;
 	private Mode mode;
-	
 	private int nbPion;
 	
 	/**
-	 * Constructeur
-	 * @param plateauDeLaPartie
+	 *
+	 * @param plateauDeLaPartie est une partie qui vient d'être créer
 	 * @param utilisateur
 	 */
 	public Partie(Plateau plateauDeLaPartie, List<Joueur> utilisateur, Mode mode, int nbPion) {
@@ -62,13 +62,16 @@ public class Partie implements Serializable{
 		this.nbPion = nbPion;
 	}
 	
+
 	public LocalDate getDateDeCreation() {
 		
 		LocalDate debut= this.dateDeCreation;
 		return debut;
 	}
 	
-	
+	public Joueur getJoueurCourant() {
+		return this.joueurCourant;
+	}
 	public int getNombreJoueur() {
 		return this.utilisateur.size();
 	}
@@ -85,13 +88,11 @@ public class Partie implements Serializable{
 		return this.mode;
 	}
 
-	
 	/**
-	 * Permet de modifier le plateau de la partie.</br>
-	 * 
-	 * @param plateauDeLaPartie
+	 * Est utile à la sauvegarde d'une partie déjà en cours
+	 * @param plateauDeLaPartie est la partie qui est sauvegarder
 	 */
-	protected void setPlateauDeLaPartie(Plateau plateauDeLaPartie) {
+	public void setPlateauDeLaPartie(Plateau plateauDeLaPartie) {
 		
 		this.plateauDeLaPartie = plateauDeLaPartie;
 	}

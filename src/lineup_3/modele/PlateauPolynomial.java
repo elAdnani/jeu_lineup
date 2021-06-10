@@ -31,8 +31,8 @@ import outils.jeu.Plateau;
  *
  * @author <a href="mailto:adnan.kouakoua.etu@univ-lille.fr">Adnân KOUAKOUA</a>
  *         IUT-A Informatique, Université de Lille.
- * @date 22 mai 2021
- * @version v2
+ * @date 28 mai 2021
+ * @version v3
  */
 
 public class PlateauPolynomial extends Plateau implements Serializable{
@@ -46,6 +46,9 @@ public class PlateauPolynomial extends Plateau implements Serializable{
 	
 	
 	
+	private static final long serialVersionUID = 146319533889966473L;
+
+
 	/**
 	 * Construction d'un Plateau de nombre de côté défini </br>
 	 * On le définit en tant que graphe non orienté. </br>
@@ -129,8 +132,8 @@ public class PlateauPolynomial extends Plateau implements Serializable{
 	}
 	
 	/**
-	 * Appelle la méthode estVoisin qui return et vérifie la proximité des deux sommets
-	 * @param coordonnee_un
+	 * Appelle la méthode estVoisin qui retourne et vérifie la proximité des deux sommets
+	 * @param coordonnee_un 
 	 * @param coordonnee_deux
 	 * @return
 	 */

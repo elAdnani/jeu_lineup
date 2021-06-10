@@ -357,8 +357,7 @@ public class Demarrage {
 		
 	}
 	
-	//TODO convertir en test
-		// Main
+
 	public static void main(String[] args) {
 		Demarrage demarrage = new Demarrage();
 		demarrage.demarrerMenu();

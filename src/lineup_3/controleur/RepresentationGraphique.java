@@ -1,4 +1,4 @@
-package lineup_3.modele;
+package lineup_3.controleur;
 
 
 import java.io.IOException;

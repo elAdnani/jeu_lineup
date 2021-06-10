@@ -26,7 +26,7 @@ public abstract class Pion implements Comparable<Pion>{
 	/**
 	 * Correspond aux coordonnées du Pion.
 	 */
-	protected Case c;
+	protected Case emplacement;
 	
 	/**
 	 * Correspond au {@link Joueur} à qui appartient le Pion courant.

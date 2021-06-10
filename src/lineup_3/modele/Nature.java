@@ -33,16 +33,14 @@ public enum Nature {
 	 */
 	CISEAUX(2);
 	
-		// Class attributes
 	
 	private int idx;
 	
-		// Constructor
 	
 	private Nature(int idx) {
 		this.idx = idx;
 	}
-		// Methods
+
 	
 	public int getIdx() {
 		return this.idx;

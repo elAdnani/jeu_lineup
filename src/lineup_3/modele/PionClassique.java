@@ -3,7 +3,8 @@ package lineup_3.modele;
 import outils.jeu.Pion;
 
 /**
- * Cette classe fait.........
+ * Cette classe permet de définir un pion de nature (cf. {@link Nature}) Classique.
+ * Elle réalise des simplemes déplacements de part une case à une autre voisine. </br>
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
  * IUT-A Informatique, Universite de Lille.
@@ -13,18 +14,15 @@ import outils.jeu.Pion;
 public class PionClassique extends Pion{
 
 	/**
-	 * @param j
+	 * @param j est un joueur possedant le pion courrant
 	 */
 	public PionClassique(Joueur j) {
 		super(j, Nature.CLASSIQUE);
 	}
 	
-		// Methods
-	
-		// toString, hashCode && equals
-
-
-
+	/**
+	 * Retourne le hashCode de {@link Pion}
+	 */
 	@Override
 	public int hashCode() {
 		return super.hashCode();

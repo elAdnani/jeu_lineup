@@ -6,7 +6,11 @@ import outils.jeu.Case;
 import outils.jeu.Pion;
 
 /**
- * Cette classe fait.........
+ * Cette classe est un type de pion. Cette classe a la particularité de pouvoir être combattue et combattre d'autres pion de même type.
+ * Elle peut être de divers {@link Nature} : </br>
+ * Pierre, lors d'un combat elle perd contre la feuille et gagne contre le ciseau. </br>
+ * Feuille, lors d'un combat elle perd contre le ciseau et gagne contre la pierre. </br>
+ * Ciseau, lors d'un combat il perd contre la pierre et gagne contre la feuille. </br>
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
  * IUT-A Informatique, Universite de Lille.
@@ -23,7 +27,6 @@ public class PionChifumi extends Pion{
 	
 		// Constructor
 	/**
-	 * Ce constructeur instancie un Pion avec un maximum d'information.
 	 * @param j Représente le pseudo du Joueur à qui appartient ce Pion.
 	 */
 	public PionChifumi(Joueur j, Nature nature) {

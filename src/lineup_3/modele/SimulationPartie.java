@@ -31,12 +31,16 @@ import outils.jeu.Case;
  */
 public class SimulationPartie {
 	public static void main(String[] args) {
+		int nbCote =4;
+		boolean piege = false;
+		Mode modeDuJeu = Mode.CLASSIQUE;
+		int nbPion = 6;
+
 		
-		Parametres parametrePartie = new Parametres(4, false, Mode.CLASSIQUE, 6);
-		PlateauPolynomial plateauPartie = new PlateauPolynomial(parametrePartie.getNBCOTE());
+		PlateauPolynomial plateauPartie = new PlateauPolynomial(plateauPartie.getnbCote());
 		
-		Joueur joueur1 = new Joueur("Joueur1", parametrePartie.getNBPION(), parametrePartie.getMODE());
-		Joueur joueur2 = new Joueur("Joueur2", parametrePartie.getNBPION(), parametrePartie.getMODE());
+		Joueur joueur1 = new Joueur("Joueur1", nbPion, modeDuJeu);
+		Joueur joueur2 = new Joueur("Joueur2", nbPion, modeDuJeu);
 		
 		Map<Joueur, Character> skinPion = new HashMap<>();
 		skinPion.put(joueur1, '#');
@@ -48,7 +52,7 @@ public class SimulationPartie {
 		
 		AffichagePlateau at = new AffichagePlateau(plateauPartie);
 		
-		at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+		at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 
 		Case case00 = new Case(0,0);// En attendant d'avoir une entrée au clavier.
 		Case case01 = new Case(0,1);// En attendant d'avoir une entrée au clavier.
@@ -85,17 +89,19 @@ public class SimulationPartie {
 //		}
 
 			/*On pose des Pion pour voir si toutes les mises à jour se font*/
-		joueur1.poserPion(case00, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
+		
+		
+		joueur1.poserPion(case00, plateauPartie, plateauPartie.NBCOUCHE, plateauPartie.getnbCote());
 		System.out.println("\n==== 'Le joueur1 pose un premier Pion' ====\n");
 		
-		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
+		joueur2.poserPion(case01, plateauPartie, plateauPartie.NBCOUCHE, plateauPartie.getnbCote());
 		System.out.println("\n==== 'Le joueur2 pose un premier Pion' ====\n");
 		
-		joueur1.poserPion(case02, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
+		joueur1.poserPion(case02, plateauPartie, plateauPartie.NBCOUCHE, plateauPartie.getnbCote());
 		System.out.println("\n==== 'Le joueur1 pose un deuxième Pion' ====\n");
 		
-		joueur2.poserPion(case03, plateauPartie, parametrePartie.getNBCOUCHE(), parametrePartie.getNBCOTE());
-		System.out.println("\n==== 'Le joueur2 pose un deuxième Pion' ====\n");at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+		joueur2.poserPion(case03, plateauPartie, plateauPartie.NBCOUCHE, plateauPartie.getnbCote());
+		System.out.println("\n==== 'Le joueur2 pose un deuxième Pion' ====\n");at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //
 //		
 //			/*On sait que les mises à jour sont faites lors de la pose de Pion.
@@ -116,52 +122,52 @@ public class SimulationPartie {
 //			/*On pose un Pion et on essaie de le déplacer dans des endroits libre et non-libre et
 //			 * on observe le comportement des Cases et du Pion*/
 //		System.out.println("\n==== '"+ joueur1.getJoueur() + " pose un Pion' ====\n");
-//		joueur1.poserPion(case11, plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+//		joueur1.poserPion(case11, plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);
 //		//System.out.println(case11);
 //		
-		System.out.println("\n==== '" + joueur1.getJoueur() + " déplace le Pion vers une case libre' ====\n");
-		joueur1.deplacerPion(case11.getPion(), "haut", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+		System.out.println("\n==== '" + joueur1.getPseudo() + " déplace le Pion vers une case libre' ====\n");
+		joueur1.deplacerPion(case11.getPion(), "haut", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);
 		System.out.println(case11);
-		System.out.println(case21);//TODO corriger la classe voisinsDe(T sommet)
+		System.out.println(case21);
 //		
 //		System.out.println("\n==== '" + joueur1.getJoueur() + " re-déplace le Pion vers l'ancienne case' ====\n");
-//		joueur1.deplacerPion(case21.getPion(), "bas", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+//		joueur1.deplacerPion(case21.getPion(), "bas", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);
 //		//System.out.println(case21);
 //		//System.out.println(case11);
 //		
 //		System.out.println("\n==== '"+ joueur2.getPseudo() + " pose un Pion' ====\n");
-//		joueur2.poserPion(case01, plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE(), Nature.CLASSIQUE);
+//		joueur2.poserPion(case01, plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE, Nature.CLASSIQUE);
 //		//System.out.println(case01);
 //		
 //		System.out.println("\n==== '" + joueur1.getJoueur() + " tante de déplacer son Pion vers une case occupée' ====\n");
-//		joueur2.deplacerPion(case11.getPion(), "bas", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());
+//		joueur2.deplacerPion(case11.getPion(), "bas", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);
 //		//System.out.println(case11);
 //		//System.out.println(case3.getPion());
 //		//System.out.println(case01);
 //		//System.out.println(case2.getPion());
 //		
 //		System.out.println("\n==== '" + joueur2.getPseudo() + " tante de déplacer son Pion d'un tour complet dans le sens anti-horiare' ====\n");
-//		joueur2.deplacerPion(case01.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case01.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		//System.out.println(case01);
 //		//System.out.println(case00+"\n");
 //		
-//		joueur2.deplacerPion(case00.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case00.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		//System.out.println(case00);
 //		//System.out.println(case05+"\n");
 //		
-//		joueur2.deplacerPion(case05.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case05.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		System.out.println(case05);
 //		System.out.println(case04+"\n");
 //
-//		joueur2.deplacerPion(case04.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case04.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		//System.out.println(case04);
 //		//System.out.println(case03+"\n");
 //
-//		joueur2.deplacerPion(case03.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case03.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		//System.out.println(case03);
 //		//System.out.println(case02+"\n");
 //
-//		joueur2.deplacerPion(case02.getPion(), "gauche", plateauPartie, parametrePartie.getNBCOTE(), parametrePartie.getNBCOUCHE());at.affichagePlateau(parametrePartie.getNBCOTE(), skinPion);
+//		joueur2.deplacerPion(case02.getPion(), "gauche", plateauPartie, plateauPartie.getnbCote(), plateauPartie.NBCOUCHE);at.affichagePlateau(plateauPartie.getnbCote(), skinPion);
 //		//System.out.println(case02);
 //		//System.out.println(case01+"\n");
 //		

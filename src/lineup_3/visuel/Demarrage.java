@@ -67,7 +67,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			premierChoix();
 		}
 	}
@@ -81,7 +81,7 @@ public class Demarrage {
 		try {
 			int choix = scanner.nextInt();
 			while (choix != 1 && choix != 2 && choix != 3 && choix != 4) {
-				System.out.print("Choix inexistant. Veuillez réessayez : ");
+				System.out.print("Choix inexistant. Veuillez réessayer : ");
 				if (scanner.hasNextInt()) choix = scanner.nextInt();
 			}
 			if (choix == 1) {
@@ -91,7 +91,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			lireLesRegles();
 		}
 	}
@@ -128,7 +128,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			demarrerUnePartie();
 		}
 	}
@@ -185,7 +185,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			choixDuNomrbreDeCote();
 		}
 	}
@@ -221,7 +221,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			choixDuMode();
 		}
 	}
@@ -259,7 +259,7 @@ public class Demarrage {
 			}
 		} catch (InputMismatchException e) {
 			scanner.next();
-			System.out.println("Vous n'avez pas entrer un nombre");
+			System.out.println("Vous n'avez pas entré un nombre");
 			recapitulatif();
 		}
 	}
@@ -288,7 +288,7 @@ public class Demarrage {
 			}
 		}
 		catch (InputMismatchException e) { 	scanner.next();
-		System.out.println("Vous n'avez pas entrer un nombre");
+		System.out.println("Vous n'avez pas entré un nombre");
 		dernierChoix();}
 	}
 	

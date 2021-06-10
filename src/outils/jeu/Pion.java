@@ -54,12 +54,12 @@ public abstract class Pion implements Comparable<Pion>{
 		this.joueur = joueur;
 	}
 	
-	public Case getC() {
-		return this.c;
+	public Case getEmplacement() {
+		return this.emplacement;
 	}
 	
-	public void setC(Case c) {
-		this.c = c;
+	public void setEmplacement(Case c) {
+		this.emplacement = c;
 	}
 	
 	public List<Deplacement> getPossibilites() {
@@ -107,11 +107,11 @@ public abstract class Pion implements Comparable<Pion>{
 		this.possibilites.add(Deplacement.DROITE);
 
 	//Lorqu'on n'est pas dans un coin, il faut ajouter soit en haut, soit en bas, soit les deux.
-		if (this.c.getCoordonnees().getX() == nbCouche-1) {
+		if (this.emplacement.getCoordonnees().getX() == nbCouche-1) {
 			this.possibilites.add(Deplacement.BAS);
-		} else if (this.c.getCoordonnees().getX() == 0 && this.c.getCoordonnees().getY()%2 !=0) {
+		} else if (this.emplacement.getCoordonnees().getX() == 0 && this.emplacement.getCoordonnees().getY()%2 !=0) {
 			this.possibilites.add(Deplacement.HAUT);
-		} else if (this.c.getCoordonnees().getY()%2 != 0) {
+		} else if (this.emplacement.getCoordonnees().getY()%2 != 0) {
 			this.possibilites.add(Deplacement.BAS);
 			this.possibilites.add(Deplacement.HAUT);	
 		}
@@ -143,10 +143,10 @@ public abstract class Pion implements Comparable<Pion>{
 		if (this.possibilites.contains(Deplacement.valueOf(direction.toUpperCase()))) {
 			for (Case c : cases) {
 				if (c.getCoordonnees().getX()
-						== this.c.getCoordonnees().getX()
+						== this.emplacement.getCoordonnees().getX()
 						+Deplacement.valueOf(direction.toUpperCase()).getX()
 					&& c.getCoordonnees().getY()
-						== (this.c.getCoordonnees().getY()
+						== (this.emplacement.getCoordonnees().getY()
 						+Deplacement.valueOf(direction.toUpperCase()).getY()+2*nbCote)%(2*nbCote)
 						&& (c.EstLibre() || this.mange(c.getPion()))) {
 					this.echangerPion(c);
@@ -178,13 +178,13 @@ public abstract class Pion implements Comparable<Pion>{
 		for (Deplacement deplacement : possibilites) {
 			for (Case case1 : cases) {
 				if (case1.getCoordonnees().getX()
-							== this.c.getCoordonnees().getX()
+							== this.emplacement.getCoordonnees().getX()
 							+deplacement.getX()
 						&& case1.getCoordonnees().getY()
-							== (this.c.getCoordonnees().getY()
+							== (this.emplacement.getCoordonnees().getY()
 							+deplacement.getY()+2*nbCote)%(2*nbCote)
 						&& !case1.EstLibre()
-						&& this.c.getPion().getJoueur() ==  case1.getPion().getJoueur()) {
+						&& this.emplacement.getPion().getJoueur() ==  case1.getPion().getJoueur()) {
 					for (Deplacement deplacement2 : case1.getPion().getPossibilites()) {
 						for (Case case2 : cases) {
 							if (case2.getCoordonnees().getX()
@@ -193,7 +193,7 @@ public abstract class Pion implements Comparable<Pion>{
 									&& case2.getCoordonnees().getY()
 										== (case1.getCoordonnees().getY()
 										+deplacement2.getY()+2*nbCote)%(2*nbCote)
-									&& case2 != case1 && case2 != this.c
+									&& case2 != case1 && case2 != this.emplacement
 									&& !case2.EstLibre()
 									&& case1.getPion().getJoueur() == case2.getPion().getJoueur()) {
 								return true;
@@ -213,17 +213,17 @@ public abstract class Pion implements Comparable<Pion>{
 	 * @param c Représente la {@link Case} sur laquelle le Pion se déplace.
 	 */
 	public void echangerPion(Case c) {
-		Case tmp = this.c;
+		Case tmp = this.emplacement;
 		c.ajouterPion(tmp.getPion());
-		this.c.retirerPion();
-		this.setC(c);
+		this.emplacement.retirerPion();
+		this.setEmplacement(c);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((c == null) ? 0 : c.hashCode());
+		result = prime * result + ((emplacement == null) ? 0 : emplacement.hashCode());
 		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
 		result = prime * result + ((possibilites == null) ? 0 : possibilites.hashCode());
 		return result;
@@ -238,10 +238,10 @@ public abstract class Pion implements Comparable<Pion>{
 		if (getClass() != obj.getClass())
 			return false;
 		Pion other = (Pion) obj;
-		if (c == null) {
-			if (other.c != null)
+		if (emplacement == null) {
+			if (other.emplacement != null)
 				return false;
-		} else if (!c.equals(other.c))
+		} else if (!emplacement.equals(other.emplacement))
 			return false;
 		if (joueur == null) {
 			if (other.joueur != null)
@@ -260,7 +260,7 @@ public abstract class Pion implements Comparable<Pion>{
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pion [c=");
-		builder.append(c);
+		builder.append(emplacement);
 		builder.append(", couleur=");
 		builder.append(joueur);
 		builder.append(", possibilites=");

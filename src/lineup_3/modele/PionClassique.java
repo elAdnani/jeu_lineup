@@ -44,7 +44,7 @@ public class PionClassique extends Pion{
 		builder.append("#Pion :\nC'est un pion : ");
 		builder.append(super.nature);
 		builder.append("\nIl est sur ");
-		builder.append(super.c);
+		builder.append(super.emplacement);
 		builder.append("\nIl appartient à : ");
 		builder.append(super.joueur.getPseudo());
 		builder.append("\nDirections possibles : ");

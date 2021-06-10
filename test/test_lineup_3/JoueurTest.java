@@ -16,7 +16,6 @@ import lineup_3.modele.AffichagePlateau;
 import lineup_3.modele.Joueur;
 import lineup_3.modele.Mode;
 import lineup_3.modele.Nature;
-import lineup_3.modele.Parametres;
 import lineup_3.modele.PlateauPolynomial;
 import outils.jeu.Case;
 
@@ -103,77 +102,77 @@ class JoueurTest {
 	@Test
 	public void alignementSurPoseIntraCoucheTest() {
 		/*Sur une pose de Pion intra-couche*/
-		assertFalse(joueur1.poserPion(this.case00, plateau, plateau.NBCOUCHE, plateau.getnbCote());
-		assertFalse(joueur1.poserPion(this.case01, plateau, plateau.NBCOUCHE, plateau.getnbCote());
-		assertTrue(joueur1.poserPion(this.case02, plateau, plateau.NBCOUCHE, plateau.getnbCote());
+		assertFalse(joueur1.poserPion(this.case00, plateau, plateau.NBCOUCHE, plateau.getnbCote()));
+		assertFalse(joueur1.poserPion(this.case01, plateau, plateau.NBCOUCHE, plateau.getnbCote()));
+		assertTrue(joueur1.poserPion(this.case02, plateau, plateau.NBCOUCHE, plateau.getnbCote()));
 	}
 	
 	@Test
 	public void alignementSurPoseInterCoucheTest() {
 		/*Sur une pose de Pion inter-couche*/
-		assertFalse(joueur1.poserPion(this.case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(this.case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertTrue(joueur1.poserPion(this.case21, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(this.case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(this.case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertTrue(joueur1.poserPion(this.case21, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 	@Test
 	public void alignementSurDeplacementIntraCoucheTest() {
 		/*Sur un déplacement intra-couche*/
-		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case13, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case13, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 		assertTrue(joueur1.deplacerPion(case13.getPion(), "gauche", plateau, plateau.NBCOUCHE, plateau.getnbCote()));
 	}
 	
 	@Test
 	public void alignementSurDeplacementInterCoucheTest() {
 		/*Sur un déplacement inter-couche*/
-		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case01, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case01, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 		assertTrue(joueur1.deplacerPion(case10.getPion(), "droite", plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 	@Test
 	public void nonAlignementSurCaseNonLiees() {
 		/*On s'assure que les Case sans arêtes ne forment pas d'alignement*/
-		assertFalse(joueur1.poserPion(case20, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case20, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 						/*On aligne maintenant trois Pions de différents Joueurs et on vérifie la non-detection de l'alignement*/
 	@Test
 	public void nonAlignementSurPoseIntraCouche() {
 		/*Sur une pose de Pion intra-couche*/
-		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur2.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case12, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur2.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case12, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 	@Test
 	public void nonAlignementSurPoseInterCouche() {
 		/*Sur une pose de Pion inter-couche*/
-		assertFalse(joueur2.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur2.poserPion(case21, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur2.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur2.poserPion(case21, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 	@Test
 	public void nonAlignementSurDeplacementIntraCouche() {
 		/*Sur un déplacement intra-couche*/
-		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur2.poserPion(case13, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case11, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur2.poserPion(case13, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 		assertFalse(joueur2.deplacerPion(case13.getPion(), "gauche", plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	
 	@Test
 	public void nonAlignementSurDeplacementInterCouche () {
 		/*Sur un déplacement inter-couche*/
-		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur2.poserPion(case01, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
-		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE);
+		assertFalse(joueur1.poserPion(case00, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur2.poserPion(case01, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
+		assertFalse(joueur1.poserPion(case10, plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 		assertFalse(joueur1.deplacerPion(case10.getPion(), "droite", plateau, plateau.getnbCote(), plateau.NBCOUCHE));
 	}
 	

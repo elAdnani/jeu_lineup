@@ -41,10 +41,10 @@ public class PionChifumi extends Pion{
 		if (super.getPossibilites().contains(Deplacement.valueOf(direction.toUpperCase()))) {
 			for (Case c : cases) {
 				if (c.getCoordonnees().getX()
-						== super.getC().getCoordonnees().getX()
+						== super.getEmplacement().getCoordonnees().getX()
 						+Deplacement.valueOf(direction.toUpperCase()).getX()
 					&& c.getCoordonnees().getY()
-						== (super.getC().getCoordonnees().getY()
+						== (super.getEmplacement().getCoordonnees().getY()
 						+Deplacement.valueOf(direction.toUpperCase()).getY()+2*nbCote)%(2*nbCote)
 					&& (c.EstLibre() || this.mange(c.getPion()))) {
 					this.echangerPion(c);
@@ -84,7 +84,7 @@ public class PionChifumi extends Pion{
 		builder.append("#Pion :\nC'est un pion : ");
 		builder.append(super.nature);
 		builder.append("\nIl est sur ");
-		builder.append(super.c);
+		builder.append(super.emplacement);
 		builder.append("\nIl appartient à : ");
 		builder.append(super.joueur.getPseudo());
 		builder.append("\nDirections possibles : ");

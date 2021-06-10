@@ -127,9 +127,9 @@ public class Joueur implements Serializable{
 	 */
 	public boolean poserPionChifumi(Case c, Plateau p, int  nbCouche, int nbCote, Nature nature) {
 		c.ajouterPion(main.getPion(this, nature));
-		main.getPion(this, nature).setC(c);
+		main.getPion(this, nature).setEmplacement(c);
 		main.getPion(this, nature).deplacementsPossibles(nbCouche);
-		main.getProchainPion(this, nature).setC(c);
+		main.getProchainPion(this, nature).setEmplacement(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
 			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}
@@ -148,9 +148,9 @@ public class Joueur implements Serializable{
 	 */
 	public boolean poserPion(Case c, Plateau p, int  nbCouche, int nbCote) {
 		c.ajouterPion(main.getPion(this, Nature.CLASSIQUE));
-		main.getPion(this, Nature.CLASSIQUE).setC(c);
+		main.getPion(this, Nature.CLASSIQUE).setEmplacement(c);
 		main.getPion(this, Nature.CLASSIQUE).deplacementsPossibles(nbCouche);
-		main.getProchainPion(this, Nature.CLASSIQUE).setC(c);
+		main.getProchainPion(this, Nature.CLASSIQUE).setEmplacement(c);
 		if (c.getPion().alignements(p.getListeCase(), nbCote, nbCouche)){
 			return c.getPion().alignements(p.getListeCase(), nbCote, nbCouche);
 		}//211111

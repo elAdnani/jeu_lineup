@@ -1,8 +1,6 @@
 package lineup_3.modele;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import outils.jeu.Case;
@@ -31,13 +29,11 @@ import outils.jeu.Case;
  */
 public class SimulationPartie {
 	public static void main(String[] args) {
-		int nbCote =4;
-		boolean piege = false;
 		Mode modeDuJeu = Mode.CLASSIQUE;
 		int nbPion = 6;
 
 		
-		PlateauPolynomial plateauPartie = new PlateauPolynomial(plateauPartie.getnbCote());
+		PlateauPolynomial plateauPartie = new PlateauPolynomial(4);
 		
 		Joueur joueur1 = new Joueur("Joueur1", nbPion, modeDuJeu);
 		Joueur joueur2 = new Joueur("Joueur2", nbPion, modeDuJeu);

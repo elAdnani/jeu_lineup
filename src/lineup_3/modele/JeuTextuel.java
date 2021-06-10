@@ -195,7 +195,9 @@ public class JeuTextuel {
 		skinPion.put(p.utilisateur.get(1), '$');
 		JeuTextuel jeu = new JeuTextuel();
 
-		
+
+		partie = p;
+		at.affichagePlateau(partie.getPlateau().getnbCote(), skinPion);
 		while (continuer) {
 			partie = p;
 			jeu.quelleAction();

@@ -18,8 +18,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.graalvm.compiler.nodes.NodeView.Default;
-
 import outils.jeu.Plateau;
 
 /**

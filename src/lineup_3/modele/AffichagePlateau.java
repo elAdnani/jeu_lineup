@@ -46,7 +46,6 @@ public class AffichagePlateau {
 	 * @return est une liste de coordonnée, une liste de Paire  {@link Paire }
 	 */
 	private List<Case> recuperationDesCoordonnees(String ligne){
-		System.out.println(plateau.getClass().getName());
 		List<Case> coordonnees = new ArrayList<>();
 		String[] separationDesCoordoonees;
 		separationDesCoordoonees = ligne.split(" ");

@@ -1,5 +1,5 @@
-	||solo||
-pseudo1 : selm
-pseudo2 : IA
+	|||1v1|||
+pseudo1 : 1
+pseudo2 : 2
 nombre de côté : 3
 mode : CLASSIQUE

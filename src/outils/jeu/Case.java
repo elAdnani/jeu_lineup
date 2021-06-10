@@ -3,7 +3,6 @@ package outils.jeu;
 import java.util.List;
 import java.util.Set;
 
-import lineup_3.modele.Parametres;
 import lineup_3.modele.PlateauPolynomial;
 import lineup_3.modele.SimulationPartie;
 import outils.Paire;
@@ -200,11 +199,6 @@ public class Case {
 		if (estLibre != other.estLibre)
 			return false;
 		if (estPiege != other.estPiege)
-			return false;
-		if (param == null) {
-			if (other.param != null)
-				return false;
-		} else if (!param.equals(other.param))
 			return false;
 		if (pion == null) {
 			if (other.pion != null)

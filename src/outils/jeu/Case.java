@@ -40,10 +40,6 @@ public class Case {
 	 */
 	private Pion pion;
 	
-	/**
-	 * Correspond aux paramètres de la partie
-	 */
-	private Parametres param;
 	
 			// Getters & Setters
 	
@@ -71,25 +67,16 @@ public class Case {
 			// Constructors
 
 	/**
-	 * Ce constructeur instancie une case avec ses coordonnées passées en paramètre.
+	 * {@link #Case(int, int, Parametres)} instancie une case avec ses coordonnées et des paramètres de partie. Surtout utilisé pour  {@link SimulationPartie}
 	 * @param couche Représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
 	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
 	 */
+
 	public Case(int couche, int point) {
 		this.COORDONNEES = new Paire(couche, point);
 	}
 	
-	/**
-	 * {@link #Case(int, int, Parametres)} instancie une case avec ses coordonnées et des paramètres de partie. Surtout utilisé pour  {@link SimulationPartie}
-	 * @param couche Représente la coordonnée indiquant la couche sur laquelle se trouve la Case.
-	 * @param point Représente la coordonnée indiquant le point sur laquelle se trouve la Case, dépendamment de la couche.
-	 * @param p Représente les {@link Parametres} de la partie lors d'une simulation.
-	 */
-	public Case(int couche, int point, Parametres p) {
-		this.COORDONNEES = new Paire(couche, point);
-		this.param = p;
-	}
-	
+
 	
 			// Methods
 	

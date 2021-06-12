@@ -33,7 +33,9 @@ public class JouerPartie {
 	VBox menuMessage;
 	
 	
-	
+	public void initialize() {
+		this.menuMessage.setVisible(false);
+	}
 	public void MessageQuitter() {
 		
 		this.menuMessage.setVisible(false);

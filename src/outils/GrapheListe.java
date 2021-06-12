@@ -326,7 +326,7 @@ public class GrapheListe<T> extends Graphe<T> {
 		
 		/**
 		 * <p>Donne un set de tous les enfants d'un sommet.</p>
-		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X ← Y (parent)</p>
+		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
 		 * 
 		 * @param parent Le sommet parent
 		 * 

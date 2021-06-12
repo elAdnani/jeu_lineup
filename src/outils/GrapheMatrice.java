@@ -349,7 +349,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		/**
 		 * <p>Donne un set de tous les parents d'un sommet.</p>
-		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X → Y (enfant)</p>
+		 * <p>Un parent du sommet Y est un sommet X relié par une arrête partant de X et arrivant à Y<br>(parent) X -> Y (enfant)</p>
 		 * 
 		 * @param enfant Le sommet enfant
 		 * 
@@ -372,7 +372,7 @@ public class GrapheMatrice<T> extends Graphe<T> {
 		
 		/**
 		 * <p>Donne un set de tous les enfants d'un sommet.</p>
-		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X ← Y (parent)</p>
+		 * <p>Un enfant du sommet Y est un sommet X relié par une arrête partant de Y et arrivant à X<br>(enfant) X <- Y (parent)</p>
 		 * 
 		 * @param parent Le sommet parent
 		 * @return - Un Set des enfants du sommet<br>

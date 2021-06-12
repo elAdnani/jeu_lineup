@@ -1,7 +1,9 @@
 package lineup_3.controleur.gestionDesEvenements;
 
 
-
+/**
+ * Lancement du fichier representation ( son contrôleur est CommencerPartie)
+ */
 import java.io.IOException;
 import java.net.URL;	
 import javafx.application.Application;
@@ -14,7 +16,7 @@ public class RepresentationGraphique extends Application{
 
 	 public void start(Stage stage) throws IOException {
          FXMLLoader loader = new FXMLLoader();
-         URL fxmlFileUrl = getClass().getResource("../gestionDesEvenements/partie.fxml");
+         URL fxmlFileUrl = getClass().getResource("../representationGraphique.fxml");
          if (fxmlFileUrl == null) {
                  System.out.println("Impossible de charger le fichier fxml");
                  System.exit(-1);

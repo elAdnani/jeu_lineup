@@ -20,8 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -39,7 +37,7 @@ import outils.iterateurBoucle;
  * Au minimum, on peut générer :</br>
  * - 3 côté </br>
  * - 3 pions </br>
- * - 2 joueurs </br>
+ * - 2 joueurs jusqu'à 7 joueurs </br>
  * 
  * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
  * IUT-A Informatique, Universite de Lille.
@@ -47,7 +45,7 @@ import outils.iterateurBoucle;
  * 
  */
 public class CommencerPartie extends Application{
-	//TODO définir le maximum de joueur/pion/côté
+	//TODO définir le maximum de pion/côté
 	static int cptJoueur= 0;
 	
 	@FXML 
@@ -99,7 +97,7 @@ public class CommencerPartie extends Application{
 	 * @param c  Couleur entrant qui était celle de l'utilisateur
 	 */
 	@SuppressWarnings("unchecked")
-	public Couleur ChangerCouleur(Couleur c) {
+	private Couleur ChangerCouleur(Couleur c) {
 
 		mettreDisponible(c); 
 
@@ -124,7 +122,7 @@ public class CommencerPartie extends Application{
 	 * permet de rendre couleur disponible de sorte qu'elle puisse être choisie par l'utilisateur
 	 * @param c couleur voulant être mis dans la liste disponible
 	 */
-	public void mettreDisponible(Couleur c) {
+	private void mettreDisponible(Couleur c) {
 		if(c!=null) {
 			
 			this.CouleurIndisponible.remove(c);
@@ -136,7 +134,7 @@ public class CommencerPartie extends Application{
 	 * permet de rendre couleur indisponible car elle est déjà utilisé par un utilisateur
 	 * @param ccouleur voulant être mis dans la liste indisponible
 	 */
-	public void mettreIndisponible(Couleur c) {
+	private void mettreIndisponible(Couleur c) {
 		if(c!=null) {
 			
 			this.CouleurDisponible.remove(c);
@@ -173,7 +171,7 @@ public class CommencerPartie extends Application{
 		this.pionMoins.setDisable(true);
 		this.joueurMoins.setDisable(true);
 	
-		this.CouleurDisponible= FXCollections.observableArrayList(Couleur.BLEU,Couleur.BLANC,Couleur.VERT,Couleur.ROUGE,Couleur.ORANGE,Couleur.NOIR);
+		this.CouleurDisponible= FXCollections.observableArrayList(Couleur.values());
 		
 		NouveauJoueur("Rima");
 		NouveauJoueur();
@@ -247,11 +245,16 @@ public class CommencerPartie extends Application{
 	 * @param event appuie sur le bouton "-" 
 	 */
 	public void EnleverJoueur(ActionEvent event) {
+
 		int nombreDeJoueur = Integer.valueOf(this.nmbreJoueur.getText());
-		
+		this.joueurPlus.setDisable(false);
 		if(nombreDeJoueur<=3) { // 
 			this.joueurMoins.setDisable(true);
 		}
+		HBox configurationJoueur = (HBox) listeDesJoueurs.getChildren().get(listeDesJoueurs.getChildren().size()-1);
+		Circle famille =  (Circle)configurationJoueur.getChildren().get(3);
+		
+		mettreDisponible(    trouverCouleurIndisponible((Color) famille.getFill() ) );
 		
 		this.listeDesJoueurs.getChildren().remove(listeDesJoueurs.getChildren().size()-1); // on enleve le joueur
 
@@ -275,7 +278,7 @@ public class CommencerPartie extends Application{
 		else{
 			this.joueurMoins.setDisable(false);
 		}
-		if(pseudo.equals("")) {
+		if(pseudo.equals(null) || pseudo.equals("")) {
 			NouveauJoueur();
 		}
 		else {
@@ -296,7 +299,7 @@ public class CommencerPartie extends Application{
 	/**
 	 * Permet d'ajouter une configuration joueur avec un pseudo vide
 	 */
-	public void NouveauJoueur() {
+	private void NouveauJoueur() {
 		NouveauJoueur(null);
 	}
 	
@@ -304,7 +307,7 @@ public class CommencerPartie extends Application{
 	 *  Permet d'ajouter une configuration joueur avec un pseudo spécifié
 	 * @param pseudo nom du l'utilisateur choisi
 	 */
-	public void NouveauJoueur(String pseudo) {
+	private void NouveauJoueur(String pseudo) {
 
 		cptJoueur++;
 		
@@ -312,10 +315,10 @@ public class CommencerPartie extends Application{
 		
 		text.setText(cptJoueur+" - "); // indication du numéro du joueur
 		text.setStyle("-fx-font-size: 1em;");
-
+		
 		Circle famille = new Circle(5, this.CouleurDisponible.get(0).getCouleur());
-		mettreIndisponible( this.CouleurDisponible.get(0));
 		famille.setRadius(10);
+		mettreIndisponible( this.CouleurDisponible.get(0));
 		 // on vient récupérer la premiere couleur de la liste.
 		// elle est indiquée comme "indisponible" pour ne pas être utilisé par deux utilisateurs.
 		
@@ -332,7 +335,7 @@ public class CommencerPartie extends Application{
 		
 
 		CouleurSuiv.setOnAction(e->{ // si la flèche est cliqué =>
-
+						// on récupère la couleur du cercle et on cherche la couleur suivante
 			Paint Couleur = ChangerCouleur( chercherCouleur( (Color)famille.getFill() ) ).getCouleur();
 			
 			famille.setFill(Couleur); // on récupérer la couleur suivante
@@ -361,11 +364,11 @@ public class CommencerPartie extends Application{
 		
 		configurationJoueur = new HBox(10,text,pseudonyme,robot,famille,CouleurSuiv);
 	
-		Region espace = new Region();
-        HBox.setHgrow(espace, Priority.ALWAYS);
+//		Region espace = new Region();
+//        HBox.setHgrow(espace, Priority.ALWAYS);
         
         
-		this.listeDesJoueurs.getChildren().addAll(espace,configurationJoueur);
+		this.listeDesJoueurs.getChildren().addAll(configurationJoueur);
 		this.listeDesJoueurs.setSpacing(10);
 	}
 

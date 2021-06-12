@@ -2,8 +2,6 @@ package lineup_3.modele;
 
 import java.time.LocalDate;
 
-import lineup_3.controleur.gestionDesEvenements.Partie;
-
 /**
  * 
  * Cette classe sert à manipuler les parties. Il y a dans la partie graphique une liste de partie.

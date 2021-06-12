@@ -1,4 +1,4 @@
-package test_externe;
+package test_extern;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

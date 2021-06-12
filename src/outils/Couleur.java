@@ -18,7 +18,8 @@ public enum Couleur {
 	BLEU(Color.BLUE,"bleu"),
 	ROUGE(Color.RED,"rouge"),
 	ORANGE(Color.ORANGE,"orange"),
-	VERT(Color.GREEN,"vert");
+	VERT(Color.GREEN,"vert"),
+	JAUNE(Color.YELLOW, "jaune");
 	
 
 	private Color couleur;

@@ -1,6 +1,5 @@
-package lineup_3.controleur;
+package lineup_3.controleur.gestionDesEvenements;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,7 +14,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lineup_3.modele.ManipulationPartie;
 
+/**
+ * 
+ * Cette classe est le menu aura dans les parties "local" comme "multijoueur". </br>
+ * Il pourra depuis ce menu, manipuler les parties, qui utilisera la classe {@link ManipulationPartie}.</br>
+ *
+ * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
+ * IUT-A Informatique, Universite de Lille.
+ * @date 5 juin 2021
+ */
 public class MenuCreationDePartie extends Application{
 	
 	private List<String> listeTotalDesParties = new ArrayList<String>();
@@ -60,15 +69,12 @@ public class MenuCreationDePartie extends Application{
 
 	
 	
-	static String MyPath = System.getProperty("user.dir")
-			+ File.separator + "src"
-			+ File.separator + "partieGraphique"
-			+ File.separator + "controlleurs"
-			+ File.separator;
-
+	/**
+	 * Est l'affichage temporaire du fichier fxml.
+	 */
 	 public void start(Stage stage) throws IOException {
          FXMLLoader loader = new FXMLLoader();
-         URL fxmlFileUrl = getClass().getResource("./menuCreationDePartie.fxml");
+         URL fxmlFileUrl = getClass().getResource("../menuCreationDePartie.fxml");
          if (fxmlFileUrl == null) {
                  System.out.println("Impossible de charger le fichier fxml");
                  System.exit(-1);

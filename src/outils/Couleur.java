@@ -1,7 +1,10 @@
 package outils;
 
+import javafx.scene.paint.Color;
+
 /**
- * Cette classe fait.........
+ * Cette classe définit les couleurs existantes dans notre jeu. </br>
+ * Elle permettra en mode graphique de définir les couleurs des pions des joueurs qui permettent de les identifier.
  *
  * @author <a href="mailto:choukhiselmene@gmail.com">Selmene CHOUKHI</a>
  * IUT-A Informatique, Universite de Lille.
@@ -9,30 +12,35 @@ package outils;
  * @version 5 juin 2021 10:53:53
  */
 public enum Couleur {
-		// Class Values
-	BLANC("blanc", 0),
-	NOIR("noir", 1),
-	BLEU("bleu", 2),
-	ROUGE("rouge", 3),
-	ORANGE("orange", 4),
-	VERT("vert", 5);
+
+	BLANC(Color.WHITE,"blanc"),
+	NOIR(Color.BLACK,"noir"),
+	BLEU(Color.BLUE,"bleu"),
+	ROUGE(Color.RED,"rouge"),
+	ORANGE(Color.ORANGE,"orange"),
+	VERT(Color.GREEN,"vert");
 	
-		// Class Attributes
-	private String couleur;
-	private int num;
+
+	private Color couleur;
+	private String nom;
 	
-		// Getters && Setters
-	public String getCouleur() {
+		/**
+		 * @return la couleur attribué à l'enum
+		 */
+	public Color getCouleur() {
 		return couleur;
 	}
 	
-	public int getNum() {
-		return num;
+	/**
+	 * @return le nom attribué à l'enum
+	 */
+	public String getNom() {
+		return nom;
 	}
 	
 		// Constructor
-	private Couleur(String c, int n) {
-		this.couleur = c;
-		this.num = n;
+	private Couleur(Color couleur, String nomDeLaCouleur) {
+		this.couleur = couleur;
+		this.nom = nomDeLaCouleur;
 	}
 }

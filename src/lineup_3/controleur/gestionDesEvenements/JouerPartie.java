@@ -1,4 +1,4 @@
-package lineup_3.controleur;
+package lineup_3.controleur.gestionDesEvenements;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,8 +8,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-
-public class Partie {
+/**
+ * Est le menu lancé lorsque les utilisateurs sont en train de jouer.
+ * @author <a href="mailto:adnan.kouakoua@univ-lille1.fr">Adnân KOUAKOUA</a>
+ * IUT-A Informatique, Universite de Lille.
+ * @date 8 juin 2021
+ */
+public class JouerPartie {
 
 	
 	@FXML

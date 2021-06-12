@@ -10,7 +10,7 @@
 .button{
 	
 	-fx-color:gray;
-	-fx-font-size: 16px;
+	-fx-font-size: 16em;
 	-fx-padding: 10px;
 
 }
@@ -19,22 +19,4 @@
 	 -FX-font-size: 26px;
 	 
 }
-#pane{
-	fx-background-image: url("./controlleurs/name.jpg");
-}
-/* FOND DU MENU */
-#main{
 
-    -fx-background-image: url("fond-bleu.png");
-    -fx-background-repeat: no-repeat ;    
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
-
-
-
-}
-/*
-#titreLogo{
-	-fx-alignment:center;
-}*/   

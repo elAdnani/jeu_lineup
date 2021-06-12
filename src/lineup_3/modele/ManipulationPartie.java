@@ -2,7 +2,7 @@ package lineup_3.modele;
 
 import java.time.LocalDate;
 
-import lineup_3.controleur.Partie;
+import lineup_3.controleur.gestionDesEvenements.Partie;
 
 /**
  * 

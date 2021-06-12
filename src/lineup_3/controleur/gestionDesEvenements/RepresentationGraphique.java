@@ -1,4 +1,4 @@
-package lineup_3.controleur;
+package lineup_3.controleur.gestionDesEvenements;
 
 
 

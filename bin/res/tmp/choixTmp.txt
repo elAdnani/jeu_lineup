@@ -1,5 +1,0 @@
-	||solo||
-pseudo1 : zefd
-pseudo2 : IA
-nombre de côté : 3
-mode : CLASSIQUE
